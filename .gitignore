@@ -1,0 +1,16 @@
+# Godot
+.import/
+.godot/
+
+# Mac
+.DS_Store
+
+# Fitxers temporals i errors
+*.tmp
+*.log
+
+# Aseprite
+*.aseprite~
+*.ase~
+*.asebackup
+*.ase.autosave
