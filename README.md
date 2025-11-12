@@ -1,4 +1,4 @@
-# Fractum Tria
+# FractumTria
 
 Autora: Berta Juanhuix
 <br>Motor: Godot 4
