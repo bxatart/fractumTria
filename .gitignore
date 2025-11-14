@@ -1,6 +1,6 @@
 # Godot
-.import
-.godot
+*.import
+.godot/
 
 # Mac
 .DS_Store
