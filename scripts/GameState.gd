@@ -7,7 +7,7 @@ var current_color: StringName = "green"
 signal color_changed(new_color: StringName)
 
 ## Funció per canviar de color
-func set_color(new_color: StringName) -> void:
+func set_color(new_color: StringName):
 	if current_color == new_color:
 		return
 	current_color = new_color
