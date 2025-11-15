@@ -72,8 +72,10 @@ swap_color={
 
 [layer_names]
 
-2d_physics/layer_1="Ground"
-2d_physics/layer_2="Player"
+2d_physics/layer_1="GroundGreen"
+2d_physics/layer_2="GroundOrange"
+2d_physics/layer_3="GroundPurple"
+2d_physics/layer_4="Player"
 
 [rendering]
 
