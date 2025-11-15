@@ -1,5 +1,5 @@
 # Godot
-.import/
+*.import
 .godot/
 
 # Mac

@@ -123,7 +123,7 @@ script = ExtResource("1_3vyb7")
 sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"idle_green"
 autoplay = "idle_green"
-frame_progress = 0.915737
+frame_progress = 0.791515
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_dqkch")
