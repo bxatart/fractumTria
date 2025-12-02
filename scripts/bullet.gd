@@ -5,7 +5,7 @@ extends Area2D
 
 var speed: int = 100 #Velocitat
 var direction: float = 1.0
-var color: StringName = "green"
+var color: GameState.color = GameState.color.GREEN
 
 #Destrucció de la bala
 var destroyed: bool = false
@@ -15,7 +15,7 @@ func _ready() -> void:
 	#Connectar el senyal de col·lisió
 	body_entered.connect(on_collision)
 
-func setup(new_direction: float, new_color: StringName) -> void:
+func setup(new_direction: float, new_color: GameState.color) -> void:
 	direction = new_direction
 	color = new_color
 	print("BALA setup -> direction:", direction, " color:", color)
@@ -31,14 +31,10 @@ func _physics_process(delta) -> void:
 func change_color() -> void:
 	#Dona la volta a l'animació si va cap a l'esquerra
 	bulletAnim.flip_h = direction < 0
+	#Nom del color actual
+	var color_name: String = GameState.get_color_name(color)
 	#Canvia el color segons el color del jugador
-	match color:
-		"green":
-			bulletAnim.play("shot_green")
-		"orange":
-			bulletAnim.play("shot_orange")
-		"purple":
-			bulletAnim.play("shot_purple")
+	bulletAnim.play("shot_%s" % color_name)
 
 #Destrucció de la bala
 func destroy_bullet() -> void:
@@ -47,13 +43,9 @@ func destroy_bullet() -> void:
 	destroyed = true
 	#Desactivar col·lisions
 	bulletCollision.disabled = true
-	match color:
-		"green":
-			bulletAnim.play("shot_destroy_green")
-		"orange":
-			bulletAnim.play("shot_destroy_orange")
-		"purple":
-			bulletAnim.play("shot_destroy_purple")
+	#Animació de la bala
+	var color_name: String = GameState.get_color_name(color)
+	bulletAnim.play("shot_destroy_%s" % color_name)
 	await bulletAnim.animation_finished
 	queue_free()
 

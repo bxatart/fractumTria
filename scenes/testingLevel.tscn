@@ -1,8 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://c4ahfb1qox22u"]
+[gd_scene load_steps=11 format=4 uid="uid://c4ahfb1qox22u"]
 
 [ext_resource type="TileSet" uid="uid://blsjebdkgft2x" path="res://assets/sprites/platforms.tres" id="1_8a6tn"]
 [ext_resource type="Texture2D" uid="uid://26apthyhfvx0" path="res://assets/sprites/platforms_base.png" id="1_mbgpt"]
 [ext_resource type="PackedScene" uid="uid://cjtjm74ubxjwa" path="res://scenes/player.tscn" id="2_8a6tn"]
+[ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemy_1.tscn" id="4_npxo8"]
+[ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemy_2.tscn" id="5_u243f"]
+[ext_resource type="PackedScene" uid="uid://cyoyxa1grlhr6" path="res://scenes/enemy_3.tscn" id="6_0rfwd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_npxo8"]
 texture = ExtResource("1_mbgpt")
@@ -23,13 +26,13 @@ texture_region_size = Vector2i(32, 32)
 4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:0/0/custom_data_0 = "orange"
 5:0/0 = 0
-5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 9.10827, 7, 16, -6, 16, -16, 2.80115)
 5:0/0/custom_data_0 = "orange"
 6:0/0 = 0
-6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -16, 16, -16, 16, 16, 6, 16, -7, -1)
 6:0/0/custom_data_0 = "orange"
 7:0/0 = 0
-7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 5, -16, 5, 6, -12, 16, -16, 16)
 7:0/0/custom_data_0 = "orange"
 8:0/0 = 0
 8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -194,3 +197,50 @@ collision_mask = 7
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, 1)
 position_smoothing_enabled = true
+
+[node name="enemy1" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_npxo8")]
+position = Vector2(158, 0)
+patrol_points = NodePath("PatrolPoints")
+wait_time = 2
+
+[node name="PatrolPoints" type="Node2D" parent="enemy1"]
+
+[node name="Point1" type="Marker2D" parent="enemy1/PatrolPoints"]
+position = Vector2(-77, 0)
+
+[node name="Point2" type="Marker2D" parent="enemy1/PatrolPoints"]
+position = Vector2(84, 0)
+
+[node name="enemy1_1" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_npxo8")]
+position = Vector2(177, -192)
+enemy_color = 1
+patrol_points = NodePath("PatrolPoints")
+speed = 3000.0
+wait_time = 1
+
+[node name="PatrolPoints" type="Node2D" parent="enemy1_1"]
+
+[node name="Point1" type="Marker2D" parent="enemy1_1/PatrolPoints"]
+position = Vector2(-68, 0)
+
+[node name="Point2" type="Marker2D" parent="enemy1_1/PatrolPoints"]
+position = Vector2(66, 0)
+
+[node name="enemy2" parent="." instance=ExtResource("5_u243f")]
+position = Vector2(305, -105)
+
+[node name="enemy2_1" parent="." instance=ExtResource("5_u243f")]
+position = Vector2(-129, -108)
+enemy_color = 2
+
+[node name="enemy3" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("6_0rfwd")]
+position = Vector2(105, -116)
+patrol_points = NodePath("PatrolPoints")
+
+[node name="PatrolPoints" type="Node2D" parent="enemy3"]
+
+[node name="Point1" type="Marker2D" parent="enemy3/PatrolPoints"]
+position = Vector2(-100, 0)
+
+[node name="Point2" type="Marker2D" parent="enemy3/PatrolPoints"]
+position = Vector2(100, 0)

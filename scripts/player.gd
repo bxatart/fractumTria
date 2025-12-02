@@ -10,7 +10,10 @@ var base_jump: float
 var base_gravity: float
 
 #Colors
-var colors: Array[StringName] = ["green", "orange", "purple"]
+var colors: Array[GameState.color] = [
+	GameState.color.GREEN, 
+	GameState.color.ORANGE, 
+	GameState.color.PURPLE]
 var color_index: int = 0
 
 #Variables per l'inclinació de l'animació
@@ -77,26 +80,26 @@ func change_color() -> void:
 	if Input.is_action_just_pressed("swap_color"):
 		#Cicle infinit dels colors
 		color_index = (color_index + 1) % colors.size()
-		var new_color: StringName = colors[color_index]
+		var new_color: GameState.color = colors[color_index]
 		GameState.set_color(new_color)
 		change_collision_layer()
 		change_physics()
-		print("Color actual: ", new_color)
+		print("Color actual: ", GameState.get_color_name(GameState.current_color))
 
 #Canvia la física segons el color del jugador
 func change_physics() -> void:
 	match GameState.current_color:
-		"green":
+		GameState.color.GREEN:
 			#Normal
 			speed = base_speed
 			jump = base_jump #2 tiles
 			gravity = base_gravity
-		"orange":
+		GameState.color.ORANGE:
 			#Més pesat
 			speed = base_speed - 20
 			jump = base_jump - 60 #1 tile
 			gravity = base_gravity + 400
-		"purple":
+		GameState.color.PURPLE:
 			#Més lleuger
 			speed = base_speed + 20
 			jump = base_jump + 60 #4 tiles
@@ -115,7 +118,7 @@ func player_falling(delta: float) -> void:
 func player_idle(delta: float) -> void:
 	if is_on_floor():
 		current_state = State.idle
-		print("State: ", State.keys()[current_state])
+		print("Player State: ", State.keys()[current_state])
 
 func player_run(delta: float) -> void:
 	#Moviment lateral
@@ -127,7 +130,7 @@ func player_run(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed)
 	if dir != 0:
 		current_state = State.run
-		print("State: ", State.keys()[current_state])
+		print("Player State: ", State.keys()[current_state])
 	#Salt
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -jump
@@ -144,7 +147,7 @@ func player_shoot(delta: float) -> void:
 		current_state = State.shoot
 		#Temporitzador
 		shoot_timer = 0.15
-		print("State: ", State.keys()[current_state])
+		print("Player State: ", State.keys()[current_state])
 
 func update_shoot_timer(delta: float) -> void:
 	if shoot_timer > 0.0:
@@ -161,17 +164,17 @@ func update_shoot_timer(delta: float) -> void:
 
 func get_anim(delta: float) -> void:
 	#Color actual
-	var color: StringName = GameState.current_color
+	var color_name: StringName = GameState.get_color_name(GameState.current_color)
 	match current_state:
 		State.idle:
 			#Atura l'animació si el jugador no es mou
-			anim.play("idle_%s" % color)
+			anim.play("idle_%s" % color_name)
 		State.run:
 			#Animació de moviment
-			anim.play("run_%s" % color)
+			anim.play("run_%s" % color_name)
 		State.shoot:
 			#Animació de disparar
-			anim.play("shoot_%s" % color)
+			anim.play("shoot_%s" % color_name)
 	#Dona la volta a l'sprite si el jugador va cap a l'esquerra
 	anim.flip_h = last_dir < 0
 	#Dona la volta al muzzle si el jugador va cap a l'esquerra
@@ -187,11 +190,11 @@ func get_anim(delta: float) -> void:
 #Canvia la Collision Mask segons el color del jugador
 func change_collision_layer() -> void:
 	#Verd
-	set_collision_mask_value(1, GameState.current_color == "green")
+	set_collision_mask_value(1, GameState.get_color_name(GameState.current_color) == "green")
 	#Taronja
-	set_collision_mask_value(2, GameState.current_color == "orange")
+	set_collision_mask_value(2, GameState.get_color_name(GameState.current_color) == "orange")
 	#Lila
-	set_collision_mask_value(3, GameState.current_color == "purple")
+	set_collision_mask_value(3, GameState.get_color_name(GameState.current_color) == "purple")
 
 #PROVA - Torna a la posició inicial si el jugador cau
 func respawn() -> void:
@@ -201,7 +204,7 @@ func respawn() -> void:
 	global_position = spawn_position
 	velocity = Vector2.ZERO
 	color_index = 0
-	GameState.set_color(colors[0])
+	GameState.set_color(colors[color_index])
 	last_dir = 1.0
 	change_physics()
 	change_collision_layer()

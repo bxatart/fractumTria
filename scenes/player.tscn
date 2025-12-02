@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cjtjm74ubxjwa"]
+[gd_scene load_steps=70 format=3 uid="uid://cjtjm74ubxjwa"]
 
 [ext_resource type="Script" uid="uid://cq2w0furos24y" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://bkpy6pgf2ga7n" path="res://assets/sprites/fractumGreen.png" id="2_dqkch"]
@@ -530,10 +530,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
-size = Vector2(21, 32)
-
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 8
 script = ExtResource("1_3vyb7")
 
@@ -542,8 +539,8 @@ sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"damage_purple"
 autoplay = "idle_green"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_dqkch")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(11, -1, 1, -15, -1, -15, -9, -1, -9, 3, 0, 15, 1, 15, 11, 3)
 
 [node name="Muzzle" type="Marker2D" parent="."]
 position = Vector2(20, 0)
