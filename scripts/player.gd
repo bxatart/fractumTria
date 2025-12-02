@@ -112,13 +112,13 @@ func player_falling(delta: float) -> void:
 	else:
 		velocity.y = max(velocity.y, 0.0)
 	#PROVA - Si el personatge ha caigut, el torna a la posició inicial
-	if global_position.y > 800:
+	if global_position.y > 600:
 		respawn()
 
 func player_idle(delta: float) -> void:
 	if is_on_floor():
 		current_state = State.idle
-		print("Player State: ", State.keys()[current_state])
+		#print("Player State: ", State.keys()[current_state])
 
 func player_run(delta: float) -> void:
 	#Moviment lateral
@@ -130,7 +130,7 @@ func player_run(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed)
 	if dir != 0:
 		current_state = State.run
-		print("Player State: ", State.keys()[current_state])
+		#print("Player State: ", State.keys()[current_state])
 	#Salt
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -jump

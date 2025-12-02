@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var enemy_death_effect = preload("res://scenes/enemy_2_death.tscn")
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_check_left: RayCast2D = $FloorCheckLeft
 @onready var floor_check_right: RayCast2D = $FloorCheckRight
@@ -8,8 +10,9 @@ extends CharacterBody2D
 
 
 @export var enemy_color: GameState.color = GameState.color.GREEN
-@export var speed: float = 100.0
+@export var speed: float = 50.0
 @export var jump: float = 400.0 #Força del salt
+@export var health: int = 5
 
 #Jugador
 var player: Node2D = null
@@ -22,6 +25,7 @@ var spawn_position: Vector2
 var base_jump
 var base_speed
 var base_gravity
+var facing_dir: float = 1.0 #Direcció
 
 #Estat de l'enemic
 enum State { idle, move }
@@ -114,7 +118,8 @@ func enemy_move(delta: float) -> void:
 		#Salta si hi ha paret o no hi ha plataforma
 		if wall_ahead or not floor_ahead:
 			velocity.y = -jump
-	velocity.x = dir * speed			
+	velocity.x = dir * speed	
+	facing_dir = dir
 	anim.flip_h = dir < 0
 
 func find_player() -> void:
@@ -162,3 +167,17 @@ func check_wall(dir: float) -> bool:
 func respawn() -> void:
 	global_position = spawn_position
 	current_state = State.idle
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("Hurtbox area entered")
+	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
+		var node: Node = area.get_parent()
+		health -= node.damage_amount
+		print("Health: ", health)
+		if health <= 0:
+			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
+			enemy_death_instance.global_position = anim.global_position
+			get_parent().add_child(enemy_death_instance)
+			if enemy_death_instance.has_method("setup"):
+				enemy_death_instance.setup(facing_dir, enemy_color)
+			queue_free()
