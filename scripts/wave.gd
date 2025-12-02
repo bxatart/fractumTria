@@ -55,9 +55,6 @@ func frame_changed() -> void:
 		capsule_shape.radius = data["radius"]
 		capsule_shape.height = data["height"]
 
-func _on_timer_timeout() -> void:
-	return
-
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	#Esborra l'onada quan hagi sortit de la pantalla
 	queue_free()

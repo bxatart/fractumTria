@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bgvw11ub8858o"]
+[gd_scene load_steps=39 format=3 uid="uid://bgvw11ub8858o"]
 
 [ext_resource type="Script" uid="uid://dx7u7yw7sj3py" path="res://scripts/enemy_2.gd" id="1_fi5i3"]
 [ext_resource type="Texture2D" uid="uid://5du1y1t0ga6x" path="res://assets/sprites/enemy2.png" id="1_hqy2m"]
@@ -275,6 +275,9 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqy2m"]
 height = 26.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fi5i3"]
+height = 28.0
+
 [node name="enemy2" type="CharacterBody2D"]
 collision_layer = 32
 collision_mask = 7
@@ -309,3 +312,15 @@ collision_mask = 7
 position = Vector2(12, 0)
 target_position = Vector2(16, 0)
 collision_mask = 7
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 24
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_fi5i3")
+debug_color = Color(0.992045, 0, 0.257437, 0.42)
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

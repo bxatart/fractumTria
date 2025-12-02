@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var enemy_death_effect = preload("res://scenes/enemy_1_death.tscn")
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer = $Timer
 
@@ -7,6 +9,7 @@ extends CharacterBody2D
 @export var patrol_points: Node2D
 @export var speed: float = 1500.0
 @export var wait_time: int = 3
+@export var health: int = 3
 
 #Marcadors que limiten el moviment
 var children: Array
@@ -121,4 +124,17 @@ func _on_timer_timeout() -> void:
 func respawn() -> void:
 	global_position = spawn_position
 	current_state = State.idle
-	
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("Hurtbox area entered")
+	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
+		var node: Node = area.get_parent()
+		health -= node.damage_amount
+		print("Health: ", health)
+		if health <= 0:
+			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
+			enemy_death_instance.global_position = anim.global_position
+			get_parent().add_child(enemy_death_instance)
+			if enemy_death_instance.has_method("setup"):
+				enemy_death_instance.setup(direction.x, enemy_color)
+			queue_free()

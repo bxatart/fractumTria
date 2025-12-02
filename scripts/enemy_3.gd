@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var enemy_death_effect = preload("res://scenes/enemy_3_death.tscn")
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer = $Timer
 @onready var muzzle : Marker2D = $Muzzle
@@ -11,6 +13,7 @@ extends CharacterBody2D
 @export var wait_time: int = 3
 @export var wave_amp: float = 16.0 #Alçada d'ona
 @export var wave_speed: float = 4.0 #Velocitat d'ona
+@export var health: int = 6
 
 #Jugador
 var player: Node2D = null
@@ -81,7 +84,7 @@ func enemy_idle(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed * delta)
 		velocity.y = 0
 		current_state = State.idle
-		print("ENEMY3 State: ", State.keys()[current_state])
+		#print("ENEMY3 State: ", State.keys()[current_state])
 
 func enemy_move(delta: float) -> void:
 	#Si no es pot moure, surt de la funció
@@ -91,7 +94,7 @@ func enemy_move(delta: float) -> void:
 	if abs(position.x - current_point.x) > 16:
 		velocity.x = direction.x * speed
 		current_state = State.move
-		print("ENEMY3 State: ", State.keys()[current_state])
+		#print("ENEMY3 State: ", State.keys()[current_state])
 	#Si l'enemic està al marcador de destí
 	else:
 		current_point_position += 1
@@ -176,6 +179,10 @@ func _on_shoot_timer_timeout() -> void:
 	#Si ja està en estat de disparar
 	if current_state == State.shoot:
 		return
+	#Si està lluny del jugador no dispara
+	var distance := global_position.distance_to(player.global_position)
+	if distance >= detection_range:
+		return
 	#Guardar estats anteriors a disparar
 	prev_state = current_state
 	print("ENEMY3 Prev State: ", State.keys()[prev_state])
@@ -195,3 +202,17 @@ func _on_shoot_timer_timeout() -> void:
 	canMove = prev_canMove
 	#Actualitza animació
 	get_animation()
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("Hurtbox area entered")
+	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color != enemy_color:
+		var node: Node = area.get_parent()
+		health -= node.damage_amount
+		print("Health: ", health)
+		if health <= 0:
+			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
+			enemy_death_instance.global_position = anim.global_position
+			get_parent().add_child(enemy_death_instance)
+			if enemy_death_instance.has_method("setup"):
+				enemy_death_instance.setup(direction.x, enemy_color)
+			queue_free()
