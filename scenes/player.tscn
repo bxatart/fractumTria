@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://cjtjm74ubxjwa"]
+[gd_scene load_steps=68 format=3 uid="uid://cjtjm74ubxjwa"]
 
 [ext_resource type="Script" uid="uid://cq2w0furos24y" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://bkpy6pgf2ga7n" path="res://assets/sprites/fractumGreen.png" id="2_dqkch"]
@@ -6,17 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://c8echgc3vlk5r" path="res://assets/sprites/fractumOrange.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://bd671xkgccton" path="res://assets/sprites/fractumPurple.png" id="4_tuyoq"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2a3c5"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(0, 0, 29, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_42b1b"]
 atlas = ExtResource("2_qlg0r")
 region = Rect2(29, 0, 29, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7ic4"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(58, 0, 29, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_au7lq"]
 atlas = ExtResource("2_qlg0r")
@@ -262,16 +254,10 @@ region = Rect2(116, 64, 29, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2a3c5")
-}, {
-"duration": 5.0,
 "texture": SubResource("AtlasTexture_42b1b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h7ic4")
 }],
 "loop": false,
-"name": &"damage_green",
+"name": &"damage",
 "speed": 10.0
 }, {
 "frames": [{
@@ -536,7 +522,7 @@ script = ExtResource("1_3vyb7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4r5pv")
-animation = &"damage_purple"
+animation = &"damage"
 autoplay = "idle_green"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -544,3 +530,12 @@ polygon = PackedVector2Array(11, -1, 1, -15, -1, -15, -9, -1, -9, 3, 0, 15, 1, 1
 
 [node name="Muzzle" type="Marker2D" parent="."]
 position = Vector2(20, 0)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 32
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hurtbox"]
+polygon = PackedVector2Array(11, -1, 1, -15, -1, -15, -9, -1, -9, 3, 0, 15, 1, 15, 11, 3)
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
