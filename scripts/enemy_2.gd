@@ -8,11 +8,12 @@ var enemy_death_effect = preload("res://scenes/enemy_2_death.tscn")
 @onready var wall_check_left: RayCast2D = $WallCheckLeft
 @onready var wall_check_right: RayCast2D = $WallCheckRight
 
-
 @export var enemy_color: GameState.color = GameState.color.GREEN
 @export var speed: float = 50.0
 @export var jump: float = 400.0 #Força del salt
 @export var health: int = 5
+
+var feedback: bool = false
 
 #Jugador
 var player: Node2D = null
@@ -32,6 +33,7 @@ enum State { idle, move }
 var current_state: State
 
 func _ready() -> void:
+	add_to_group("enemies")
 	#Busca el jugador a l'escena
 	find_player()
 	#Animació inicial de l'enemic
@@ -168,6 +170,20 @@ func respawn() -> void:
 	global_position = spawn_position
 	current_state = State.idle
 
+#Posa l'animació en gris si s'ha tocat l'enemic
+func hit_feedback() -> void:
+	if feedback:
+		return
+	feedback = true
+	#Animació en gris
+	anim.self_modulate = Color(0.5, 0.5, 0.5, 1.0)
+	#Temporitzador
+	await get_tree().create_timer(0.15).timeout
+	#Torna al color normal si no s'ha eliminat l'enemic
+	if not is_queued_for_deletion():
+		anim.self_modulate = Color(1, 1, 1, 1)
+	feedback = false
+
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	print("Hurtbox area entered")
 	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
@@ -181,3 +197,5 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			if enemy_death_instance.has_method("setup"):
 				enemy_death_instance.setup(facing_dir, enemy_color)
 			queue_free()
+		else:
+			hit_feedback()

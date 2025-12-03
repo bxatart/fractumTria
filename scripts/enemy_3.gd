@@ -15,6 +15,8 @@ var enemy_death_effect = preload("res://scenes/enemy_3_death.tscn")
 @export var wave_speed: float = 4.0 #Velocitat d'ona
 @export var health: int = 6
 
+var feedback: bool = false
+
 #Jugador
 var player: Node2D = null
 var detection_range: float = 500.0 #Distància per detectar el jugador
@@ -45,6 +47,7 @@ enum State { idle, move, shoot }
 var current_state: State
 
 func _ready() -> void:
+	add_to_group("enemies")
 	#Busca el jugador a l'escena
 	find_player()
 	#Busca els marcadors
@@ -203,6 +206,20 @@ func _on_shoot_timer_timeout() -> void:
 	#Actualitza animació
 	get_animation()
 
+#Posa l'animació en gris si s'ha tocat l'enemic
+func hit_feedback() -> void:
+	if feedback:
+		return
+	feedback = true
+	#Animació en gris
+	anim.self_modulate = Color(0.5, 0.5, 0.5, 1.0)
+	#Temporitzador
+	await get_tree().create_timer(0.15).timeout
+	#Torna al color normal si no s'ha eliminat l'enemic
+	if not is_queued_for_deletion():
+		anim.self_modulate = Color(1, 1, 1, 1)
+	feedback = false
+
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	print("Hurtbox area entered")
 	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color != enemy_color:
@@ -216,3 +233,5 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			if enemy_death_instance.has_method("setup"):
 				enemy_death_instance.setup(direction.x, enemy_color)
 			queue_free()
+		else:
+			hit_feedback()

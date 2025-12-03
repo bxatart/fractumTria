@@ -1,7 +1,7 @@
 extends Area2D
 
 @onready var waveAnim: AnimatedSprite2D = $AnimatedSprite2D
-@onready var wave_collision: CollisionShape2D = $CollisionShape2D
+@onready var wave_collision: CollisionShape2D = $Hitbox/CollisionShape2D
 @onready var capsule_shape: CapsuleShape2D = wave_collision.shape
 
 #Moviment
@@ -58,3 +58,14 @@ func frame_changed() -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	#Esborra l'onada quan hagi sortit de la pantalla
 	queue_free()
+
+func wave_impact(body: Node2D) -> void:
+	if body.is_in_group("player") and body.has_method("wave_change_color"):
+		var color_changed: bool = body.wave_change_color(color)
+		if color_changed:
+			#Destruir l'onada després de l'impacte
+			queue_free()
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	print("Wave body entered: ", body.name)
+	wave_impact(body)
