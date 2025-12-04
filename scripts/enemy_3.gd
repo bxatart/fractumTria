@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var enemy_death_effect = preload("res://scenes/enemy_3_death.tscn")
+var enemy_death_effect = preload("res://scenes/enemies/enemy_3_death.tscn")
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer = $Timer
@@ -37,7 +37,7 @@ var base_y: float = 0.0
 
 #Disparar
 #Variable onada
-var wave = preload("res://scenes/wave.tscn")
+var wave = preload("res://scenes/enemies/wave.tscn")
 var muzzle_position
 var prev_state: State
 var prev_canMove: bool

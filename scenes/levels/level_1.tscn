@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=4 uid="uid://dqpfobno3p4nb"]
+
+[ext_resource type="PackedScene" uid="uid://doyfwebhb78xw" path="res://scenes/levels/base_level.tscn" id="1_014kd"]
+[ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="2_bswci"]
+[ext_resource type="Script" uid="uid://hodty6ci7fxw" path="res://scripts/level_1.gd" id="2_x42e6"]
+[ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="3_nsrm0"]
+
+[node name="Level1" instance=ExtResource("1_014kd")]
+script = ExtResource("2_x42e6")
+
+[node name="ParallaxBackground" parent="." index="0" instance=ExtResource("2_bswci")]
+offset = Vector2(0, -360)
+transform = Transform2D(1, 0, 0, 1, 0, -360)
+
+[node name="TileMapLayerGreen" parent="." index="1"]
+position = Vector2(0, 64)
+tile_map_data = PackedByteArray("AAAAAP3/AQAAAAAAAAABAP3/AQAAAAAAAAACAP3/AQAAAAAAAAADAP3/AQAAAAAAAAAEAP3/AQAAAAAAAAAFAP3/AQAAAAAAAAAGAP3/AQAAAAAAAAAHAP3/AQAAAAAAAAAIAP3/AQAAAAAAAAAJAP3/AQAAAAAAAAAKAP3/AQAAAAAAAAALAP3/AQAAAAAAAAAMAP3/AQAAAAAAAAANAP3/AQAAAAAAAAAOAP3/AQAAAAAAAAAPAP3/AQAAAAAAAAAQAP3/AQADAAAAAAD///3/AQAAAAAAAAD///z/AQAAAAAAAAD///v/AQAAAAAAAAD///r/AQAAAAAAAAD///n/AQAAAAAAAAD///j/AQAAAAAAAAD///f/AQAAAAAAAAD///b/AQAAAAAAAAAKAPz/AAAAAAAAAAATAPv/AQAAAAAAAAAUAPv/AQAAAAAAAAAVAPv/AQAAAAAAAAASAPv/AQACAAAAAAAWAPv/AQADAAAAAAAYAPn/AQABAAAAAAAaAPv/AQABAAAAAAAcAPz/AQACAAAAAAAdAPz/AQAAAAAAAAAeAPz/AQAAAAAAAAAfAPz/AQAAAAAAAAAgAPz/AQAAAAAAAAAhAPz/AQAAAAAAAAAiAPz/AQAAAAAAAAAjAPz/AQAAAAAAAAAkAPz/AQAAAAAAAAAlAPz/AQADAAAAAAAgAPv/AAAAAAAAAAA3AP3/AQACAAAAAAA4AP3/AQAAAAAAAAA5AP3/AQAAAAAAAAA6AP3/AQAAAAAAAAA7AP3/AQAAAAAAAAA8AP3/AQAAAAAAAAA9AP3/AQAAAAAAAAA+AP3/AQAAAAAAAAA/AP3/AQAAAAAAAABAAP3/AQAAAAAAAABBAP3/AQAAAAAAAABCAP3/AQAAAAAAAABDAP3/AQAAAAAAAABEAP3/AQAAAAAAAABFAP3/AQAAAAAAAABGAP3/AQAAAAAAAABHAP3/AQAAAAAAAABIAP3/AQADAAAAAAA8APr/AQABAAAAAAA/APr/AQACAAAAAABAAPr/AQAAAAAAAABBAPr/AQADAAAAAAA=")
+
+[node name="TileMapLayerOrange" parent="." index="2"]
+tile_map_data = PackedByteArray("AAAnAP7/AQAGAAAAAAAoAP7/AQAEAAAAAAApAP7/AQAEAAAAAAAqAP7/AQAEAAAAAAArAP7/AQAEAAAAAAAsAP7/AQAEAAAAAAAtAP7/AQAHAAAAAAAqAP3/AAAAAAAAAAA=")
+
+[node name="TileMapLayerPurple" parent="." index="3"]
+tile_map_data = PackedByteArray("AAAvAP7/AQAKAAAAAAAwAP7/AQAIAAAAAAAxAP7/AQAIAAAAAAAyAP7/AQAIAAAAAAAzAP7/AQAIAAAAAAA0AP7/AQAIAAAAAAA1AP7/AQALAAAAAAAyAP3/AAAAAAAAAAA=")
+
+[node name="Player" parent="." index="4"]
+position = Vector2(64, -112)
+jump = 500.0
+
+[node name="Camera2D" parent="Player" index="4"]
+offset = Vector2(0, -360)
+
+[node name="Enemies" type="Node" parent="." index="5"]
+
+[node name="enemy1" parent="Enemies" index="0" node_paths=PackedStringArray("patrol_points") instance=ExtResource("3_nsrm0")]
+position = Vector2(2072, -30)
+patrol_points = NodePath("PatrolPoints")
+wait_time = 2
+
+[node name="PatrolPoints" type="Node2D" parent="Enemies/enemy1" index="4"]
+
+[node name="Point1" type="Marker2D" parent="Enemies/enemy1/PatrolPoints" index="0"]
+position = Vector2(-152, 0)
+
+[node name="Point2" type="Marker2D" parent="Enemies/enemy1/PatrolPoints" index="1"]
+position = Vector2(168, 0)

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var enemy_death_effect = preload("res://scenes/enemy_1_death.tscn")
+var enemy_death_effect = preload("res://scenes/enemies/enemy_1_death.tscn")
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer = $Timer
