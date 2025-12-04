@@ -7,44 +7,47 @@
 [ext_resource type="Texture2D" uid="uid://bg84keuh5f0ao" path="res://assets/backgrounds/coluds_green.png" id="5_f5j04"]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
-offset = Vector2(0, -400)
-transform = Transform2D(1, 0, 0, 1, 0, -400)
 
 [node name="BackgroundParallaxLayer" type="ParallaxLayer" parent="."]
-motion_mirroring = Vector2(1280, 0)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundParallaxLayer"]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_a82yn")
 centered = false
 
 [node name="Bg1ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(1.1, 1)
-motion_mirroring = Vector2(1280, 0)
+motion_scale = Vector2(1.05, 1)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Bg1ParallaxLayer"]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_1e54i")
 centered = false
 
 [node name="Bg2ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(1.2, 1)
-motion_mirroring = Vector2(1280, 0)
+motion_scale = Vector2(1.1, 1)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Bg2ParallaxLayer"]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_xvldy")
 centered = false
 
 [node name="Bg3ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(1.3, 1)
-motion_mirroring = Vector2(1280, 0)
+motion_scale = Vector2(1.15, 1)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Bg3ParallaxLayer"]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_17dea")
 centered = false
 
 [node name="CloudsParallaxLayer" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(2, 1)
-motion_mirroring = Vector2(1280, 0)
+motion_scale = Vector2(1.2, 1)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="CloudsParallaxLayer"]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_f5j04")
 centered = false

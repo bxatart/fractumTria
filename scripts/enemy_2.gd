@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var enemy_death_effect = preload("res://scenes/enemy_2_death.tscn")
+var enemy_death_effect = preload("res://scenes/enemies/enemy_2_death.tscn")
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_check_left: RayCast2D = $FloorCheckLeft

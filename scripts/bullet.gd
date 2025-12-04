@@ -1,6 +1,6 @@
 extends Area2D
 
-var bullet_impact_effect = preload("res://scenes/bullet_impact.tscn")
+var bullet_impact_effect = preload("res://scenes/player/bullet_impact.tscn")
 
 @onready var bulletAnim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var bulletCollision: CollisionShape2D = $CollisionShape2D

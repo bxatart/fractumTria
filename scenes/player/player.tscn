@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://cjtjm74ubxjwa"]
+[gd_scene load_steps=62 format=3 uid="uid://cjtjm74ubxjwa"]
 
 [ext_resource type="Script" uid="uid://cq2w0furos24y" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://bkpy6pgf2ga7n" path="res://assets/sprites/fractumGreen.png" id="2_dqkch"]
@@ -9,30 +9,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_42b1b"]
 atlas = ExtResource("2_qlg0r")
 region = Rect2(29, 0, 29, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_au7lq"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(0, 32, 29, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nubpm"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(29, 32, 29, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ua5cf"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(58, 32, 29, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_51ujp"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(0, 64, 29, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tk41t"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(29, 64, 29, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fuw3a"]
-atlas = ExtResource("2_qlg0r")
-region = Rect2(58, 64, 29, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("2_dqkch")
@@ -258,34 +234,6 @@ animations = [{
 }],
 "loop": false,
 "name": &"damage",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_au7lq")
-}, {
-"duration": 5.0,
-"texture": SubResource("AtlasTexture_nubpm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ua5cf")
-}],
-"loop": false,
-"name": &"damage_orange",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_51ujp")
-}, {
-"duration": 5.0,
-"texture": SubResource("AtlasTexture_tk41t")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fuw3a")
-}],
-"loop": false,
-"name": &"damage_purple",
 "speed": 10.0
 }, {
 "frames": [{

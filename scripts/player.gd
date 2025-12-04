@@ -36,7 +36,7 @@ var tilt_speed: float = 10.0
 
 #Disparar
 #Variable bala
-var bullet = preload("res://scenes/bullet.tscn")
+var bullet = preload("res://scenes/player/bullet.tscn")
 var muzzle_position
 var shoot_timer: float = 0.0
 
@@ -96,6 +96,7 @@ func change_color() -> void:
 		change_collision_layer()
 		change_physics()
 		print("Color actual: ", GameState.get_color_name(GameState.current_color))
+		Sound.playSfx("changeColor")
 
 #Canvi de color per col·lisió amb onada enemiga
 func wave_change_color(new_color: GameState.color) -> bool:
@@ -164,6 +165,7 @@ func player_run(delta: float) -> void:
 	#Salt
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -jump
+		Sound.playSfx("jump")
 
 func player_shoot(delta: float) -> void:
 	if last_dir  != 0 and Input.is_action_just_pressed("shoot"):
@@ -178,6 +180,7 @@ func player_shoot(delta: float) -> void:
 		#Temporitzador
 		shoot_timer = 0.15
 		print("Player State: ", State.keys()[current_state])
+		Sound.playSfx("shot")
 
 func update_shoot_timer(delta: float) -> void:
 	if shoot_timer > 0.0:
@@ -247,6 +250,7 @@ func hit_feedback() -> void:
 		return
 	is_hurt = true
 	anim.play("damage")
+	Sound.playSfx("playerHit")
 	await anim.animation_finished
 	is_hurt = false
 	#Torna a l'animació anterior
@@ -270,6 +274,7 @@ func take_damage(amount: int, from_node: Node) -> void:
 	apply_knockback(from_node)
 	hit_feedback()
 	if health <= 0:
+		Sound.playSfx("playerDeath")
 		die()
 
 func die() -> void:
