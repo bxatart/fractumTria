@@ -253,10 +253,11 @@ size = Vector2(18, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ejytf"]
 size = Vector2(21, 32)
 
-[node name="enemy1" type="CharacterBody2D"]
+[node name="enemy1" type="CharacterBody2D" node_paths=PackedStringArray("patrol_points")]
 collision_layer = 32
 collision_mask = 7
 script = ExtResource("1_ejytf")
+patrol_points = NodePath("PatrolPoints")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)
@@ -280,6 +281,14 @@ collision_mask = 24
 position = Vector2(-0.5, -16)
 shape = SubResource("RectangleShape2D_ejytf")
 debug_color = Color(0.735387, 0, 0.121698, 0.392157)
+
+[node name="PatrolPoints" type="Node2D" parent="."]
+
+[node name="Point1" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(-56, 0)
+
+[node name="Point2" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(72, 0)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

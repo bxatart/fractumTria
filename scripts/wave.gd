@@ -12,7 +12,7 @@ var velocity: Vector2 = Vector2.ZERO
 var color: GameState.color = GameState.color.GREEN
 
 #Col·lisió
-var collision_sizes := [
+var collision_sizes = [
 	{ "radius": 3.0, "height": 6.0 }, #frame 0
 	{ "radius": 3.0, "height": 10.0 }, #frame 1
 	{ "radius": 3.0, "height": 14.0 }, #frame 2
@@ -28,10 +28,13 @@ func _ready() -> void:
 	#Animació inicial
 	change_color()
 
-func setup(new_direction: Vector2, new_color: GameState.color) -> void:
-	velocity = new_direction.normalized() * speed
+func setup(new_direction: Vector2, new_color: GameState.color, new_speed: float = -1.0) -> void:
 	color = new_color
-	print("WAVE setup -> direction:", velocity, " color:", color)
+	if new_speed > 0.0:
+		velocity = new_direction.normalized() * new_speed
+	else:
+		velocity = new_direction.normalized() * speed
+	print("WAVE setup: direction:", velocity, " color:", color, " speed:", new_speed)
 	change_color()
 	#Orientació de l'onada segons la direcció
 	rotation = velocity.angle()
@@ -48,7 +51,7 @@ func change_color() -> void:
 	waveAnim.play("wave_%s" % color_name)
 
 func frame_changed() -> void:
-	var frame := waveAnim.frame
+	var frame = waveAnim.frame
 	#Modifica la mida de la collision shape cada cop que s'avanci un frame de l'animació
 	if frame >= 0 and frame < collision_sizes.size():
 		var data = collision_sizes[frame]

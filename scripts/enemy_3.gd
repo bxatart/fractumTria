@@ -118,7 +118,7 @@ func enemy_move(delta: float) -> void:
 		timer.start()
 	#Moviment d'ona
 	wave_time += delta
-	var target_y := base_y + sin(wave_time * wave_speed) * wave_amp
+	var target_y = base_y + sin(wave_time * wave_speed) * wave_amp
 	velocity.y = (target_y - global_position.y) / delta
 
 func enemy_shoot() -> void:
@@ -152,7 +152,7 @@ func get_animation() -> void:
 func find_player() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	if player == null:
-		print("Enemy3: No s'ha trobat cap jugador a l'escena")
+		print("ENEMY3: No s'ha trobat cap jugador a l'escena")
 	else:
 		print(player)
 
@@ -160,16 +160,18 @@ func find_points() -> void:
 	#Troba la posició dels marcadors
 	children = patrol_points.get_children()
 	points_number = children.size()
-	print("Fills de patrol_points: ", children)
+	print("ENEMY3: Fills de patrol_points: ", children)
 	#Si no té marcadors
 	if points_number == 0:
-		print("No hi ha marcadors")
+		print("ENEMY3: No hi ha marcadors")
 		return
+	point_positions.clear()
 	#Afegeix la posició dels marcadors a l'array
 	for point in children:
 		point_positions.append(point.global_position)
+	current_point_position = 0
 	current_point = point_positions[current_point_position]
-	print("Punts de patrol: ", point_positions)
+	print("ENEMY3: Punts de patrol: ", point_positions)
 
 func _on_timer_timeout() -> void:
 	canMove = true
@@ -183,7 +185,7 @@ func _on_shoot_timer_timeout() -> void:
 	if current_state == State.shoot:
 		return
 	#Si està lluny del jugador no dispara
-	var distance := global_position.distance_to(player.global_position)
+	var distance = global_position.distance_to(player.global_position)
 	if distance >= detection_range:
 		return
 	#Guardar estats anteriors a disparar
@@ -221,11 +223,11 @@ func hit_feedback() -> void:
 	feedback = false
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	print("Hurtbox area entered")
+	print("ENEMY3: Hurtbox area entered")
 	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color != enemy_color:
 		var node: Node = area.get_parent()
 		health -= node.damage_amount
-		print("Health: ", health)
+		print("ENEMY3 Health: ", health)
 		if health <= 0:
 			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
 			enemy_death_instance.global_position = anim.global_position

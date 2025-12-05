@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b7kxw8sfbnwml"]
+[gd_scene load_steps=15 format=4 uid="uid://b7kxw8sfbnwml"]
 
 [ext_resource type="TileSet" uid="uid://blsjebdkgft2x" path="res://assets/sprites/platforms.tres" id="1_8a6tn"]
 [ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="1_86d38"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="4_npxo8"]
 [ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemies/enemy_2.tscn" id="5_u243f"]
 [ext_resource type="PackedScene" uid="uid://cyoyxa1grlhr6" path="res://scenes/enemies/enemy_3.tscn" id="6_0rfwd"]
+[ext_resource type="PackedScene" uid="uid://ctinipsbc2yra" path="res://scenes/enemies/final_enemy.tscn" id="6_kexhe"]
+[ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="8_s2rl2"]
 [ext_resource type="Script" uid="uid://bxpb085c4awnk" path="res://scripts/camera_2d.gd" id="11_7j4wx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_86d38"]
@@ -155,57 +157,52 @@ tile_set = SubResource("TileSet_ojdn3")
 position = Vector2(26, -89)
 collision_mask = 7
 
+[node name="altar" parent="." instance=ExtResource("8_s2rl2")]
+position = Vector2(1849, -143)
+
 [node name="Enemies" type="Node" parent="."]
 
-[node name="enemy1" parent="Enemies" node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_npxo8")]
-position = Vector2(157, -70)
-patrol_points = NodePath("PatrolPoints")
+[node name="enemy1" parent="Enemies" instance=ExtResource("4_npxo8")]
+position = Vector2(520, -70)
 wait_time = 2
 
-[node name="PatrolPoints" type="Node2D" parent="Enemies/enemy1"]
-
-[node name="Point1" type="Marker2D" parent="Enemies/enemy1/PatrolPoints"]
-position = Vector2(-77, 0)
-
-[node name="Point2" type="Marker2D" parent="Enemies/enemy1/PatrolPoints"]
-position = Vector2(84, 0)
-
-[node name="enemy1_1" parent="Enemies" node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_npxo8")]
+[node name="enemy1_1" parent="Enemies" instance=ExtResource("4_npxo8")]
 position = Vector2(176, -262)
 enemy_color = 1
-patrol_points = NodePath("PatrolPoints")
 speed = 3000.0
 wait_time = 1
 
-[node name="PatrolPoints" type="Node2D" parent="Enemies/enemy1_1"]
+[node name="PatrolPoints2" type="Node2D" parent="Enemies/enemy1_1"]
 
-[node name="Point1" type="Marker2D" parent="Enemies/enemy1_1/PatrolPoints"]
+[node name="Point1" type="Marker2D" parent="Enemies/enemy1_1/PatrolPoints2"]
 position = Vector2(-68, 0)
 
-[node name="Point2" type="Marker2D" parent="Enemies/enemy1_1/PatrolPoints"]
+[node name="Point2" type="Marker2D" parent="Enemies/enemy1_1/PatrolPoints2"]
 position = Vector2(66, 0)
 
 [node name="enemy2" parent="Enemies" instance=ExtResource("5_u243f")]
 position = Vector2(1440, -116)
 
-[node name="enemy3" parent="Enemies" node_paths=PackedStringArray("patrol_points") instance=ExtResource("6_0rfwd")]
+[node name="enemy3" parent="Enemies" instance=ExtResource("6_0rfwd")]
 position = Vector2(677, -267)
-patrol_points = NodePath("PatrolPoints")
 
-[node name="PatrolPoints" type="Node2D" parent="Enemies/enemy3"]
+[node name="PatrolPoints2" type="Node2D" parent="Enemies/enemy3"]
 
-[node name="Point1" type="Marker2D" parent="Enemies/enemy3/PatrolPoints"]
+[node name="Point1" type="Marker2D" parent="Enemies/enemy3/PatrolPoints2"]
 position = Vector2(-100, 0)
 
-[node name="Point2" type="Marker2D" parent="Enemies/enemy3/PatrolPoints"]
+[node name="Point2" type="Marker2D" parent="Enemies/enemy3/PatrolPoints2"]
 position = Vector2(100, 0)
+
+[node name="finalEnemy" parent="Enemies" instance=ExtResource("6_kexhe")]
+position = Vector2(144, -144)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -360)
 limit_left = 0
 limit_top = 0
 limit_right = 8000
-limit_bottom = 2000
+limit_bottom = 0
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
