@@ -2,26 +2,30 @@ extends CharacterBody2D
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var cam: Camera2D = $Camera2D
-@onready var green_platforms:= $"../TileMapLayerGreen"
-@onready var orange_platforms:= $"../TileMapLayerOrange"
-@onready var purple_platforms:= $"../TileMapLayerPurple"
+@onready var green_platforms = $"../TileMapLayerGreen"
+@onready var orange_platforms = $"../TileMapLayerOrange"
+@onready var purple_platforms = $"../TileMapLayerPurple"
 @onready var muzzle : Marker2D = $Muzzle
 @onready var hurtbox: Area2D = $Hurtbox
 
 @export var speed: float = 180.0 #velocitat
 @export var jump: float = 400.0 #força de salt
 @export var gravity: float = 1200.0 #gravetat
-@export var health: int = 100 #vida
+@export var max_health: int = 3 #vida
 @export var knockback: float = 250.0 #força del knockback
+@export var exit_limit: float = 2000.0 #Sortir del nivell
 
 #Dany al jugador
-var is_hurt : bool = false
+var is_hurt: bool = false
+var health: int
 
-#variables per guardar els valors
+#Guardar els valors de moviment
 var last_dir: float = 1.0 #direcció
 var base_speed: float
 var base_jump: float
 var base_gravity: float
+var can_control: bool = true
+var exit_level: bool = false
 
 #Colors
 var colors: Array[GameState.color] = [
@@ -34,8 +38,7 @@ var color_index: int = 0
 var tilt_angle: float = 10.0
 var tilt_speed: float = 10.0
 
-#Disparar
-#Variable bala
+#Variable disparar
 var bullet = preload("res://scenes/player/bullet.tscn")
 var muzzle_position
 var shoot_timer: float = 0.0
@@ -53,6 +56,9 @@ func _ready() -> void:
 	base_speed = speed
 	base_jump = jump
 	base_gravity = gravity
+	health = max_health
+	#Control del jugador
+	enable_control()
 	#Posició muzzle
 	muzzle_position = muzzle.position
 	#Comença amb el color verd
@@ -66,6 +72,9 @@ func _ready() -> void:
 
 #Moviment jugador
 func _physics_process(delta: float) -> void:
+	if exit_level:
+		exit(delta)
+		return
 	if is_hurt:
 		player_falling(delta)
 		move_and_slide()
@@ -88,6 +97,9 @@ func _physics_process(delta: float) -> void:
 
 #Gestiona el canvi de color
 func change_color() -> void:
+	#Si no es pot controlar el jugador, no canvi de color
+	if not can_control:
+		return
 	if Input.is_action_just_pressed("swap_color"):
 		#Cicle infinit dels colors
 		color_index = (color_index + 1) % colors.size()
@@ -95,7 +107,7 @@ func change_color() -> void:
 		GameState.set_color(new_color)
 		change_collision_layer()
 		change_physics()
-		print("Color actual: ", GameState.get_color_name(GameState.current_color))
+		print("PLAYER: Color actual: ", GameState.get_color_name(GameState.current_color))
 		Sound.playSfx("changeColor")
 
 #Canvi de color per col·lisió amb onada enemiga
@@ -143,17 +155,25 @@ func player_falling(delta: float) -> void:
 	else:
 		velocity.y = max(velocity.y, 0.0)
 	#PROVA - Si el personatge ha caigut, el torna a la posició inicial
-	if global_position.y > 600:
+	if global_position.y > 600 and not exit_level:
 		respawn()
 
 func player_idle(delta: float) -> void:
+	#Si no es pot controlar el jugador
+	if not can_control:
+		current_state = State.idle
+		return
 	if is_on_floor():
 		current_state = State.idle
 		#print("Player State: ", State.keys()[current_state])
 
 func player_run(delta: float) -> void:
+	#Atura el moviment si no es pot controlar el jugador
+	if not can_control:
+		velocity.x = 0
+		return
 	#Moviment lateral
-	var dir := Input.get_axis("move_left", "move_right")
+	var dir = Input.get_axis("move_left", "move_right")
 	if dir:
 		velocity.x = dir * speed
 		last_dir = dir
@@ -168,6 +188,9 @@ func player_run(delta: float) -> void:
 		Sound.playSfx("jump")
 
 func player_shoot(delta: float) -> void:
+	#No disparar si no es pot controlar el jugador
+	if not can_control:
+		return
 	if last_dir  != 0 and Input.is_action_just_pressed("shoot"):
 		var bullet_instance: Area2D = bullet.instantiate()
 		#Posició d'inici de la bala
@@ -216,7 +239,7 @@ func get_anim(delta: float) -> void:
 	if last_dir != 0:
 		muzzle.position.x = abs(muzzle_position.x) * last_dir
 	#Rota l'sprite
-	var target_tilt := 0.0
+	var target_tilt = 0.0
 	target_tilt = deg_to_rad(tilt_angle) * sign(velocity.x)
 	#Rotació suau
 	var t: float = clamp(delta * tilt_speed, 0.0, 1.0)
@@ -238,11 +261,23 @@ func respawn() -> void:
 	#Torna el jugador a l'inici
 	global_position = spawn_position
 	velocity = Vector2.ZERO
+	#Torna al color inicial
 	color_index = 0
 	GameState.set_color(colors[color_index])
 	last_dir = 1.0
 	change_physics()
 	change_collision_layer()
+	#Control del jugador
+	enable_control()
+
+#Control del jugador
+func enable_control():
+	can_control = true
+	exit_level = false
+
+func disable_control():
+	can_control = false
+	velocity.x = 0
 
 #Si s'ha tocat el jugador
 func hit_feedback() -> void:
@@ -270,7 +305,7 @@ func apply_knockback(from_node: Node) -> void:
 #Dany al jugador
 func take_damage(amount: int, from_node: Node) -> void:
 	health -= amount
-	print("Player Health: ", health)
+	print("PLAYER Health: ", health)
 	apply_knockback(from_node)
 	hit_feedback()
 	if health <= 0:
@@ -278,12 +313,40 @@ func take_damage(amount: int, from_node: Node) -> void:
 		die()
 
 func die() -> void:
-	print("Player DEATH")
+	print("PLAYER DEATH")
 	#PROVA - Utilitzo el respawn i restableixo la vida inicial
 	respawn()
-	health = 100
+	health = max_health
+
+func full_heal() -> void:
+	health = max_health
+
+func start_exit() -> void:
+	disable_control()
+	exit_level = true
+	#Fer que miri a la dreta
+	last_dir = 1.0
+	current_state = State.run
+	#Animació de moviment
+	get_anim(0.0)
+	
+func exit(delta: float) -> void:
+	#Gravetat
+	player_falling(delta)
+	velocity.x = speed
+	last_dir = 1.0
+	move_and_slide()
+	get_anim(delta)
+	#PROVA - SURT DEL NIVELL
+	if global_position.x > exit_limit:
+		#Codi per sortir del nivell
+		respawn() 
+		exit_level = false
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
+	#Si s'està sortint del nivell, no et poden tocar
+	if exit_level:
+		return
 	var enemy = area.get_parent()
 	if enemy.is_in_group("enemies"):
-		take_damage(10, enemy)
+		take_damage(1, enemy)

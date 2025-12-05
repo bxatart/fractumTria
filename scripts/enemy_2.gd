@@ -89,7 +89,7 @@ func update_state() -> void:
 		current_state = State.idle
 		return
 	#Distància entre el jugador i l'enemic
-	var distance := global_position.distance_to(player.global_position)
+	var distance = global_position.distance_to(player.global_position)
 	if distance <= detection_range:
 		canMove = true
 		current_state = State.move
@@ -114,8 +114,8 @@ func enemy_move(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
 		return
 	#Mirar si té plataformes a sota o a davant
-	var floor_ahead := check_floor(dir)
-	var wall_ahead := check_wall(dir)
+	var floor_ahead = check_floor(dir)
+	var wall_ahead = check_wall(dir)
 	if is_on_floor():
 		#Salta si hi ha paret o no hi ha plataforma
 		if wall_ahead or not floor_ahead:
@@ -127,7 +127,7 @@ func enemy_move(delta: float) -> void:
 func find_player() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	if player == null:
-		print("Enemy2: No s'ha trobat cap jugador a l'escena")
+		print("ENEMY2: No s'ha trobat cap jugador a l'escena")
 	else:
 		print(player)
 
@@ -185,11 +185,11 @@ func hit_feedback() -> void:
 	feedback = false
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	print("Hurtbox area entered")
+	print("ENEMY2: Hurtbox area entered")
 	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
 		var node: Node = area.get_parent()
 		health -= node.damage_amount
-		print("Health: ", health)
+		print("ENEMY2 Health: ", health)
 		if health <= 0:
 			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
 			enemy_death_instance.global_position = anim.global_position

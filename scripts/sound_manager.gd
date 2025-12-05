@@ -5,7 +5,7 @@ var MUSIC = {
 	"level1": preload("res://assets/audio/music/greenLevelMusic.wav"),
 	"level2": preload("res://assets/audio/music/orangeLevelMusic.wav"),
 	"level3": preload("res://assets/audio/music/purpleLevelMusic.wav"),
-	"level4": preload("res://assets/audio/music/finalLevelMusic.wav"),
+	"finalLevel": preload("res://assets/audio/music/finalLevelMusic.wav"),
 	"intro": preload("res://assets/audio/music/gameIntro.wav"),
 	"menu": preload("res://assets/audio/music/levelSelectMusic.wav"),
 }
@@ -22,6 +22,7 @@ var SFX = {
 	"playerHit": preload("res://assets/audio/sfx/playerDamage.wav"),
 	"playerDeath": preload("res://assets/audio/sfx/playerDeath.wav"),
 	"shot": preload("res://assets/audio/sfx/shooting.wav"),
+	"endLevel": preload("res://assets/audio/sfx/endLevel.wav"),
 }
 #Guarda el nom de la música
 var current_music_name = ""

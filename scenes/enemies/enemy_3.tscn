@@ -279,8 +279,9 @@ height = 26.0
 radius = 11.0
 height = 28.0
 
-[node name="enemy3" type="CharacterBody2D"]
+[node name="enemy3" type="CharacterBody2D" node_paths=PackedStringArray("patrol_points")]
 script = ExtResource("1_djy1j")
+patrol_points = NodePath("PatrolPoints")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_57y64")
@@ -310,6 +311,14 @@ collision_mask = 24
 position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_djy1j")
 debug_color = Color(0.998296, 0, 0.14566, 0.42)
+
+[node name="PatrolPoints" type="Node2D" parent="."]
+
+[node name="Point1" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(-100, 0)
+
+[node name="Point2" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(100, 0)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
