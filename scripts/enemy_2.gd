@@ -143,13 +143,13 @@ func change_physics() -> void:
 		GameState.color.ORANGE:
 			#Més pesat
 			speed = base_speed - 20
-			jump = base_jump - 60 #1 tile
-			gravity = base_gravity + 400
+			jump = base_jump - 40 #1 tile
+			gravity = base_gravity + 200
 		GameState.color.PURPLE:
 			#Més lleuger
 			speed = base_speed + 20
-			jump = base_jump + 60 #4 tiles
-			gravity = base_gravity - 400
+			jump = base_jump + 20 #4 tiles
+			gravity = base_gravity - 100
 		
 #Mira si hi ha plataformes a sota de l'enemic
 func check_floor(dir: float) -> bool:

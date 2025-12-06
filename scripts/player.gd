@@ -8,8 +8,9 @@ extends CharacterBody2D
 @onready var muzzle : Marker2D = $Muzzle
 @onready var hurtbox: Area2D = $Hurtbox
 
+@export var start_color: GameState.color = GameState.color.GREEN
 @export var speed: float = 180.0 #velocitat
-@export var jump: float = 400.0 #força de salt
+@export var jump: float = 500.0 #força de salt
 @export var gravity: float = 1200.0 #gravetat
 @export var max_health: int = 3 #vida
 @export var knockback: float = 250.0 #força del knockback
@@ -28,6 +29,7 @@ var can_control: bool = true
 var exit_level: bool = false
 
 #Colors
+var spawn_color_index: int = 0
 var colors: Array[GameState.color] = [
 	GameState.color.GREEN, 
 	GameState.color.ORANGE, 
@@ -61,7 +63,10 @@ func _ready() -> void:
 	enable_control()
 	#Posició muzzle
 	muzzle_position = muzzle.position
-	#Comença amb el color verd
+	#Comença amb el color seleccionat segons el nivell
+	var idx := colors.find(start_color)
+	color_index = idx
+	spawn_color_index = idx
 	GameState.set_color(colors[color_index])
 	#Canvia la física segons el color
 	change_physics()
@@ -135,18 +140,18 @@ func change_physics() -> void:
 		GameState.color.GREEN:
 			#Normal
 			speed = base_speed
-			jump = base_jump #2 tiles
+			jump = base_jump #3 tiles
 			gravity = base_gravity
 		GameState.color.ORANGE:
 			#Més pesat
 			speed = base_speed - 20
-			jump = base_jump - 60 #1 tile
-			gravity = base_gravity + 400
+			jump = base_jump - 40 #2 tiles
+			gravity = base_gravity + 200
 		GameState.color.PURPLE:
 			#Més lleuger
 			speed = base_speed + 20
-			jump = base_jump + 60 #4 tiles
-			gravity = base_gravity - 400
+			jump = base_jump + 20 #4 tiles
+			gravity = base_gravity - 200
 
 func player_falling(delta: float) -> void:
 	#Cau si el personatge està a l'aire
@@ -156,6 +161,7 @@ func player_falling(delta: float) -> void:
 		velocity.y = max(velocity.y, 0.0)
 	#PROVA - Si el personatge ha caigut, el torna a la posició inicial
 	if global_position.y > 600 and not exit_level:
+		health -= 1
 		respawn()
 
 func player_idle(delta: float) -> void:
@@ -262,13 +268,16 @@ func respawn() -> void:
 	global_position = spawn_position
 	velocity = Vector2.ZERO
 	#Torna al color inicial
-	color_index = 0
+	color_index = spawn_color_index
 	GameState.set_color(colors[color_index])
 	last_dir = 1.0
 	change_physics()
 	change_collision_layer()
 	#Control del jugador
 	enable_control()
+
+func set_spawn_position(new_pos: Vector2) -> void:
+	spawn_position = new_pos
 
 #Control del jugador
 func enable_control():
@@ -321,12 +330,18 @@ func die() -> void:
 func full_heal() -> void:
 	health = max_health
 
+func heal(amount) -> void:
+	#Suma vides sense passar del màxim ni baixar de zero
+	health = clamp(health + amount, 0, max_health)
+	print("PLAYER Vides: ", health)
+
 func start_exit() -> void:
 	disable_control()
 	exit_level = true
 	#Fer que miri a la dreta
 	last_dir = 1.0
 	current_state = State.run
+	exit_limit = global_position.x + 200.0
 	#Animació de moviment
 	get_anim(0.0)
 	
@@ -340,8 +355,15 @@ func exit(delta: float) -> void:
 	#PROVA - SURT DEL NIVELL
 	if global_position.x > exit_limit:
 		#Codi per sortir del nivell
-		respawn() 
-		exit_level = false
+		var current_scene = get_tree().current_scene
+		var scene_name = current_scene.name
+		match scene_name:
+			"Level1":
+				get_tree().change_scene_to_file("res://scenes/levels/level_2.tscn")
+			"Level2":
+				get_tree().change_scene_to_file("res://scenes/levels/level_3.tscn")
+			"Level3":
+				get_tree().change_scene_to_file("res://scenes/levels/level_1.tscn")
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	#Si s'està sortint del nivell, no et poden tocar

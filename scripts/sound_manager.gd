@@ -23,6 +23,7 @@ var SFX = {
 	"playerDeath": preload("res://assets/audio/sfx/playerDeath.wav"),
 	"shot": preload("res://assets/audio/sfx/shooting.wav"),
 	"endLevel": preload("res://assets/audio/sfx/endLevel.wav"),
+	"checkpoint": preload("res://assets/audio/sfx/checkpoint.wav")
 }
 #Guarda el nom de la música
 var current_music_name = ""
@@ -50,11 +51,11 @@ func playMusic(name: String) -> void:
 	#Actualitza el nom de la música que sona
 	current_music_name = name
 
-func playSfx(name: String) -> void:
+func playSfx(name: String) -> AudioStreamPlayer:
 	#Si no es troba l'efecte de so
 	if not SFX.has(name):
 		print("No s'ha trobat l'efecte al SoundManager")
-		return
+		return null
 	#Crea un reproductor d'àudio temporal
 	var p = AudioStreamPlayer.new()
 	#Carrega l'efecte de so
@@ -69,6 +70,7 @@ func playSfx(name: String) -> void:
 	p.finished.connect(func():
 		p.queue_free()
 	)
+	return p
 
 #Parar la música
 func stopMusic() -> void:

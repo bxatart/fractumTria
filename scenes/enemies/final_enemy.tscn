@@ -354,6 +354,7 @@ height = 142.0
 [node name="finalEnemy" type="CharacterBody2D" node_paths=PackedStringArray("patrol_points")]
 script = ExtResource("1_bfi4t")
 patrol_points = NodePath("PatrolPoints")
+health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
