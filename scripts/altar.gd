@@ -7,6 +7,7 @@ extends Area2D
 
 var active = false
 var player: CharacterBody2D = null
+var sfx_player: AudioStreamPlayer = null
 
 #Estat
 enum State { idle, fill }
@@ -40,7 +41,7 @@ func _on_trigger_body_entered(body: Node2D) -> void:
 	current_state = State.fill
 	get_animation()
 	#Efecte de so
-	Sound.playSfx("endLevel")
+	sfx_player = Sound.playSfx("endLevel")
 	if player.has_method("full_heal"):
 		player.full_heal()
 
@@ -50,9 +51,12 @@ func _on_altar_animation_finished() -> void:
 	#Si no hi ha jugador
 	if player == null:
 		return
+	if sfx_player != null and sfx_player.playing:
+		await sfx_player.finished
 	player.disable_control()
 	if player.has_method("start_exit"):
 		player.start_exit()
+	sfx_player = null
 
 func reset_altar() -> void:
 	active = false

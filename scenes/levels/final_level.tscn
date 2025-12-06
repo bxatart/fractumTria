@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://c26hi6cg10ylk"]
+[gd_scene load_steps=15 format=4 uid="uid://c26hi6cg10ylk"]
 
 [ext_resource type="PackedScene" uid="uid://doyfwebhb78xw" path="res://scenes/levels/base_level.tscn" id="1_lekuc"]
 [ext_resource type="Texture2D" uid="uid://k2k3xf6cofwt" path="res://assets/backgrounds/bg_final_base.png" id="2_lekuc"]
@@ -9,8 +9,36 @@
 [ext_resource type="Texture2D" uid="uid://ji57ankjjtji" path="res://assets/backgrounds/bg_final_4.png" id="6_jwk10"]
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="7_e446s"]
 [ext_resource type="PackedScene" uid="uid://ctinipsbc2yra" path="res://scenes/enemies/final_enemy.tscn" id="7_ifx55"]
+[ext_resource type="Texture2D" uid="uid://dcwij8qd6fpdt" path="res://assets/sprites/platforms_grey.png" id="8_ve0j8"]
 [ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemies/enemy_2.tscn" id="9_3xiv5"]
 [ext_resource type="PackedScene" uid="uid://cyoyxa1grlhr6" path="res://scenes/enemies/enemy_3.tscn" id="10_rqhej"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_21cr8"]
+texture = ExtResource("8_ve0j8")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_odfv6"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 7
+physics_layer_0/collision_mask = 56
+sources/0 = SubResource("TileSetAtlasSource_21cr8")
 
 [node name="FinalLevel" instance=ExtResource("1_lekuc")]
 script = ExtResource("2_rqhej")
@@ -58,7 +86,7 @@ texture = ExtResource("6_jwk10")
 offset = Vector2(0, -360)
 
 [node name="TileMapLayerGreen" parent="." index="1"]
-tile_map_data = PackedByteArray("AAAAAP//AQAAAAAAAAABAP//AQAAAAAAAAACAP//AQAAAAAAAAADAP//AQAAAAAAAAAEAP//AQAAAAAAAAAFAP//AQAAAAAAAAAGAP//AQAAAAAAAAAHAP//AQAAAAAAAAAIAP//AQAAAAAAAAAJAP//AQAAAAAAAAAKAP//AQAAAAAAAAALAP//AQAAAAAAAAAMAP//AQAAAAAAAAANAP//AQAAAAAAAAAOAP//AQAAAAAAAAAPAP//AQAAAAAAAAAQAP//AQAAAAAAAAARAP//AQAAAAAAAAASAP//AQAAAAAAAAATAP//AQAAAAAAAAARAPj/AQACAAAAAAASAPj/AQADAAAAAAABAPn/AQACAAAAAAACAPn/AQADAAAAAAAKAPj/AQABAAAAAAA=")
+tile_map_data = PackedByteArray("AAARAPj/AQACAAAAAAASAPj/AQADAAAAAAABAPn/AQACAAAAAAACAPn/AQADAAAAAAAKAPj/AQABAAAAAAA=")
 
 [node name="TileMapLayerOrange" parent="." index="2"]
 tile_map_data = PackedByteArray("AAAFAPf/AQAGAAAAAAAGAPf/AQAEAAAAAAAHAPf/AQAEAAAAAAAAAPz/AQAFAAAAAAATAPz/AQAFAAAAAAAPAPf/AQAHAAAAAAAOAPf/AQAEAAAAAAANAPf/AQAEAAAAAAAMAPf/AQAGAAAAAAAIAPf/AQAHAAAAAAA=")
@@ -66,16 +94,18 @@ tile_map_data = PackedByteArray("AAAFAPf/AQAGAAAAAAAGAPf/AQAEAAAAAAAHAPf/AQAEAAA
 [node name="TileMapLayerPurple" parent="." index="3"]
 tile_map_data = PackedByteArray("AAAOAPz/AQAIAAAAAAAPAPz/AQAIAAAAAAANAPz/AQAKAAAAAAAQAPz/AQALAAAAAAADAPz/AQAKAAAAAAAEAPz/AQAIAAAAAAAFAPz/AQAIAAAAAAAGAPz/AQALAAAAAAA=")
 
-[node name="Player" parent="." index="4"]
+[node name="TileMapLayerGrey" type="TileMapLayer" parent="." index="4"]
+tile_map_data = PackedByteArray("AAAAAP//AAABAAAAAAABAP//AAABAAAAAAACAP//AAABAAAAAAADAP//AAABAAAAAAAEAP//AAABAAAAAAAFAP//AAABAAAAAAAGAP//AAABAAAAAAAHAP//AAABAAAAAAAIAP//AAABAAAAAAAJAP//AAABAAAAAAAKAP//AAABAAAAAAALAP//AAABAAAAAAAMAP//AAABAAAAAAANAP//AAABAAAAAAAOAP//AAABAAAAAAAPAP//AAABAAAAAAAQAP//AAABAAAAAAARAP//AAABAAAAAAASAP//AAABAAAAAAATAP//AAABAAAAAAA=")
+tile_set = SubResource("TileSet_odfv6")
+
+[node name="Player" parent="." index="5"]
 position = Vector2(26, -48)
-jump = 500.0
 
 [node name="Camera2D" parent="Player" index="4"]
-offset = Vector2(0, -360)
 limit_right = 640
 limit_bottom = 0
 
-[node name="Enemies" type="Node" parent="." index="5"]
+[node name="Enemies" type="Node" parent="." index="6"]
 
 [node name="finalEnemy" parent="Enemies" index="0" node_paths=PackedStringArray("groundSpawnPoints", "topSpawnPoints", "greenSpawnPoints", "orangeSpawnPoints", "purpleSpawnPoints") instance=ExtResource("7_ifx55")]
 position = Vector2(320, -104)
@@ -88,7 +118,7 @@ greenSpawnPoints = NodePath("../../GreenSpawnPoints")
 orangeSpawnPoints = NodePath("../../OrangeSpwanPoints")
 purpleSpawnPoints = NodePath("../../PurpleSpawnPoints")
 
-[node name="GroundSpawnPoints" type="Node2D" parent="." index="6"]
+[node name="GroundSpawnPoints" type="Node2D" parent="." index="7"]
 
 [node name="Marker2D" type="Marker2D" parent="GroundSpawnPoints" index="0"]
 position = Vector2(128, -32)
@@ -96,7 +126,7 @@ position = Vector2(128, -32)
 [node name="Marker2D2" type="Marker2D" parent="GroundSpawnPoints" index="1"]
 position = Vector2(496, -32)
 
-[node name="TopSpawnPoints" type="Node2D" parent="." index="7"]
+[node name="TopSpawnPoints" type="Node2D" parent="." index="8"]
 
 [node name="Marker2D" type="Marker2D" parent="TopSpawnPoints" index="0"]
 position = Vector2(256, -328)
@@ -104,7 +134,7 @@ position = Vector2(256, -328)
 [node name="Marker2D2" type="Marker2D" parent="TopSpawnPoints" index="1"]
 position = Vector2(512, -328)
 
-[node name="PurpleSpawnPoints" type="Node2D" parent="." index="8"]
+[node name="PurpleSpawnPoints" type="Node2D" parent="." index="9"]
 
 [node name="Marker2D" type="Marker2D" parent="PurpleSpawnPoints" index="0"]
 position = Vector2(128, -128)
@@ -118,7 +148,7 @@ position = Vector2(448, -128)
 [node name="Marker2D4" type="Marker2D" parent="PurpleSpawnPoints" index="3"]
 position = Vector2(512, -128)
 
-[node name="OrangeSpwanPoints" type="Node2D" parent="." index="9"]
+[node name="OrangeSpwanPoints" type="Node2D" parent="." index="10"]
 
 [node name="Marker2D" type="Marker2D" parent="OrangeSpwanPoints" index="0"]
 position = Vector2(16, -128)
@@ -138,7 +168,7 @@ position = Vector2(480, -288)
 [node name="Marker2D6" type="Marker2D" parent="OrangeSpwanPoints" index="5"]
 position = Vector2(624, -128)
 
-[node name="GreenSpawnPoints" type="Node2D" parent="." index="10"]
+[node name="GreenSpawnPoints" type="Node2D" parent="." index="11"]
 
 [node name="Marker2D" type="Marker2D" parent="GreenSpawnPoints" index="0"]
 position = Vector2(64, -224)

@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="4_npxo8"]
 [ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemies/enemy_2.tscn" id="5_u243f"]
 [ext_resource type="PackedScene" uid="uid://cyoyxa1grlhr6" path="res://scenes/enemies/enemy_3.tscn" id="6_0rfwd"]
-[ext_resource type="PackedScene" uid="uid://ctinipsbc2yra" path="res://scenes/enemies/final_enemy.tscn" id="6_kexhe"]
 [ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="8_s2rl2"]
+[ext_resource type="PackedScene" uid="uid://bximb6t1vnmx6" path="res://scenes/player/checkpoint.tscn" id="10_kexhe"]
 [ext_resource type="Script" uid="uid://bxpb085c4awnk" path="res://scripts/camera_2d.gd" id="11_7j4wx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_86d38"]
@@ -140,7 +140,7 @@ transform = Transform2D(1, 0, 0, 1, 0, -360)
 
 [node name="TileMapLayerGreen" type="TileMapLayer" parent="."]
 position = Vector2(0, -73)
-tile_map_data = PackedByteArray("AAAAAAAAAQACAAAAAAABAAAAAQAAAAAAAAACAAAAAQAAAAAAAAADAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAQADAAAAAAAJAP7/AQABAAAAAAAXAP7/AQADAAAAAAAWAP7/AQACAAAAAAAZAP//AQACAAAAAAAaAP//AQAAAAAAAAAbAP//AQAAAAAAAAAcAP//AQAAAAAAAAAdAP//AQAAAAAAAAAeAP//AQAAAAAAAAAfAP//AQAAAAAAAAAgAP//AQAAAAAAAAAhAP//AQAAAAAAAAAiAP//AQAAAAAAAAAjAP//AQAAAAAAAAAkAP//AQAAAAAAAAAlAP//AQAAAAAAAAAmAP//AQAAAAAAAAAnAP//AQAAAAAAAAAoAP//AQAAAAAAAAApAP//AQAAAAAAAAAqAP//AQAAAAAAAAArAP//AQAAAAAAAAAsAP//AQAAAAAAAAAtAP//AQAAAAAAAAAuAP//AQAAAAAAAAAvAP//AQAAAAAAAAAwAP//AQAAAAAAAAAxAP//AQAAAAAAAAAyAP//AQAAAAAAAAAzAP//AQAAAAAAAAA0AP//AQAAAAAAAAA1AP//AQAAAAAAAAA2AP//AQAAAAAAAAA3AP//AQAAAAAAAAA4AP//AQAAAAAAAAA5AP//AQAAAAAAAAA6AP//AQAAAAAAAAA7AP//AQAAAAAAAAA8AP//AQADAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAQACAAAAAAABAAAAAQAAAAAAAAACAAAAAQAAAAAAAAADAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAQADAAAAAAAXAP7/AQADAAAAAAAWAP7/AQACAAAAAAAZAP//AQACAAAAAAAaAP//AQAAAAAAAAAbAP//AQAAAAAAAAAcAP//AQAAAAAAAAAdAP//AQAAAAAAAAAeAP//AQAAAAAAAAAfAP//AQAAAAAAAAAgAP//AQAAAAAAAAAhAP//AQAAAAAAAAAiAP//AQAAAAAAAAAjAP//AQAAAAAAAAAkAP//AQAAAAAAAAAlAP//AQAAAAAAAAAmAP//AQAAAAAAAAAnAP//AQAAAAAAAAAoAP//AQAAAAAAAAApAP//AQAAAAAAAAAqAP//AQAAAAAAAAArAP//AQAAAAAAAAAsAP//AQAAAAAAAAAtAP//AQAAAAAAAAAuAP//AQAAAAAAAAAvAP//AQAAAAAAAAAwAP//AQAAAAAAAAAxAP//AQAAAAAAAAAyAP//AQAAAAAAAAAzAP//AQAAAAAAAAA0AP//AQAAAAAAAAA1AP//AQAAAAAAAAA2AP//AQAAAAAAAAA3AP//AQAAAAAAAAA4AP//AQAAAAAAAAA5AP//AQAAAAAAAAA6AP//AQAAAAAAAAA7AP//AQAAAAAAAAA8AP//AQADAAAAAAAJAP3/AQABAAAAAAA=")
 tile_set = ExtResource("1_8a6tn")
 
 [node name="TileMapLayerOrange" type="TileMapLayer" parent="."]
@@ -150,7 +150,7 @@ tile_set = SubResource("TileSet_u243f")
 
 [node name="TileMapLayerPurple" type="TileMapLayer" parent="."]
 position = Vector2(0, -73)
-tile_map_data = PackedByteArray("AAAQAAAAAQAIAAAAAAASAAAAAQALAAAAAAARAAAAAQAIAAAAAAAUAPz/AQALAAAAAAATAPz/AQAKAAAAAAAPAPn/AQAIAAAAAAAOAPn/AQAIAAAAAAANAPn/AQAIAAAAAAAMAPn/AQAKAAAAAAAQAPn/AQALAAAAAAAPAAAAAQAIAAAAAAAOAAAAAQAKAAAAAAA=")
+tile_map_data = PackedByteArray("AAAPAPn/AQAIAAAAAAAOAPn/AQAIAAAAAAANAPn/AQAIAAAAAAAMAPn/AQAKAAAAAAAQAPn/AQALAAAAAAAOAP//AQAKAAAAAAAPAP//AQAIAAAAAAAQAP//AQAIAAAAAAARAP//AQAIAAAAAAASAP//AQALAAAAAAATAPv/AQAKAAAAAAAUAPv/AQALAAAAAAA=")
 tile_set = SubResource("TileSet_ojdn3")
 
 [node name="Player" parent="." instance=ExtResource("2_8a6tn")]
@@ -163,7 +163,8 @@ position = Vector2(1849, -143)
 [node name="Enemies" type="Node" parent="."]
 
 [node name="enemy1" parent="Enemies" instance=ExtResource("4_npxo8")]
-position = Vector2(520, -70)
+position = Vector2(464, -296)
+enemy_color = 2
 wait_time = 2
 
 [node name="enemy1_1" parent="Enemies" instance=ExtResource("4_npxo8")]
@@ -184,7 +185,7 @@ position = Vector2(66, 0)
 position = Vector2(1440, -116)
 
 [node name="enemy3" parent="Enemies" instance=ExtResource("6_0rfwd")]
-position = Vector2(677, -267)
+position = Vector2(1016, -288)
 
 [node name="PatrolPoints2" type="Node2D" parent="Enemies/enemy3"]
 
@@ -193,9 +194,6 @@ position = Vector2(-100, 0)
 
 [node name="Point2" type="Marker2D" parent="Enemies/enemy3/PatrolPoints2"]
 position = Vector2(100, 0)
-
-[node name="finalEnemy" parent="Enemies" instance=ExtResource("6_kexhe")]
-position = Vector2(144, -144)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -360)
@@ -208,3 +206,6 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("11_7j4wx")
 target = NodePath("../Player")
+
+[node name="Checkpoint" parent="." instance=ExtResource("10_kexhe")]
+position = Vector2(177, -85)

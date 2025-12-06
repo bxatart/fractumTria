@@ -1,0 +1,117 @@
+[gd_scene load_steps=13 format=4 uid="uid://d2owuefyais2h"]
+
+[ext_resource type="PackedScene" uid="uid://doyfwebhb78xw" path="res://scenes/levels/base_level.tscn" id="1_ra442"]
+[ext_resource type="Script" uid="uid://88qmn4w8asvi" path="res://scripts/level_2.gd" id="2_8qukl"]
+[ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="2_fiq81"]
+[ext_resource type="Texture2D" uid="uid://br2kons4e32et" path="res://assets/backgrounds/bg_base_orange.png" id="3_l37oo"]
+[ext_resource type="Texture2D" uid="uid://b42fesvbrkrxt" path="res://assets/backgrounds/bg1_orange.png" id="4_ibugp"]
+[ext_resource type="Texture2D" uid="uid://cr81v8mmvkfxh" path="res://assets/backgrounds/bg2_orange.png" id="5_8qukl"]
+[ext_resource type="Texture2D" uid="uid://cav6tyv8i1fva" path="res://assets/backgrounds/bg3_orange.png" id="6_3p04p"]
+[ext_resource type="Texture2D" uid="uid://dmrxoh3knonxb" path="res://assets/backgrounds/coluds_orange.png" id="7_qsp8v"]
+[ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="9_3p04p"]
+[ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="9_nt80m"]
+[ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemies/enemy_2.tscn" id="10_brxtv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8qukl"]
+size = Vector2(7.9075, 353.875)
+
+[node name="Level2" instance=ExtResource("1_ra442")]
+script = ExtResource("2_8qukl")
+
+[node name="ParallaxBackground" parent="." index="0" instance=ExtResource("2_fiq81")]
+offset = Vector2(0, -360)
+transform = Transform2D(1, 0, 0, 1, 0, -360)
+
+[node name="Sprite2D" parent="ParallaxBackground/BackgroundParallaxLayer" index="0"]
+texture = ExtResource("3_l37oo")
+
+[node name="Sprite2D" parent="ParallaxBackground/Bg1ParallaxLayer" index="0"]
+texture = ExtResource("4_ibugp")
+
+[node name="Sprite2D" parent="ParallaxBackground/Bg2ParallaxLayer" index="0"]
+texture = ExtResource("5_8qukl")
+
+[node name="Sprite2D" parent="ParallaxBackground/Bg3ParallaxLayer" index="0"]
+texture = ExtResource("6_3p04p")
+
+[node name="Sprite2D" parent="ParallaxBackground/CloudsParallaxLayer" index="0"]
+texture = ExtResource("7_qsp8v")
+
+[node name="TileMapLayerGreen" parent="." index="1"]
+tile_map_data = PackedByteArray("AAARAP3/AQACAAAAAAASAP3/AQAAAAAAAAATAP3/AQAAAAAAAAAUAP3/AQAAAAAAAAAVAP3/AQADAAAAAAAtAPr/AQACAAAAAAAuAPr/AQAAAAAAAAAvAPr/AQAAAAAAAAAwAPr/AQAAAAAAAAAxAPr/AQADAAAAAABMAPz/AQACAAAAAABNAPz/AQAAAAAAAABOAPz/AQAAAAAAAABPAPz/AQAAAAAAAABQAPz/AQAAAAAAAABRAPz/AQAAAAAAAABSAPz/AQAAAAAAAABTAPz/AQAAAAAAAABUAPz/AQADAAAAAABvAP//AQACAAAAAABwAP//AQAAAAAAAABxAP//AQAAAAAAAAByAP//AQAAAAAAAABzAP//AQAAAAAAAAB0AP//AQAAAAAAAAB1AP//AQAAAAAAAAB2AP//AQAAAAAAAAB3AP//AQAAAAAAAAB4AP//AQADAAAAAACDAP//AQACAAAAAACEAP//AQAAAAAAAACFAP//AQAAAAAAAACGAP//AQADAAAAAACSAP3/AQACAAAAAACTAP3/AQAAAAAAAACUAP3/AQAAAAAAAACVAP3/AQAAAAAAAACWAP3/AQAAAAAAAACXAP3/AQAAAAAAAACYAP3/AQAAAAAAAACZAP3/AQAAAAAAAACaAP3/AQAAAAAAAACbAP3/AQAAAAAAAACcAP3/AQAAAAAAAACdAP3/AQAAAAAAAACeAP3/AQAAAAAAAACfAP3/AQADAAAAAACbAPz/AAAAAAAAAAC8AP7/AQADAAAAAAC7AP7/AQAAAAAAAAC6AP7/AQAAAAAAAAC5AP7/AQAAAAAAAAC4AP7/AQACAAAAAACvAPj/AQACAAAAAACwAPj/AQAAAAAAAACxAPj/AQAAAAAAAACyAPj/AQAAAAAAAACzAPj/AQAAAAAAAAC0APj/AQAAAAAAAAC1APj/AQAAAAAAAAC2APj/AQADAAAAAACzAPf/AAAAAAAAAABQAPv/AAAAAAAAAAA=")
+
+[node name="TileMapLayerOrange" parent="." index="2"]
+z_index = -1
+tile_map_data = PackedByteArray("AADKAP3/AQAEAAAAAADJAP3/AQAEAAAAAADIAP3/AQAEAAAAAADHAP3/AQAEAAAAAADGAP3/AQAEAAAAAADFAP3/AQAEAAAAAADEAP3/AQAEAAAAAADDAP3/AQAEAAAAAADCAP3/AQAEAAAAAADBAP3/AQAEAAAAAADAAP3/AQAEAAAAAAC/AP3/AQAEAAAAAAC+AP3/AQAGAAAAAAAAAP7/AQAEAAAAAAABAP7/AQAEAAAAAAACAP7/AQAEAAAAAAADAP7/AQAEAAAAAAAEAP7/AQAEAAAAAAAFAP7/AQAEAAAAAAAGAP7/AQAEAAAAAAAHAP7/AQAEAAAAAAAIAP7/AQAHAAAAAAAMAP7/AQAEAAAAAAANAP7/AQAEAAAAAAAOAP7/AQAEAAAAAAALAP7/AQAGAAAAAAAPAP7/AQAHAAAAAAAXAP7/AQAGAAAAAAAYAP7/AQAEAAAAAAAZAP7/AQAEAAAAAAAaAP7/AQAEAAAAAAAbAP7/AQAHAAAAAAAEAP3/AAAAAAAAAAAmAPr/AQAEAAAAAAAnAPr/AQAEAAAAAAAoAPr/AQAEAAAAAAApAPr/AQAEAAAAAAAqAPr/AQAHAAAAAAA9AP7/AQAGAAAAAAA+AP7/AQAEAAAAAAA/AP7/AQAEAAAAAABAAP7/AQAEAAAAAABBAP7/AQAEAAAAAABCAP7/AQAEAAAAAABDAP7/AQAEAAAAAABEAP7/AQAEAAAAAABFAP7/AQAEAAAAAABGAP7/AQAEAAAAAABHAP7/AQAEAAAAAABIAP7/AQAEAAAAAABJAP7/AQAEAAAAAABKAP7/AQAHAAAAAABWAPr/AQAGAAAAAABXAPr/AQAEAAAAAABYAPr/AQAEAAAAAABZAPr/AQAEAAAAAABaAPr/AQAEAAAAAABbAPr/AQAEAAAAAABcAPr/AQAEAAAAAABdAPr/AQAEAAAAAABeAPr/AQAEAAAAAABfAPr/AQAEAAAAAABgAPr/AQAEAAAAAABhAPr/AQAEAAAAAABiAPr/AQAEAAAAAABjAPr/AQAEAAAAAABkAPr/AQAEAAAAAABlAPr/AQAEAAAAAABmAPr/AQAEAAAAAAAkAPr/AQAGAAAAAAAlAPr/AQAEAAAAAABnAPr/AQAHAAAAAABdAPn/AAAAAAAAAABvAPj/AQAGAAAAAABwAPj/AQAEAAAAAABxAPj/AQAHAAAAAAB0APj/AQAGAAAAAAB1APj/AQAHAAAAAAB4APj/AQAFAAAAAACGAPr/AQAEAAAAAACHAPr/AQAEAAAAAACIAPr/AQAEAAAAAACEAPr/AQAGAAAAAACFAPr/AQAEAAAAAACJAPr/AQAEAAAAAACKAPr/AQAEAAAAAACLAPr/AQAEAAAAAACMAPr/AQAHAAAAAACJAP//AQAGAAAAAACKAP//AQAEAAAAAACLAP//AQAEAAAAAACMAP//AQAEAAAAAACNAP//AQAEAAAAAACOAP//AQAEAAAAAACPAP//AQAEAAAAAACQAP//AQAEAAAAAACRAP//AQAHAAAAAACNAP7/AAAAAAAAAACtAP//AQAGAAAAAACuAP//AQAEAAAAAACvAP//AQAEAAAAAACwAP//AQAEAAAAAACxAP//AQAEAAAAAACyAP//AQAEAAAAAACzAP//AQAEAAAAAAC0AP//AQAEAAAAAAC1AP//AQAEAAAAAAC2AP//AQAHAAAAAADLAP3/AQAEAAAAAADMAP3/AQAEAAAAAADNAP3/AQAEAAAAAADOAP3/AQAEAAAAAADPAP3/AQAEAAAAAAA=")
+
+[node name="TileMapLayerPurple" parent="." index="3"]
+tile_map_data = PackedByteArray("AAAcAPz/AQAKAAAAAAAdAPz/AQAIAAAAAAAeAPz/AQAIAAAAAAAfAPz/AQAIAAAAAAAgAPz/AQALAAAAAAA1APr/AQAKAAAAAAA2APr/AQAIAAAAAAA3APr/AQAIAAAAAAA4APr/AQAIAAAAAAA5APr/AQALAAAAAABpAPv/AQAKAAAAAABqAPv/AQAIAAAAAABrAPv/AQAIAAAAAABsAPv/AQAIAAAAAABtAPv/AQALAAAAAAB6AP3/AQAKAAAAAAB7AP3/AQAIAAAAAAB8AP3/AQAIAAAAAAB9AP3/AQAIAAAAAAB+AP3/AQAIAAAAAAB/AP3/AQAIAAAAAACAAP3/AQAIAAAAAACBAP3/AQAIAAAAAACCAP3/AQALAAAAAAChAPr/AQAKAAAAAACiAPr/AQAIAAAAAACjAPr/AQAIAAAAAACkAPr/AQAIAAAAAAClAPr/AQAIAAAAAACmAPr/AQAIAAAAAACnAPr/AQAIAAAAAACoAPr/AQAIAAAAAACpAPr/AQAIAAAAAACqAPr/AQAIAAAAAACrAPr/AQALAAAAAAClAPn/AAAAAAAAAAA=")
+
+[node name="Player" parent="." index="4"]
+position = Vector2(64, -80)
+start_color = 1
+
+[node name="Camera2D" parent="Player" index="4"]
+limit_right = 6500
+limit_bottom = 0
+
+[node name="Enemies" type="Node" parent="." index="5"]
+
+[node name="enemy1" parent="Enemies" index="0" instance=ExtResource("9_nt80m")]
+position = Vector2(2216, -61)
+enemy_color = 1
+
+[node name="enemy1-2" parent="Enemies" index="1" instance=ExtResource("9_nt80m")]
+position = Vector2(3712, -29)
+
+[node name="enemy1-3" parent="Enemies" index="2" instance=ExtResource("9_nt80m")]
+position = Vector2(4088, -93)
+enemy_color = 2
+
+[node name="enemy1-4" parent="Enemies" index="3" instance=ExtResource("9_nt80m")]
+position = Vector2(5700, -29)
+enemy_color = 1
+
+[node name="enemy2" parent="Enemies" index="4" instance=ExtResource("10_brxtv")]
+position = Vector2(3288, -204)
+enemy_color = 1
+
+[node name="enemy2-1" parent="Enemies" index="5" instance=ExtResource("10_brxtv")]
+position = Vector2(4480, -204)
+enemy_color = 1
+
+[node name="enemy2-2" parent="Enemies" index="6" instance=ExtResource("10_brxtv")]
+position = Vector2(5088, -108)
+
+[node name="enemy2-3" parent="Enemies" index="7" instance=ExtResource("10_brxtv")]
+position = Vector2(5472, -204)
+enemy_color = 2
+
+[node name="enemy2-4" parent="Enemies" index="8" instance=ExtResource("10_brxtv")]
+position = Vector2(5824, -268)
+
+[node name="altar" parent="." index="6" instance=ExtResource("9_3p04p")]
+position = Vector2(6328, -150)
+scale = Vector2(1.5, 1.5)
+color = 1
+
+[node name="Walls" type="Node2D" parent="." index="7"]
+
+[node name="Left" type="StaticBody2D" parent="Walls" index="0"]
+collision_layer = 7
+collision_mask = 56
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" index="0"]
+position = Vector2(-1.0925, -176.937)
+shape = SubResource("RectangleShape2D_8qukl")
+
+[node name="Right" type="StaticBody2D" parent="Walls" index="1"]
+position = Vector2(6497, 0)
+collision_layer = 7
+collision_mask = 56
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls/Right" index="0"]
+position = Vector2(159, -176)
+shape = SubResource("RectangleShape2D_8qukl")
+
+[editable path="ParallaxBackground"]

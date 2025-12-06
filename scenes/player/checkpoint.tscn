@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bximb6t1vnmx6"]
+
+[ext_resource type="Texture2D" uid="uid://b4k1gdwqjm5pr" path="res://assets/other/altar_platform.png" id="1_1na7r"]
+[ext_resource type="Script" uid="uid://dmyet7xtwo78g" path="res://scripts/checkpoint.gd" id="1_gvpq7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvpq7"]
+size = Vector2(43, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qlj0w"]
+size = Vector2(24, 3)
+
+[node name="Checkpoint" type="Area2D"]
+script = ExtResource("1_gvpq7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_1na7r")
+
+[node name="Platform" type="StaticBody2D" parent="."]
+collision_layer = 7
+collision_mask = 56
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+shape = SubResource("RectangleShape2D_gvpq7")
+debug_color = Color(0.26055, 0.607643, 0.515362, 0.42)
+
+[node name="Trigger" type="Area2D" parent="."]
+position = Vector2(0, -12)
+collision_layer = 7
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
+shape = SubResource("RectangleShape2D_qlj0w")
+
+[connection signal="body_entered" from="Trigger" to="." method="_on_trigger_body_entered"]
