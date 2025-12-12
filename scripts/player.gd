@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var purple_platforms = $"../TileMapLayerPurple"
 @onready var muzzle : Marker2D = $Muzzle
 @onready var hurtbox: Area2D = $Hurtbox
+@onready var body_polygon: CollisionPolygon2D = $CollisionPolygon2D
 
 @export var start_color: GameState.color = GameState.color.GREEN
 @export var speed: float = 180.0 #velocitat
@@ -27,6 +28,8 @@ var base_jump: float
 var base_gravity: float
 var can_control: bool = true
 var exit_level: bool = false
+
+var query_shape: ConvexPolygonShape2D
 
 #Colors
 var spawn_color_index: int = 0
@@ -74,6 +77,10 @@ func _ready() -> void:
 	change_collision_layer()
 	#PROVA - Guarda la posició inicial
 	spawn_position = global_position
+	#Crear una forma
+	query_shape = ConvexPolygonShape2D.new()
+	#Posar els punts de la collision shape a la nova forma perquè tingui la mateixa forma
+	query_shape.points = body_polygon.polygon
 
 #Moviment jugador
 func _physics_process(delta: float) -> void:
@@ -107,8 +114,14 @@ func change_color() -> void:
 		return
 	if Input.is_action_just_pressed("swap_color"):
 		#Cicle infinit dels colors
-		color_index = (color_index + 1) % colors.size()
-		var new_color: GameState.color = colors[color_index]
+		var next_index = (color_index + 1) % colors.size()
+		#Color nou
+		var new_color: GameState.color = colors[next_index]
+		#Comprovar si el jugador està dins una plataforma
+		if player_overlap(new_color):
+			if not player_eject(new_color):
+				return
+		color_index = next_index
 		GameState.set_color(new_color)
 		change_collision_layer()
 		change_physics()
@@ -260,6 +273,60 @@ func change_collision_layer() -> void:
 	#Lila
 	set_collision_mask_value(3, GameState.get_color_name(GameState.current_color) == "purple")
 
+func player_mask(color: GameState.color) -> int:
+	match color: 
+		GameState.color.GREEN:
+			#Activar el bit 0 (capa 1)
+			return 1 << 0 #Desplaçament de bits
+		GameState.color.ORANGE:
+			#Activar el bit 1 (capa 2)
+			return 1 << 1
+		GameState.color.PURPLE:
+			#Activar el bit 2 (capa 3)
+			return 1 << 2
+	return 0
+	
+#Mirar si el jugador es solapa amb alguna plataforma
+func player_overlap(color: GameState.color) -> bool:
+	#Si no existeix la forma, retorna fals
+	if query_shape == null:
+		return false
+	#Paràmetres de consulta
+	var p = PhysicsShapeQueryParameters2D.new()
+	#Mirar la forma del jugador
+	p.shape = query_shape
+	#Posició de la forma
+	p.transform = global_transform
+	#Capes
+	p.collision_mask = player_mask(color)
+	#Fer que el jugador no es detecti a si mateix
+	p.exclude = [get_rid()]
+	#No detectar Area2D
+	p.collide_with_areas = false
+	#Detectar TileMaps
+	p.collide_with_bodies = true
+	#Espai del món actual
+	var space = get_world_2d().direct_space_state
+	#Llista de col·lisions
+	var results = space.intersect_shape(p, 8)
+	if results.size() > 0:
+		return true
+	else:
+		return false
+
+#Treure el jugador del mig de la plataforma
+func player_eject(color: GameState.color) -> bool:
+	#Núm de píxels
+	var num = 2.0
+	#24 intents (pot pujar 1 tile i mitja)
+	for i in 24:
+		#Si el jugador no es solapa amb cap plataforma
+		if not player_overlap(color):
+			return true
+		#Puja el jugador
+		global_position.y -= num
+	return false
+
 #PROVA - Torna a la posició inicial si el jugador cau
 func respawn() -> void:
 	#Esborra les bales
@@ -316,10 +383,10 @@ func take_damage(amount: int, from_node: Node) -> void:
 	health -= amount
 	print("PLAYER Health: ", health)
 	apply_knockback(from_node)
-	hit_feedback()
 	if health <= 0:
 		Sound.playSfx("playerDeath")
 		die()
+	hit_feedback()
 
 func die() -> void:
 	print("PLAYER DEATH")

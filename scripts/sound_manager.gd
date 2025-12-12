@@ -23,7 +23,10 @@ var SFX = {
 	"playerDeath": preload("res://assets/audio/sfx/playerDeath.wav"),
 	"shot": preload("res://assets/audio/sfx/shooting.wav"),
 	"endLevel": preload("res://assets/audio/sfx/endLevel.wav"),
-	"checkpoint": preload("res://assets/audio/sfx/checkpoint.wav")
+	"checkpoint": preload("res://assets/audio/sfx/checkpoint.wav"),
+	"enemyDamage": preload("res://assets/audio/sfx/enemyDamage.wav"),
+	"enemyDeath": preload("res://assets/audio/sfx/enemyDeath.wav"),
+	"wave": preload("res://assets/audio/sfx/wave.wav"),
 }
 #Guarda el nom de la música
 var current_music_name = ""
@@ -62,6 +65,28 @@ func playSfx(name: String) -> AudioStreamPlayer:
 	p.stream = SFX[name]
 	#Assigna bus d'àudio
 	p.bus = "Sfx"
+	#Afegeix el reproductor com a fill del soundManager
+	add_child(p)
+	#Reprodueix el so
+	p.play()
+	#Elimina el reproductor quan el so hagi acabat
+	p.finished.connect(func():
+		p.queue_free()
+	)
+	return p
+
+func playEnemySfx(name: StringName, pos: Vector2) -> AudioStreamPlayer2D:
+	#Si no es troba l'efecte de so
+	if not SFX.has(name):
+		print("No s'ha trobat l'efecte al SoundManager")
+		return null
+	#Crea un reproductor d'àudio temporal
+	var p = AudioStreamPlayer2D.new()
+	#Carrega l'efecte de so
+	p.stream = SFX[name]
+	#Assigna bus d'àudio
+	p.bus = "Sfx"
+	p.global_position = pos
 	#Afegeix el reproductor com a fill del soundManager
 	add_child(p)
 	#Reprodueix el so

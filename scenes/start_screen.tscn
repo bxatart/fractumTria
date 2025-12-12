@@ -1,0 +1,126 @@
+[gd_scene load_steps=11 format=3 uid="uid://bg5o24y4y12wu"]
+
+[ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="1_o7i0r"]
+[ext_resource type="Texture2D" uid="uid://w34paey3k1ei" path="res://assets/backgrounds/title.png" id="1_tx5wa"]
+[ext_resource type="Script" uid="uid://b1qq8p5pwp34j" path="res://scripts/start_screen.gd" id="2_r2jwc"]
+[ext_resource type="Script" uid="uid://c1o1tiftkjma6" path="res://scripts/main_button.gd" id="3_he1sj"]
+[ext_resource type="Texture2D" uid="uid://bx41x24gw17uq" path="res://assets/other/credits.png" id="5_hm208"]
+[ext_resource type="Texture2D" uid="uid://b43jtejofuyuh" path="res://assets/backgrounds/bg_pause.png" id="6_5pab1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r2jwc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hm208"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5pab1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o30b1"]
+
+[node name="startScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_o7i0r")
+script = ExtResource("2_r2jwc")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_tx5wa")
+expand_mode = 1
+
+[node name="playButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -90.0
+offset_right = 132.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_neighbor_left = NodePath("../creditsButton")
+focus_neighbor_top = NodePath("../creditsButton")
+focus_neighbor_right = NodePath("../creditsButton")
+focus_neighbor_bottom = NodePath("../creditsButton")
+focus_next = NodePath("../creditsButton")
+focus_previous = NodePath("../creditsButton")
+theme_override_colors/font_hover_pressed_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_hover_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_focus_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_pressed_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r2jwc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hm208")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5pab1")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_o30b1")
+button_mask = 0
+text = "PRESS START"
+script = ExtResource("3_he1sj")
+
+[node name="credits" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="credits"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_5pab1")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="credits"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CREDITS
+
+Game created by
+Berta Juanhuix Xatart
+
+Thank you for playing!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="creditsButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -35.0
+offset_right = 45.0
+offset_bottom = 5.0
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+focus_neighbor_left = NodePath("../playButton")
+focus_neighbor_top = NodePath("../playButton")
+focus_neighbor_right = NodePath("../playButton")
+focus_neighbor_bottom = NodePath("../playButton")
+focus_next = NodePath("../playButton")
+focus_previous = NodePath("../playButton")
+texture_normal = ExtResource("5_hm208")
+stretch_mode = 0
+
+[connection signal="pressed" from="creditsButton" to="." method="_on_credits_button_pressed"]

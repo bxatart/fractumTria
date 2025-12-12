@@ -137,6 +137,8 @@ func hit_feedback() -> void:
 	feedback = true
 	#Animació en gris
 	anim.self_modulate = Color(0.5, 0.5, 0.5, 1.0)
+	#So
+	Sound.playEnemySfx("enemyDamage", global_position)
 	#Temporitzador
 	await get_tree().create_timer(0.15).timeout
 	#Torna al color normal si no s'ha eliminat l'enemic
@@ -151,6 +153,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		health -= node.damage_amount
 		print("ENEMY1 Health: ", health)
 		if health <= 0:
+			#So
+			Sound.playEnemySfx("enemyDeath", global_position)
 			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
 			enemy_death_instance.global_position = anim.global_position
 			get_parent().add_child(enemy_death_instance)
