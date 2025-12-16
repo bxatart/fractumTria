@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var enemy_death_effect = preload("res://scenes/enemies/enemy_3_death.tscn")
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer = $Timer
 @onready var muzzle : Marker2D = $Muzzle
@@ -11,6 +13,9 @@ extends CharacterBody2D
 @export var wait_time: int = 3
 @export var wave_amp: float = 16.0 #Alçada d'ona
 @export var wave_speed: float = 4.0 #Velocitat d'ona
+@export var health: int = 6
+
+var feedback: bool = false
 
 #Jugador
 var player: Node2D = null
@@ -32,7 +37,7 @@ var base_y: float = 0.0
 
 #Disparar
 #Variable onada
-var wave = preload("res://scenes/wave.tscn")
+var wave = preload("res://scenes/enemies/wave.tscn")
 var muzzle_position
 var prev_state: State
 var prev_canMove: bool
@@ -42,6 +47,7 @@ enum State { idle, move, shoot }
 var current_state: State
 
 func _ready() -> void:
+	add_to_group("enemies")
 	#Busca el jugador a l'escena
 	find_player()
 	#Busca els marcadors
@@ -81,7 +87,7 @@ func enemy_idle(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed * delta)
 		velocity.y = 0
 		current_state = State.idle
-		print("ENEMY3 State: ", State.keys()[current_state])
+		#print("ENEMY3 State: ", State.keys()[current_state])
 
 func enemy_move(delta: float) -> void:
 	#Si no es pot moure, surt de la funció
@@ -91,7 +97,7 @@ func enemy_move(delta: float) -> void:
 	if abs(position.x - current_point.x) > 16:
 		velocity.x = direction.x * speed
 		current_state = State.move
-		print("ENEMY3 State: ", State.keys()[current_state])
+		#print("ENEMY3 State: ", State.keys()[current_state])
 	#Si l'enemic està al marcador de destí
 	else:
 		current_point_position += 1
@@ -112,7 +118,7 @@ func enemy_move(delta: float) -> void:
 		timer.start()
 	#Moviment d'ona
 	wave_time += delta
-	var target_y := base_y + sin(wave_time * wave_speed) * wave_amp
+	var target_y = base_y + sin(wave_time * wave_speed) * wave_amp
 	velocity.y = (target_y - global_position.y) / delta
 
 func enemy_shoot() -> void:
@@ -127,6 +133,8 @@ func enemy_shoot() -> void:
 	#Direcció cap al jugador
 	var dir: Vector2 = player.global_position - muzzle.global_position
 	wave_instance.setup(dir, enemy_color)
+	#So
+	Sound.playEnemySfx("wave", global_position)
 
 func get_animation() -> void:
 	var color_name: String = GameState.get_color_name(enemy_color)
@@ -146,7 +154,7 @@ func get_animation() -> void:
 func find_player() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	if player == null:
-		print("Enemy3: No s'ha trobat cap jugador a l'escena")
+		print("ENEMY3: No s'ha trobat cap jugador a l'escena")
 	else:
 		print(player)
 
@@ -154,16 +162,18 @@ func find_points() -> void:
 	#Troba la posició dels marcadors
 	children = patrol_points.get_children()
 	points_number = children.size()
-	print("Fills de patrol_points: ", children)
+	print("ENEMY3: Fills de patrol_points: ", children)
 	#Si no té marcadors
 	if points_number == 0:
-		print("No hi ha marcadors")
+		print("ENEMY3: No hi ha marcadors")
 		return
+	point_positions.clear()
 	#Afegeix la posició dels marcadors a l'array
 	for point in children:
 		point_positions.append(point.global_position)
+	current_point_position = 0
 	current_point = point_positions[current_point_position]
-	print("Punts de patrol: ", point_positions)
+	print("ENEMY3: Punts de patrol: ", point_positions)
 
 func _on_timer_timeout() -> void:
 	canMove = true
@@ -175,6 +185,10 @@ func _on_shoot_timer_timeout() -> void:
 		return
 	#Si ja està en estat de disparar
 	if current_state == State.shoot:
+		return
+	#Si està lluny del jugador no dispara
+	var distance = global_position.distance_to(player.global_position)
+	if distance >= detection_range:
 		return
 	#Guardar estats anteriors a disparar
 	prev_state = current_state
@@ -195,3 +209,37 @@ func _on_shoot_timer_timeout() -> void:
 	canMove = prev_canMove
 	#Actualitza animació
 	get_animation()
+
+#Posa l'animació en gris si s'ha tocat l'enemic
+func hit_feedback() -> void:
+	if feedback:
+		return
+	feedback = true
+	#Animació en gris
+	anim.self_modulate = Color(0.5, 0.5, 0.5, 1.0)
+	#So
+	Sound.playEnemySfx("enemyDamage", global_position)
+	#Temporitzador
+	await get_tree().create_timer(0.15).timeout
+	#Torna al color normal si no s'ha eliminat l'enemic
+	if not is_queued_for_deletion():
+		anim.self_modulate = Color(1, 1, 1, 1)
+	feedback = false
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("ENEMY3: Hurtbox area entered")
+	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color != enemy_color:
+		var node: Node = area.get_parent()
+		health -= node.damage_amount
+		print("ENEMY3 Health: ", health)
+		if health <= 0:
+			#So
+			Sound.playEnemySfx("enemyDeath", global_position)
+			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
+			enemy_death_instance.global_position = anim.global_position
+			get_parent().add_child(enemy_death_instance)
+			if enemy_death_instance.has_method("setup"):
+				enemy_death_instance.setup(direction.x, enemy_color)
+			queue_free()
+		else:
+			hit_feedback()

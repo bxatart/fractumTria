@@ -1,6 +1,13 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://blsjebdkgft2x"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://blsjebdkgft2x"]
 
+[ext_resource type="Texture2D" uid="uid://dxs10v0hqjdne" path="res://assets/other/rock_green.png" id="1_6hpse"]
 [ext_resource type="Texture2D" uid="uid://26apthyhfvx0" path="res://assets/sprites/platforms_base.png" id="1_d008h"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k1lr4"]
+texture = ExtResource("1_6hpse")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2, -16, 16, -16, 2, -16, 12, -5, 12, 2, 9, 9.5, 13, 12, 14, 16, -13, 16, -12, 12, -8, 9.5, -11, 2, -11, -5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mbgpt"]
 texture = ExtResource("1_d008h")
@@ -17,30 +24,6 @@ texture_region_size = Vector2i(32, 32)
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 5, -16, 5, 6, -12, 16, -16, 16)
 3:0/0/custom_data_0 = "green"
-4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-4:0/0/custom_data_0 = "orange"
-5:0/0 = 0
-5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-5:0/0/custom_data_0 = "orange"
-6:0/0 = 0
-6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-6:0/0/custom_data_0 = "orange"
-7:0/0 = 0
-7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-7:0/0/custom_data_0 = "orange"
-8:0/0 = 0
-8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-8:0/0/custom_data_0 = "purple"
-9:0/0 = 0
-9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-9:0/0/custom_data_0 = "purple"
-10:0/0 = 0
-10:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-10:0/0/custom_data_0 = "purple"
-11:0/0 = 0
-11:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-11:0/0/custom_data_0 = "purple"
 12:0/0 = 0
 13:0/0 = 0
 14:0/0 = 0
@@ -83,4 +66,5 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 custom_data_layer_0/name = "color"
 custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_k1lr4")
 sources/1 = SubResource("TileSetAtlasSource_mbgpt")

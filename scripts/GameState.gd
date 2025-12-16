@@ -14,7 +14,7 @@ var player_max_health: int = 3
 #Colors globals del joc
 enum color { GREEN, ORANGE, PURPLE }
 
-const color_name := {
+const color_name = {
 	color.GREEN: "green",
 	color.ORANGE: "orange",
 	color.PURPLE: "purple"

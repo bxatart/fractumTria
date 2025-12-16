@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var enemy_death_effect = preload("res://scenes/enemies/enemy_1_death.tscn")
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer = $Timer
 
@@ -7,6 +9,9 @@ extends CharacterBody2D
 @export var patrol_points: Node2D
 @export var speed: float = 1500.0
 @export var wait_time: int = 3
+@export var health: int = 3
+
+var feedback: bool = false
 
 #Marcadors que limiten el moviment
 var children: Array
@@ -26,6 +31,7 @@ enum State { idle, move }
 var current_state: State
 
 func _ready() -> void:
+	add_to_group("enemies")
 	find_points()
 	get_animation()
 	#Assigna la durada al temporitzador
@@ -103,16 +109,18 @@ func find_points() -> void:
 	#Troba la posició dels marcadors
 	children = patrol_points.get_children()
 	points_number = children.size()
-	print("Fills de patrol_points: ", children)
+	print("ENEMY1: Fills de patrol_points: ", children)
 	#Si no té marcadors
 	if points_number == 0:
-		print("No hi ha marcadors")
+		print("ENEMY1: No hi ha marcadors")
 		return
+	point_positions.clear()
 	#Afegeix la posició dels marcadors a l'array
 	for point in children:
 		point_positions.append(point.global_position)
+	current_point_position = 0
 	current_point = point_positions[current_point_position]
-	print("Punts de patrol: ", point_positions)
+	print("ENEMY1: Punts de patrol: ", point_positions)
 
 func _on_timer_timeout() -> void:
 	canMove = true
@@ -121,4 +129,37 @@ func _on_timer_timeout() -> void:
 func respawn() -> void:
 	global_position = spawn_position
 	current_state = State.idle
-	
+
+#Posa l'animació en gris si s'ha tocat l'enemic
+func hit_feedback() -> void:
+	if feedback:
+		return
+	feedback = true
+	#Animació en gris
+	anim.self_modulate = Color(0.5, 0.5, 0.5, 1.0)
+	#So
+	Sound.playEnemySfx("enemyDamage", global_position)
+	#Temporitzador
+	await get_tree().create_timer(0.15).timeout
+	#Torna al color normal si no s'ha eliminat l'enemic
+	if not is_queued_for_deletion():
+		anim.self_modulate = Color(1, 1, 1, 1)
+	feedback = false
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("ENEMY1: Hurtbox area entered")
+	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
+		var node: Node = area.get_parent()
+		health -= node.damage_amount
+		print("ENEMY1 Health: ", health)
+		if health <= 0:
+			#So
+			Sound.playEnemySfx("enemyDeath", global_position)
+			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
+			enemy_death_instance.global_position = anim.global_position
+			get_parent().add_child(enemy_death_instance)
+			if enemy_death_instance.has_method("setup"):
+				enemy_death_instance.setup(direction.x, enemy_color)
+			queue_free()
+		else:
+			hit_feedback()

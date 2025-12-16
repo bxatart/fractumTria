@@ -1,11 +1,18 @@
 extends CharacterBody2D
 
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var cam: Camera2D = $Camera2D
+@onready var green_platforms = $"../TileMapLayerGreen"
+@onready var orange_platforms = $"../TileMapLayerOrange"
+@onready var purple_platforms = $"../TileMapLayerPurple"
+@onready var muzzle : Marker2D = $Muzzle
+@onready var hurtbox: Area2D = $Hurtbox
+@onready var body_polygon: CollisionPolygon2D = $CollisionPolygon2D
+
+@export var start_color: GameState.color = GameState.color.GREEN
 @export var speed: float = 180.0 #velocitat
-@export var jump: float = 400.0 #força de salt
+@export var jump: float = 500.0 #força de salt
 @export var gravity: float = 1200.0 #gravetat
-<<<<<<< Updated upstream
-#variables per guardar els valors
-=======
 @export var max_health: int = 3 #vida
 @export var knockback: float = 250.0 #força del knockback
 @export var exit_limit: float = 2000.0 #Sortir del nivell
@@ -20,13 +27,17 @@ var game_over: bool = false
 const base_max_health: int = 3
 
 #Guardar els valors de moviment
->>>>>>> Stashed changes
 var last_dir: float = 1.0 #direcció
 var base_speed: float
 var base_jump: float
 var base_gravity: float
+var can_control: bool = true
+var exit_level: bool = false
+
+var query_shape: ConvexPolygonShape2D
 
 #Colors
+var spawn_color_index: int = 0
 var colors: Array[GameState.color] = [
 	GameState.color.GREEN, 
 	GameState.color.ORANGE, 
@@ -37,21 +48,13 @@ var color_index: int = 0
 var tilt_angle: float = 10.0
 var tilt_speed: float = 10.0
 
-#Disparar
-#Variable bala
-var bullet = preload("res://scenes/bullet.tscn")
+#Variable disparar
+var bullet = preload("res://scenes/player/bullet.tscn")
 var muzzle_position
 var shoot_timer: float = 0.0
 
 #PROVA - Posició inicial
 var spawn_position: Vector2
-
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
-@onready var cam: Camera2D = $Camera2D
-@onready var green_platforms:= $"../TileMapLayerGreen"
-@onready var orange_platforms:= $"../TileMapLayerOrange"
-@onready var purple_platforms:= $"../TileMapLayerPurple"
-@onready var muzzle : Marker2D = $Muzzle
 
 #Estat del jugador
 enum State { idle, run, shoot }
@@ -63,11 +66,6 @@ func _ready() -> void:
 	base_speed = speed
 	base_jump = jump
 	base_gravity = gravity
-<<<<<<< Updated upstream
-	#Posició muzzle
-	muzzle_position = muzzle.position
-	#Comença amb el color verd
-=======
 	health = max_health
 	emit_signal("health_changed", health, max_health)
 	#Control del jugador
@@ -78,7 +76,6 @@ func _ready() -> void:
 	var idx = colors.find(start_color)
 	color_index = idx
 	spawn_color_index = idx
->>>>>>> Stashed changes
 	GameState.set_color(colors[color_index])
 	#Canvia la física segons el color
 	change_physics()
@@ -86,9 +83,20 @@ func _ready() -> void:
 	change_collision_layer()
 	#PROVA - Guarda la posició inicial
 	spawn_position = global_position
+	#Crear una forma
+	query_shape = ConvexPolygonShape2D.new()
+	#Posar els punts de la collision shape a la nova forma perquè tingui la mateixa forma
+	query_shape.points = body_polygon.polygon
 
 #Moviment jugador
 func _physics_process(delta: float) -> void:
+	if exit_level:
+		exit(delta)
+		return
+	if is_hurt:
+		player_falling(delta)
+		move_and_slide()
+		return
 	#Controla el canvi de color
 	change_color()
 	#Mira si el jugador està a l'aire
@@ -107,14 +115,43 @@ func _physics_process(delta: float) -> void:
 
 #Gestiona el canvi de color
 func change_color() -> void:
+	#Si no es pot controlar el jugador, no canvi de color
+	if not can_control:
+		return
 	if Input.is_action_just_pressed("swap_color"):
 		#Cicle infinit dels colors
-		color_index = (color_index + 1) % colors.size()
-		var new_color: GameState.color = colors[color_index]
+		var next_index = (color_index + 1) % colors.size()
+		#Color nou
+		var new_color: GameState.color = colors[next_index]
+		#Comprovar si el jugador està dins una plataforma
+		if player_overlap(new_color):
+			if not player_eject(new_color):
+				return
+		color_index = next_index
 		GameState.set_color(new_color)
 		change_collision_layer()
 		change_physics()
-		print("Color actual: ", GameState.get_color_name(GameState.current_color))
+		print("PLAYER: Color actual: ", GameState.get_color_name(GameState.current_color))
+		Sound.playSfx("changeColor")
+
+#Canvi de color per col·lisió amb onada enemiga
+func wave_change_color(new_color: GameState.color) -> bool:
+	#Si el jugador és del mateix color que l'onada
+	if GameState.current_color == new_color:
+		return false
+	#Actualitza l'estat del color
+	GameState.set_color(new_color)
+	#Actualitza l'index
+	var i = colors.find(new_color)
+	if i != -1:
+		color_index = i
+	else:
+		color_index = 0
+	#Actualitza física i col·lisions
+	change_physics()
+	change_collision_layer()
+	print("WAVE: Color canviat a: ", GameState.get_color_name(GameState.current_color))
+	return true
 
 #Canvia la física segons el color del jugador
 func change_physics() -> void:
@@ -122,18 +159,18 @@ func change_physics() -> void:
 		GameState.color.GREEN:
 			#Normal
 			speed = base_speed
-			jump = base_jump #2 tiles
+			jump = base_jump #3 tiles
 			gravity = base_gravity
 		GameState.color.ORANGE:
 			#Més pesat
 			speed = base_speed - 20
-			jump = base_jump - 60 #1 tile
-			gravity = base_gravity + 400
+			jump = base_jump - 40 #2 tiles
+			gravity = base_gravity + 200
 		GameState.color.PURPLE:
 			#Més lleuger
 			speed = base_speed + 20
-			jump = base_jump + 60 #4 tiles
-			gravity = base_gravity - 400
+			jump = base_jump + 20 #4 tiles
+			gravity = base_gravity - 200
 
 func player_falling(delta: float) -> void:
 	if game_over:
@@ -144,10 +181,6 @@ func player_falling(delta: float) -> void:
 	else:
 		velocity.y = max(velocity.y, 0.0)
 	#PROVA - Si el personatge ha caigut, el torna a la posició inicial
-<<<<<<< Updated upstream
-	if global_position.y > 800:
-		respawn()
-=======
 	if global_position.y > 600 and not exit_level:
 		Sound.playSfx("playerFalling")
 		health -= 1
@@ -159,16 +192,23 @@ func player_falling(delta: float) -> void:
 			return
 		else:
 			respawn()
->>>>>>> Stashed changes
 
 func player_idle(delta: float) -> void:
+	#Si no es pot controlar el jugador
+	if not can_control:
+		current_state = State.idle
+		return
 	if is_on_floor():
 		current_state = State.idle
-		print("Player State: ", State.keys()[current_state])
+		#print("Player State: ", State.keys()[current_state])
 
 func player_run(delta: float) -> void:
+	#Atura el moviment si no es pot controlar el jugador
+	if not can_control:
+		velocity.x = 0
+		return
 	#Moviment lateral
-	var dir := Input.get_axis("move_left", "move_right")
+	var dir = Input.get_axis("move_left", "move_right")
 	if dir:
 		velocity.x = dir * speed
 		last_dir = dir
@@ -176,12 +216,16 @@ func player_run(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed)
 	if dir != 0:
 		current_state = State.run
-		print("Player State: ", State.keys()[current_state])
+		#print("Player State: ", State.keys()[current_state])
 	#Salt
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -jump
+		Sound.playSfx("jump")
 
 func player_shoot(delta: float) -> void:
+	#No disparar si no es pot controlar el jugador
+	if not can_control:
+		return
 	if last_dir  != 0 and Input.is_action_just_pressed("shoot"):
 		var bullet_instance: Area2D = bullet.instantiate()
 		#Posició d'inici de la bala
@@ -194,6 +238,7 @@ func player_shoot(delta: float) -> void:
 		#Temporitzador
 		shoot_timer = 0.15
 		print("Player State: ", State.keys()[current_state])
+		Sound.playSfx("shot")
 
 func update_shoot_timer(delta: float) -> void:
 	if shoot_timer > 0.0:
@@ -209,6 +254,8 @@ func update_shoot_timer(delta: float) -> void:
 				current_state = State.idle
 
 func get_anim(delta: float) -> void:
+	if is_hurt:
+		return
 	#Color actual
 	var color_name: StringName = GameState.get_color_name(GameState.current_color)
 	match current_state:
@@ -227,7 +274,7 @@ func get_anim(delta: float) -> void:
 	if last_dir != 0:
 		muzzle.position.x = abs(muzzle_position.x) * last_dir
 	#Rota l'sprite
-	var target_tilt := 0.0
+	var target_tilt = 0.0
 	target_tilt = deg_to_rad(tilt_angle) * sign(velocity.x)
 	#Rotació suau
 	var t: float = clamp(delta * tilt_speed, 0.0, 1.0)
@@ -242,9 +289,6 @@ func change_collision_layer() -> void:
 	#Lila
 	set_collision_mask_value(3, GameState.get_color_name(GameState.current_color) == "purple")
 
-<<<<<<< Updated upstream
-#PROVA - Torna a la posició inicial si el jugador cau
-=======
 func player_mask(color: GameState.color) -> int:
 	match color: 
 		GameState.color.GREEN:
@@ -300,20 +344,18 @@ func player_eject(color: GameState.color) -> bool:
 	return false
 
 #Torna a la posició inicial si el jugador cau
->>>>>>> Stashed changes
 func respawn() -> void:
 	#Esborra les bales
 	get_tree().call_group("bullets", "queue_free")
 	#Torna el jugador a l'inici
 	global_position = spawn_position
 	velocity = Vector2.ZERO
-	color_index = 0
+	#Torna al color inicial
+	color_index = spawn_color_index
 	GameState.set_color(colors[color_index])
 	last_dir = 1.0
 	change_physics()
 	change_collision_layer()
-<<<<<<< Updated upstream
-=======
 	#Control del jugador
 	enable_control()
 
@@ -457,4 +499,3 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	var enemy = area.get_parent()
 	if enemy.is_in_group("enemies"):
 		take_damage(1, enemy)
->>>>>>> Stashed changes

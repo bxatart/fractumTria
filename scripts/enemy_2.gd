@@ -1,15 +1,19 @@
 extends CharacterBody2D
 
+var enemy_death_effect = preload("res://scenes/enemies/enemy_2_death.tscn")
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_check_left: RayCast2D = $FloorCheckLeft
 @onready var floor_check_right: RayCast2D = $FloorCheckRight
 @onready var wall_check_left: RayCast2D = $WallCheckLeft
 @onready var wall_check_right: RayCast2D = $WallCheckRight
 
-
 @export var enemy_color: GameState.color = GameState.color.GREEN
-@export var speed: float = 100.0
+@export var speed: float = 50.0
 @export var jump: float = 400.0 #Força del salt
+@export var health: int = 5
+
+var feedback: bool = false
 
 #Jugador
 var player: Node2D = null
@@ -22,12 +26,14 @@ var spawn_position: Vector2
 var base_jump
 var base_speed
 var base_gravity
+var facing_dir: float = 1.0 #Direcció
 
 #Estat de l'enemic
 enum State { idle, move }
 var current_state: State
 
 func _ready() -> void:
+	add_to_group("enemies")
 	#Busca el jugador a l'escena
 	find_player()
 	#Animació inicial de l'enemic
@@ -83,7 +89,7 @@ func update_state() -> void:
 		current_state = State.idle
 		return
 	#Distància entre el jugador i l'enemic
-	var distance := global_position.distance_to(player.global_position)
+	var distance = global_position.distance_to(player.global_position)
 	if distance <= detection_range:
 		canMove = true
 		current_state = State.move
@@ -108,19 +114,20 @@ func enemy_move(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
 		return
 	#Mirar si té plataformes a sota o a davant
-	var floor_ahead := check_floor(dir)
-	var wall_ahead := check_wall(dir)
+	var floor_ahead = check_floor(dir)
+	var wall_ahead = check_wall(dir)
 	if is_on_floor():
 		#Salta si hi ha paret o no hi ha plataforma
 		if wall_ahead or not floor_ahead:
 			velocity.y = -jump
-	velocity.x = dir * speed			
+	velocity.x = dir * speed	
+	facing_dir = dir
 	anim.flip_h = dir < 0
 
 func find_player() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	if player == null:
-		print("Enemy2: No s'ha trobat cap jugador a l'escena")
+		print("ENEMY2: No s'ha trobat cap jugador a l'escena")
 	else:
 		print(player)
 
@@ -136,13 +143,13 @@ func change_physics() -> void:
 		GameState.color.ORANGE:
 			#Més pesat
 			speed = base_speed - 20
-			jump = base_jump - 60 #1 tile
-			gravity = base_gravity + 400
+			jump = base_jump - 40 #1 tile
+			gravity = base_gravity + 200
 		GameState.color.PURPLE:
 			#Més lleuger
 			speed = base_speed + 20
-			jump = base_jump + 60 #4 tiles
-			gravity = base_gravity - 400
+			jump = base_jump + 20 #4 tiles
+			gravity = base_gravity - 100
 		
 #Mira si hi ha plataformes a sota de l'enemic
 func check_floor(dir: float) -> bool:
@@ -162,3 +169,37 @@ func check_wall(dir: float) -> bool:
 func respawn() -> void:
 	global_position = spawn_position
 	current_state = State.idle
+
+#Posa l'animació en gris si s'ha tocat l'enemic
+func hit_feedback() -> void:
+	if feedback:
+		return
+	feedback = true
+	#Animació en gris
+	anim.self_modulate = Color(0.5, 0.5, 0.5, 1.0)
+	#So
+	Sound.playEnemySfx("enemyDamage", global_position)
+	#Temporitzador
+	await get_tree().create_timer(0.15).timeout
+	#Torna al color normal si no s'ha eliminat l'enemic
+	if not is_queued_for_deletion():
+		anim.self_modulate = Color(1, 1, 1, 1)
+	feedback = false
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("ENEMY2: Hurtbox area entered")
+	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
+		var node: Node = area.get_parent()
+		health -= node.damage_amount
+		print("ENEMY2 Health: ", health)
+		if health <= 0:
+			#So
+			Sound.playEnemySfx("enemyDeath", global_position)
+			var enemy_death_instance: Node2D = enemy_death_effect.instantiate()
+			enemy_death_instance.global_position = anim.global_position
+			get_parent().add_child(enemy_death_instance)
+			if enemy_death_instance.has_method("setup"):
+				enemy_death_instance.setup(facing_dir, enemy_color)
+			queue_free()
+		else:
+			hit_feedback()
