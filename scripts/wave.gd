@@ -6,6 +6,7 @@ extends Area2D
 
 #Moviment
 @export var speed: float = 100.0 #Velocitat
+@export var timer: float = 4.0
 var velocity: Vector2 = Vector2.ZERO
 
 #Color
@@ -23,6 +24,7 @@ var collision_sizes := [
 
 func _ready() -> void:
 	add_to_group("waves")
+	get_tree().create_timer(timer).timeout.connect(queue_free)
 	#Ajustar la forma de col·lisió quan canvia de frame
 	waveAnim.frame_changed.connect(frame_changed)
 	#Animació inicial

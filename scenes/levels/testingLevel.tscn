@@ -1,0 +1,216 @@
+[gd_scene load_steps=17 format=4 uid="uid://b7kxw8sfbnwml"]
+
+[ext_resource type="TileSet" uid="uid://blsjebdkgft2x" path="res://assets/sprites/platforms.tres" id="1_8a6tn"]
+[ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="1_86d38"]
+[ext_resource type="Texture2D" uid="uid://26apthyhfvx0" path="res://assets/sprites/platforms_base.png" id="1_mbgpt"]
+[ext_resource type="Script" uid="uid://c0w6oco18bwio" path="res://scripts/testing_level.gd" id="1_q2ifd"]
+[ext_resource type="PackedScene" uid="uid://cjtjm74ubxjwa" path="res://scenes/player/player.tscn" id="2_8a6tn"]
+[ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="4_npxo8"]
+[ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemies/enemy_2.tscn" id="5_u243f"]
+[ext_resource type="PackedScene" uid="uid://cyoyxa1grlhr6" path="res://scenes/enemies/enemy_3.tscn" id="6_0rfwd"]
+[ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="8_s2rl2"]
+[ext_resource type="PackedScene" uid="uid://bximb6t1vnmx6" path="res://scenes/player/checkpoint.tscn" id="10_kexhe"]
+[ext_resource type="Script" uid="uid://bxpb085c4awnk" path="res://scripts/camera_2d.gd" id="11_7j4wx"]
+[ext_resource type="PackedScene" uid="uid://dycf21wlpjigt" path="res://scenes/levels/game_ui.tscn" id="12_e6ui7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_86d38"]
+texture = ExtResource("1_mbgpt")
+texture_region_size = Vector2i(32, 32)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:0/0/custom_data_0 = "orange"
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 9.10827, 7, 16, -6, 16, -16, 2.80115)
+5:0/0/custom_data_0 = "orange"
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -16, 16, -16, 16, 16, 6, 16, -7, -1)
+6:0/0/custom_data_0 = "orange"
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 5, -16, 5, 6, -12, 16, -16, 16)
+7:0/0/custom_data_0 = "orange"
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+17:0/0 = 0
+18:0/0 = 0
+19:0/0 = 0
+20:0/0 = 0
+21:0/0 = 0
+22:0/0 = 0
+23:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+17:1/0 = 0
+18:1/0 = 0
+19:1/0 = 0
+20:1/0 = 0
+21:1/0 = 0
+22:1/0 = 0
+23:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_u243f"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 2
+custom_data_layer_0/name = "color"
+custom_data_layer_0/type = 4
+sources/1 = SubResource("TileSetAtlasSource_86d38")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7dlnn"]
+texture = ExtResource("1_mbgpt")
+texture_region_size = Vector2i(32, 32)
+8:0/0 = 0
+8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+8:0/0/custom_data_0 = "purple"
+9:0/0 = 0
+9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 9.15031, 7, 16, -6.5, 16, -16, 2.81928)
+9:0/0/custom_data_0 = "purple"
+10:0/0 = 0
+10:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -16, 16, -16, 16, 16, 6, 16, -7, -1.5)
+10:0/0/custom_data_0 = "purple"
+11:0/0 = 0
+11:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 5, -16, 5.5, 5.5, -13, 16, -16, 16)
+11:0/0/custom_data_0 = "purple"
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+17:0/0 = 0
+18:0/0 = 0
+19:0/0 = 0
+20:0/0 = 0
+21:0/0 = 0
+22:0/0 = 0
+23:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+17:1/0 = 0
+18:1/0 = 0
+19:1/0 = 0
+20:1/0 = 0
+21:1/0 = 0
+22:1/0 = 0
+23:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ojdn3"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 4
+custom_data_layer_0/name = "color"
+custom_data_layer_0/type = 4
+sources/1 = SubResource("TileSetAtlasSource_7dlnn")
+
+[node name="testingLevel" type="Node2D"]
+position = Vector2(-1, 1)
+script = ExtResource("1_q2ifd")
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("1_86d38")]
+offset = Vector2(0, -360)
+transform = Transform2D(1, 0, 0, 1, 0, -360)
+
+[node name="TileMapLayerGreen" type="TileMapLayer" parent="."]
+position = Vector2(0, -73)
+tile_map_data = PackedByteArray("AAAAAAAAAQACAAAAAAABAAAAAQAAAAAAAAACAAAAAQAAAAAAAAADAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAQADAAAAAAAXAP7/AQADAAAAAAAWAP7/AQACAAAAAAAZAP//AQACAAAAAAAaAP//AQAAAAAAAAAbAP//AQAAAAAAAAAcAP//AQAAAAAAAAAdAP//AQAAAAAAAAAeAP//AQAAAAAAAAAfAP//AQAAAAAAAAAgAP//AQAAAAAAAAAhAP//AQAAAAAAAAAiAP//AQAAAAAAAAAjAP//AQAAAAAAAAAkAP//AQAAAAAAAAAlAP//AQAAAAAAAAAmAP//AQAAAAAAAAAnAP//AQAAAAAAAAAoAP//AQAAAAAAAAApAP//AQAAAAAAAAAqAP//AQAAAAAAAAArAP//AQAAAAAAAAAsAP//AQAAAAAAAAAtAP//AQAAAAAAAAAuAP//AQAAAAAAAAAvAP//AQAAAAAAAAAwAP//AQAAAAAAAAAxAP//AQAAAAAAAAAyAP//AQAAAAAAAAAzAP//AQAAAAAAAAA0AP//AQAAAAAAAAA1AP//AQAAAAAAAAA2AP//AQAAAAAAAAA3AP//AQAAAAAAAAA4AP//AQAAAAAAAAA5AP//AQAAAAAAAAA6AP//AQAAAAAAAAA7AP//AQAAAAAAAAA8AP//AQADAAAAAAAJAP3/AQABAAAAAAA=")
+tile_set = ExtResource("1_8a6tn")
+
+[node name="TileMapLayerOrange" type="TileMapLayer" parent="."]
+position = Vector2(0, -73)
+tile_map_data = PackedByteArray("AAALAAEAAQAEAAAAAAAMAAEAAQAEAAAAAAAKAAEAAQAGAAAAAAANAAEAAQAHAAAAAAAGAPr/AQAEAAAAAAAFAPr/AQAEAAAAAAAEAPr/AQAEAAAAAAADAPr/AQAGAAAAAAAHAPr/AQAHAAAAAAABAPn/AQAFAAAAAAA+AP7/AQAGAAAAAAA/AP7/AQAEAAAAAABAAP7/AQAEAAAAAABBAP7/AQAEAAAAAABCAP7/AQAEAAAAAABDAP7/AQAHAAAAAAA=")
+tile_set = SubResource("TileSet_u243f")
+
+[node name="TileMapLayerPurple" type="TileMapLayer" parent="."]
+position = Vector2(0, -73)
+tile_map_data = PackedByteArray("AAAPAPn/AQAIAAAAAAAOAPn/AQAIAAAAAAANAPn/AQAIAAAAAAAMAPn/AQAKAAAAAAAQAPn/AQALAAAAAAAOAP//AQAKAAAAAAAPAP//AQAIAAAAAAAQAP//AQAIAAAAAAARAP//AQAIAAAAAAASAP//AQALAAAAAAATAPv/AQAKAAAAAAAUAPv/AQALAAAAAAA=")
+tile_set = SubResource("TileSet_ojdn3")
+
+[node name="Player" parent="." instance=ExtResource("2_8a6tn")]
+position = Vector2(26, -89)
+collision_mask = 7
+
+[node name="altar" parent="." instance=ExtResource("8_s2rl2")]
+position = Vector2(1849, -143)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="enemy1" parent="Enemies" instance=ExtResource("4_npxo8")]
+position = Vector2(464, -296)
+enemy_color = 2
+wait_time = 2
+
+[node name="enemy1_1" parent="Enemies" instance=ExtResource("4_npxo8")]
+position = Vector2(176, -262)
+enemy_color = 1
+speed = 3000.0
+wait_time = 1
+
+[node name="PatrolPoints2" type="Node2D" parent="Enemies/enemy1_1"]
+
+[node name="Point1" type="Marker2D" parent="Enemies/enemy1_1/PatrolPoints2"]
+position = Vector2(-68, 0)
+
+[node name="Point2" type="Marker2D" parent="Enemies/enemy1_1/PatrolPoints2"]
+position = Vector2(66, 0)
+
+[node name="enemy2" parent="Enemies" instance=ExtResource("5_u243f")]
+position = Vector2(1440, -116)
+
+[node name="enemy3" parent="Enemies" instance=ExtResource("6_0rfwd")]
+position = Vector2(1016, -288)
+
+[node name="PatrolPoints2" type="Node2D" parent="Enemies/enemy3"]
+
+[node name="Point1" type="Marker2D" parent="Enemies/enemy3/PatrolPoints2"]
+position = Vector2(-100, 0)
+
+[node name="Point2" type="Marker2D" parent="Enemies/enemy3/PatrolPoints2"]
+position = Vector2(100, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -360)
+limit_left = 0
+limit_top = 0
+limit_right = 8000
+limit_bottom = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("11_7j4wx")
+target = NodePath("../Player")
+
+[node name="Checkpoint" parent="." instance=ExtResource("10_kexhe")]
+position = Vector2(177, -85)
+
+[node name="gameUI" parent="." instance=ExtResource("12_e6ui7")]

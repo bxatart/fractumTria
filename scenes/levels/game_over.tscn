@@ -1,0 +1,219 @@
+[gd_scene load_steps=16 format=3 uid="uid://dfyvc48y85m7w"]
+
+[ext_resource type="Texture2D" uid="uid://b43jtejofuyuh" path="res://assets/backgrounds/bg_pause.png" id="1_lpwf7"]
+[ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="1_org1n"]
+[ext_resource type="Script" uid="uid://df376pl2l6ujo" path="res://scripts/game_over.gd" id="2_qy7gw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_org1n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qy7gw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lw2kh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gdwfc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_trggy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i47r0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nesse"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_017v7"]
+
+[sub_resource type="GDScript" id="GDScript_oldqh"]
+script/source = "extends Button
+"
+
+[sub_resource type="Animation" id="Animation_lw2kh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/text:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/retryButton:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("VBoxContainer/exitButton:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qy7gw"]
+resource_name = "in"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.196078), Color(1, 1, 1, 0.392157), Color(1, 1, 1, 0.588235), Color(1, 1, 1, 0.784314), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/text:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/retryButton:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("VBoxContainer/exitButton:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gdwfc"]
+_data = {
+&"RESET": SubResource("Animation_lw2kh"),
+&"in": SubResource("Animation_qy7gw")
+}
+
+[node name="gameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_org1n")
+script = ExtResource("2_qy7gw")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lpwf7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -53.5
+offset_right = 42.5
+offset_bottom = 53.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="text" type="Label" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984314, 0.419608, 0.113725, 1)
+theme_override_font_sizes/font_size = 50
+text = "GAME OVER"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="retryButton" type="Button" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../exitButton")
+focus_neighbor_bottom = NodePath("../exitButton")
+theme_override_colors/font_hover_pressed_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_hover_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_focus_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_pressed_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_org1n")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qy7gw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_lw2kh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gdwfc")
+text = "RETRY"
+
+[node name="exitButton" type="Button" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../retryButton")
+focus_neighbor_bottom = NodePath("../retryButton")
+theme_override_colors/font_hover_pressed_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_colors/font_hover_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_colors/font_focus_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_colors/font_pressed_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_trggy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_i47r0")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nesse")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_017v7")
+text = "EXIT TO LEVEL SELECT"
+script = SubResource("GDScript_oldqh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gdwfc")
+}
+
+[connection signal="focus_entered" from="VBoxContainer/retryButton" to="." method="_on_retry_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/retryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/exitButton" to="." method="_on_exit_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/exitButton" to="." method="_on_exit_button_pressed"]

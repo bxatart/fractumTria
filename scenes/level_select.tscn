@@ -1,0 +1,97 @@
+[gd_scene load_steps=27 format=3 uid="uid://b5timaf4x37kc"]
+
+[ext_resource type="Script" uid="uid://bg6ijawdgls1o" path="res://scripts/level_select.gd" id="1_htctk"]
+[ext_resource type="PackedScene" uid="uid://dgm26fe1647fi" path="res://scenes/rock.tscn" id="2_4nqmc"]
+[ext_resource type="Script" uid="uid://bav3cbwyfbcp6" path="res://scripts/background_layers.gd" id="2_317l6"]
+[ext_resource type="Texture2D" uid="uid://bl6wgvbwms1pn" path="res://assets/backgrounds/levelSelect_base.png" id="2_m4qq5"]
+[ext_resource type="Texture2D" uid="uid://bj422lmpfh5uf" path="res://assets/other/rock_grey.png" id="3_7plkq"]
+[ext_resource type="Texture2D" uid="uid://bxp8civpet0v3" path="res://assets/backgrounds/levelSelect_bg1_grey.png" id="3_n1411"]
+[ext_resource type="Texture2D" uid="uid://1tarrgyranb7" path="res://assets/backgrounds/levelSelect_baseGrey.png" id="3_r4hmm"]
+[ext_resource type="Texture2D" uid="uid://dxs10v0hqjdne" path="res://assets/other/rock_green.png" id="4_ckc44"]
+[ext_resource type="Texture2D" uid="uid://cre5huq6xc7fr" path="res://assets/backgrounds/levelSelect_bg2_grey.png" id="4_vxici"]
+[ext_resource type="Texture2D" uid="uid://cpf0slg663prs" path="res://assets/other/rock_orange.png" id="5_o2xx4"]
+[ext_resource type="Texture2D" uid="uid://dya3kdlbccp41" path="res://assets/backgrounds/levelSelect_bg3_grey.png" id="5_thf6c"]
+[ext_resource type="Texture2D" uid="uid://dem2pmq1xywfl" path="res://assets/other/rock_purple.png" id="6_htctk"]
+[ext_resource type="Texture2D" uid="uid://c6jfl8uclsq7m" path="res://assets/backgrounds/levelSelect_bg1_green.png" id="6_ichcy"]
+[ext_resource type="PackedScene" uid="uid://dqpfobno3p4nb" path="res://scenes/levels/level_1.tscn" id="6_u4mbh"]
+[ext_resource type="Texture2D" uid="uid://c6spm43d5tutw" path="res://assets/other/rock_multicolor.png" id="7_s6tf7"]
+[ext_resource type="Texture2D" uid="uid://unf384p4oy25" path="res://assets/backgrounds/levelSelect_bg2_orange.png" id="8_112fn"]
+[ext_resource type="PackedScene" uid="uid://d2owuefyais2h" path="res://scenes/levels/level_2.tscn" id="8_rovvv"]
+[ext_resource type="PackedScene" uid="uid://id7px3yaigo" path="res://scenes/player/player_marker.tscn" id="9_ckc44"]
+[ext_resource type="PackedScene" uid="uid://b8omrwx7w62be" path="res://scenes/levels/level_3.tscn" id="10_0wyvj"]
+[ext_resource type="Texture2D" uid="uid://cbewji04mmg1k" path="res://assets/backgrounds/levelSelect_bg3_purple.png" id="10_povud"]
+[ext_resource type="PackedScene" uid="uid://c26hi6cg10ylk" path="res://scenes/levels/final_level.tscn" id="12_m4qq5"]
+[ext_resource type="Texture2D" uid="uid://b55jj7w1lemas" path="res://assets/other/rock_unlocked_green.png" id="14_povud"]
+[ext_resource type="Texture2D" uid="uid://mxwqlmuuhbow" path="res://assets/other/rock_unlocked_orange.png" id="17_6k74p"]
+[ext_resource type="Texture2D" uid="uid://dsx6q2x3m605p" path="res://assets/other/rock_unlocked_purple.png" id="20_v042j"]
+[ext_resource type="Texture2D" uid="uid://p82segy687kl" path="res://assets/other/rock_unlocked_multicolor.png" id="23_5ot7t"]
+[ext_resource type="PackedScene" uid="uid://dycf21wlpjigt" path="res://scenes/levels/game_ui.tscn" id="26_6k74p"]
+
+[node name="levelSelect" type="Node2D"]
+position = Vector2(320, 180)
+script = ExtResource("1_htctk")
+
+[node name="background" type="Node2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="layer0" type="Sprite2D" parent="background"]
+script = ExtResource("2_317l6")
+level_index = 3
+locked_texture = ExtResource("3_r4hmm")
+unlocked_texture = ExtResource("2_m4qq5")
+
+[node name="layer1" type="Sprite2D" parent="background"]
+script = ExtResource("2_317l6")
+locked_texture = ExtResource("3_n1411")
+unlocked_texture = ExtResource("6_ichcy")
+
+[node name="layer2" type="Sprite2D" parent="background"]
+script = ExtResource("2_317l6")
+level_index = 1
+locked_texture = ExtResource("4_vxici")
+unlocked_texture = ExtResource("8_112fn")
+
+[node name="layer3" type="Sprite2D" parent="background"]
+script = ExtResource("2_317l6")
+level_index = 2
+locked_texture = ExtResource("5_thf6c")
+unlocked_texture = ExtResource("10_povud")
+
+[node name="rocks" type="Node2D" parent="."]
+
+[node name="rockLevel1" parent="rocks" instance=ExtResource("2_4nqmc")]
+position = Vector2(-241, 105)
+texture_grey = ExtResource("3_7plkq")
+texture_completed = ExtResource("4_ckc44")
+texture_unlocked = ExtResource("14_povud")
+level_scene = ExtResource("6_u4mbh")
+
+[node name="rockLevel2" parent="rocks" instance=ExtResource("2_4nqmc")]
+position = Vector2(-93, 96)
+level_index = 1
+texture_grey = ExtResource("3_7plkq")
+texture_completed = ExtResource("5_o2xx4")
+texture_unlocked = ExtResource("17_6k74p")
+level_scene = ExtResource("8_rovvv")
+
+[node name="rockLevel3" parent="rocks" instance=ExtResource("2_4nqmc")]
+position = Vector2(42, 86)
+level_index = 2
+texture_grey = ExtResource("3_7plkq")
+texture_completed = ExtResource("6_htctk")
+texture_unlocked = ExtResource("20_v042j")
+level_scene = ExtResource("10_0wyvj")
+
+[node name="rockFinalLevel" parent="rocks" instance=ExtResource("2_4nqmc")]
+position = Vector2(166, 66)
+level_index = 3
+texture_grey = ExtResource("3_7plkq")
+texture_completed = ExtResource("7_s6tf7")
+texture_unlocked = ExtResource("23_5ot7t")
+level_scene = ExtResource("12_m4qq5")
+
+[node name="playerMarker" parent="." instance=ExtResource("9_ckc44")]
+
+[node name="gameUI" parent="." instance=ExtResource("26_6k74p")]
+
+[editable path="gameUI"]
