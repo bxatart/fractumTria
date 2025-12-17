@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://dqpfobno3p4nb"]
+[gd_scene load_steps=8 format=4 uid="uid://dqpfobno3p4nb"]
 
 [ext_resource type="PackedScene" uid="uid://doyfwebhb78xw" path="res://scenes/levels/base_level.tscn" id="1_014kd"]
 [ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="2_bswci"]
 [ext_resource type="Script" uid="uid://hodty6ci7fxw" path="res://scripts/level_1.gd" id="2_x42e6"]
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="3_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="4_6761a"]
+[ext_resource type="PackedScene" uid="uid://bximb6t1vnmx6" path="res://scenes/player/checkpoint.tscn" id="5_sk5k4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6761a"]
 size = Vector2(1.815, 353.875)
@@ -12,7 +13,7 @@ size = Vector2(1.815, 353.875)
 [node name="Level1" instance=ExtResource("1_014kd")]
 script = ExtResource("2_x42e6")
 
-[node name="ParallaxBackground" parent="." index="0" instance=ExtResource("2_bswci")]
+[node name="ParallaxBackground" parent="." index="0" groups=["background"] instance=ExtResource("2_bswci")]
 offset = Vector2(0, -360)
 transform = Transform2D(1, 0, 0, 1, 0, -360)
 
@@ -38,7 +39,10 @@ limit_bottom = 0
 position = Vector2(4360, -182)
 scale = Vector2(1.5, 1.5)
 
-[node name="Enemies" type="Node" parent="." index="6"]
+[node name="Checkpoint" parent="." index="6" instance=ExtResource("5_sk5k4")]
+position = Vector2(2016, -140)
+
+[node name="Enemies" type="Node" parent="." index="7"]
 
 [node name="enemy1" parent="Enemies" index="0" instance=ExtResource("3_nsrm0")]
 position = Vector2(2216, -125)
@@ -56,7 +60,7 @@ enemy_color = 1
 position = Vector2(3250, -61)
 enemy_color = 2
 
-[node name="Walls" type="Node2D" parent="." index="7"]
+[node name="Walls" type="Node2D" parent="." index="8"]
 
 [node name="Left" type="StaticBody2D" parent="Walls" index="0"]
 collision_layer = 7
@@ -74,3 +78,5 @@ collision_mask = 56
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls/Right" index="0"]
 position = Vector2(127, -176)
 shape = SubResource("RectangleShape2D_6761a")
+
+[editable path="gameUI"]

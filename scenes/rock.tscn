@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgm26fe1647fi"]
+
+[ext_resource type="Texture2D" uid="uid://bj422lmpfh5uf" path="res://assets/other/rock_grey.png" id="1_1di36"]
+[ext_resource type="Script" uid="uid://88mevhujpghj" path="res://scripts/rock.gd" id="1_mek2u"]
+
+[node name="rock" type="Node2D"]
+script = ExtResource("1_mek2u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_1di36")
+
+[node name="anchor" type="Marker2D" parent="."]
+position = Vector2(0, 13)

@@ -7,7 +7,8 @@ var MUSIC = {
 	"level3": preload("res://assets/audio/music/purpleLevelMusic.wav"),
 	"finalLevel": preload("res://assets/audio/music/finalLevelMusic.wav"),
 	"intro": preload("res://assets/audio/music/gameIntro.wav"),
-	"menu": preload("res://assets/audio/music/levelSelectMusic.wav"),
+	"levelSelect": preload("res://assets/audio/music/levelSelectMusic.wav"),
+	"gameOver": preload("res://assets/audio/music/gameOverMusic.wav"),
 }
 
 #Efectes
@@ -21,6 +22,7 @@ var SFX = {
 	"menuSelect": preload("res://assets/audio/sfx/menuSelect.wav"),
 	"playerHit": preload("res://assets/audio/sfx/playerDamage.wav"),
 	"playerDeath": preload("res://assets/audio/sfx/playerDeath.wav"),
+	"playerFalling": preload("res://assets/audio/sfx/playerFalling.wav"),
 	"shot": preload("res://assets/audio/sfx/shooting.wav"),
 	"endLevel": preload("res://assets/audio/sfx/endLevel.wav"),
 	"checkpoint": preload("res://assets/audio/sfx/checkpoint.wav"),
@@ -33,7 +35,9 @@ var current_music_name = ""
 var musicPlayer: AudioStreamPlayer
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	musicPlayer = $musicPlayer
+	musicPlayer.process_mode = Node.PROCESS_MODE_INHERIT
 
 func playMusic(name: String) -> void:
 	#Si no es troba la música
@@ -61,6 +65,8 @@ func playSfx(name: String) -> AudioStreamPlayer:
 		return null
 	#Crea un reproductor d'àudio temporal
 	var p = AudioStreamPlayer.new()
+	#Sona encara que estigui el joc en pausa
+	p.process_mode = Node.PROCESS_MODE_ALWAYS
 	#Carrega l'efecte de so
 	p.stream = SFX[name]
 	#Assigna bus d'àudio
@@ -82,6 +88,8 @@ func playEnemySfx(name: StringName, pos: Vector2) -> AudioStreamPlayer2D:
 		return null
 	#Crea un reproductor d'àudio temporal
 	var p = AudioStreamPlayer2D.new()
+	#Sona encara que estigui el joc en pausa
+	p.process_mode = Node.PROCESS_MODE_ALWAYS
 	#Carrega l'efecte de so
 	p.stream = SFX[name]
 	#Assigna bus d'àudio
@@ -101,3 +109,9 @@ func playEnemySfx(name: StringName, pos: Vector2) -> AudioStreamPlayer2D:
 func stopMusic() -> void:
 	musicPlayer.stop()
 	current_music_name = ""
+
+func pauseMusic() -> void:
+	musicPlayer.stream_paused = true
+
+func resumeMusic() -> void:
+	musicPlayer.stream_paused = false

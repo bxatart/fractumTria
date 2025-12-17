@@ -43,7 +43,7 @@ sources/0 = SubResource("TileSetAtlasSource_21cr8")
 [node name="FinalLevel" instance=ExtResource("1_lekuc")]
 script = ExtResource("2_rqhej")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="0"]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="0" groups=["background"]]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
 
@@ -100,6 +100,7 @@ tile_set = SubResource("TileSet_odfv6")
 
 [node name="Player" parent="." index="5"]
 position = Vector2(26, -48)
+level_index = 3
 
 [node name="Camera2D" parent="Player" index="4"]
 limit_right = 640
@@ -178,3 +179,5 @@ position = Vector2(336, -256)
 
 [node name="Marker2D3" type="Marker2D" parent="GreenSpawnPoints" index="2"]
 position = Vector2(576, -256)
+
+[editable path="gameUI"]

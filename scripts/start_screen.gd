@@ -19,14 +19,11 @@ func _ready() -> void:
 	play_button.grab_focus()
 	credits.visible = false
 
-func _unhandled_input(_event):
-	if Input.is_action_just_pressed("start_game") and not credits.visible:
-		start_game()
-
 func start_game() -> void:
 	#PROVA - Hi ha d'anar la cutscene primer
 	Sound.stopMusic()
-	get_tree().change_scene_to_file("res://scenes/levels/level_1.tscn")
+	await get_tree().create_timer(0.5).timeout
+	get_tree().change_scene_to_file("res://scenes/level_select.tscn")
 
 func _on_credits_button_pressed() -> void:
 	#Fer visible la pantalla de crèdits
@@ -35,3 +32,6 @@ func _on_credits_button_pressed() -> void:
 		credits_button.grab_focus()
 	else:
 		play_button.grab_focus()
+
+func _on_play_button_pressed() -> void:
+	start_game()

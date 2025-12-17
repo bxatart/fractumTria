@@ -12,7 +12,11 @@ extends CharacterBody2D
 @export var speed: float = 1500.0
 @export var wave_speed: float = 200.0
 @export var wait_time: int = 3
-@export var health: int = 20
+@export var max_health: int = 20
+var health: int
+signal max_health_set(max_hp: int)
+signal health_changed(current_hp: int)
+signal died
 
 #Enemics
 @export var enemy1_scene: PackedScene
@@ -67,6 +71,11 @@ var current_state: State
 
 func _ready() -> void:
 	add_to_group("enemies")
+	add_to_group("final_boss")
+	#Inicialitza vida i senyals
+	health = max_health
+	emit_signal("max_health_set", max_health)
+	emit_signal("health_changed", health)
 	#Busca el jugador a l'escena
 	find_player()
 	#Busca els marcadors
@@ -83,6 +92,8 @@ func _ready() -> void:
 	spawn_position = global_position
 	#Inicialitza llistes
 	init_spawn_markers()
+	#Connectar amb UI
+	connect_hud()
 	
 func _physics_process(delta: float) -> void:
 	if current_state == State.idle or current_state == State.move:
@@ -414,7 +425,7 @@ func find_top_marker() -> Node2D:
 	var free : Array[Node2D] = []
 	#Mirar al diccionari quin està ocupat
 	for marker in top_markers:
-		var occupied = ground_occupied.get(marker, null)
+		var occupied = top_occupied.get(marker, null)
 		#Si no hi ha cap enemic o l'enemic s'ha eliminat
 		if occupied == null or not is_instance_valid(occupied):
 			#Afegim l'spawn point a la llista dels que no estan ocupats
@@ -498,10 +509,24 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
 		var node: Node = area.get_parent()
 		health -= node.damage_amount
+		health = max(health, 0)
+		emit_signal("health_changed", health)
 		print("Health: ", health)
 		if health <= 0:
 			#PROVA - Mort de l'enemic
+			emit_signal("died")
 			queue_free()
 			return
 		else:
 			hit_feedback()
+
+func connect_hud() -> void:
+	var hud = get_tree().get_first_node_in_group("hud")
+	#Si no es troba el HUD
+	if hud == null:
+		print("FINAL ENEMY: No s'ha trobat el HUD")
+		return
+	#Connectar senyals
+	max_health_set.connect(hud.setup_healthbar)
+	health_changed.connect(hud.update_healthbar)
+	died.connect(hud.hide_healthbar)

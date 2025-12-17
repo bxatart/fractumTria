@@ -1,4 +1,5 @@
-extends Node2D
+extends BaseLevel
 
 func _ready() -> void:
+	super._ready()
 	Sound.playMusic("level2")

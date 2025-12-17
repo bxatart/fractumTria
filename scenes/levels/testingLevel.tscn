@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=4 uid="uid://b7kxw8sfbnwml"]
+[gd_scene load_steps=17 format=4 uid="uid://b7kxw8sfbnwml"]
 
 [ext_resource type="TileSet" uid="uid://blsjebdkgft2x" path="res://assets/sprites/platforms.tres" id="1_8a6tn"]
 [ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="1_86d38"]
 [ext_resource type="Texture2D" uid="uid://26apthyhfvx0" path="res://assets/sprites/platforms_base.png" id="1_mbgpt"]
+[ext_resource type="Script" uid="uid://c0w6oco18bwio" path="res://scripts/testing_level.gd" id="1_q2ifd"]
 [ext_resource type="PackedScene" uid="uid://cjtjm74ubxjwa" path="res://scenes/player/player.tscn" id="2_8a6tn"]
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="4_npxo8"]
 [ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemies/enemy_2.tscn" id="5_u243f"]
@@ -10,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="8_s2rl2"]
 [ext_resource type="PackedScene" uid="uid://bximb6t1vnmx6" path="res://scenes/player/checkpoint.tscn" id="10_kexhe"]
 [ext_resource type="Script" uid="uid://bxpb085c4awnk" path="res://scripts/camera_2d.gd" id="11_7j4wx"]
+[ext_resource type="PackedScene" uid="uid://dycf21wlpjigt" path="res://scenes/levels/game_ui.tscn" id="12_e6ui7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_86d38"]
 texture = ExtResource("1_mbgpt")
@@ -133,6 +135,7 @@ sources/1 = SubResource("TileSetAtlasSource_7dlnn")
 
 [node name="testingLevel" type="Node2D"]
 position = Vector2(-1, 1)
+script = ExtResource("1_q2ifd")
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_86d38")]
 offset = Vector2(0, -360)
@@ -209,3 +212,5 @@ target = NodePath("../Player")
 
 [node name="Checkpoint" parent="." instance=ExtResource("10_kexhe")]
 position = Vector2(177, -85)
+
+[node name="gameUI" parent="." instance=ExtResource("12_e6ui7")]

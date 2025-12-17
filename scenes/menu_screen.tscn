@@ -1,0 +1,118 @@
+[gd_scene load_steps=17 format=3 uid="uid://c3kalwup4b35e"]
+
+[ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="1_e6vgv"]
+[ext_resource type="Texture2D" uid="uid://b43jtejofuyuh" path="res://assets/backgrounds/bg_pause.png" id="1_yft84"]
+[ext_resource type="Script" uid="uid://cgjnslc8d3w76" path="res://scripts/menu_screen.gd" id="2_pn7wg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pn7wg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sm2ni"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tc5hl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_73fcp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ar34o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_amt2q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lkml2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gld7y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g2cvw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0m60l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_smlye"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5aq17"]
+
+[sub_resource type="GDScript" id="GDScript_pn7wg"]
+script/source = "extends Button
+"
+
+[node name="menuScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_e6vgv")
+script = ExtResource("2_pn7wg")
+
+[node name="TextureRect" type="TextureRect" parent="." groups=["background"]]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_yft84")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -53.5
+offset_right = 42.5
+offset_bottom = 53.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="continueButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../exitButton")
+focus_neighbor_bottom = NodePath("../configButton")
+theme_override_colors/font_hover_pressed_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_hover_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_focus_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_colors/font_pressed_color = Color(0.117647, 0.737255, 0.45098, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pn7wg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_sm2ni")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tc5hl")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_73fcp")
+text = "CONTINUE"
+
+[node name="configButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../continueButton")
+focus_neighbor_bottom = NodePath("../exitButton")
+theme_override_colors/font_hover_pressed_color = Color(0.984314, 0.419608, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0.984314, 0.419608, 0.113725, 1)
+theme_override_colors/font_focus_color = Color(0.984314, 0.419608, 0.113725, 1)
+theme_override_colors/font_pressed_color = Color(0.984314, 0.419608, 0.113725, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ar34o")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_amt2q")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_lkml2")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gld7y")
+text = "SETTINGS"
+
+[node name="exitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../configButton")
+focus_neighbor_bottom = NodePath("../continueButton")
+theme_override_colors/font_hover_pressed_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_colors/font_hover_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_colors/font_focus_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_colors/font_pressed_color = Color(0.658824, 0.517647, 0.952941, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_g2cvw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0m60l")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_smlye")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5aq17")
+text = "EXIT"
+script = SubResource("GDScript_pn7wg")
+
+[connection signal="focus_entered" from="VBoxContainer/continueButton" to="." method="_on_continue_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/continueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/configButton" to="." method="_on_config_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/configButton" to="." method="_on_config_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/exitButton" to="." method="_on_exit_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/exitButton" to="." method="_on_exit_button_pressed"]
