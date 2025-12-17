@@ -29,7 +29,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/path = NodePath("worldTint/TextureRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -81,7 +81,7 @@ length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/path = NodePath("worldTint/TextureRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -143,11 +143,16 @@ grow_vertical = 2
 theme = ExtResource("1_org1n")
 script = ExtResource("2_qy7gw")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
+[node name="worldTint" type="Node2D" parent="."]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="worldTint"]
+
+[node name="TextureRect" type="TextureRect" parent="worldTint" groups=["background"]]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_lpwf7")

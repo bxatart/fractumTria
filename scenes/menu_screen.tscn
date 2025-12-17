@@ -42,7 +42,7 @@ grow_vertical = 2
 theme = ExtResource("1_e6vgv")
 script = ExtResource("2_pn7wg")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." groups=["background"]]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameState="*res://scripts/GameState.gd"
 Sound="*res://scenes/sound_manager.tscn"
+Settings="*res://scripts/Settings.gd"
 
 [display]
 

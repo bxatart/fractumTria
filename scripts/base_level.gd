@@ -23,11 +23,11 @@ func _ready() -> void:
 		hud.update_hearts(current)
 	)
 
-func _unhandled_input(event):
+func _unhandled_input(event) -> void:
 	if event.is_action_pressed("pause"):
 		game_ui.open_pause_menu(true, false)
 
-func show_game_over():
+func show_game_over() -> void:
 	var game_over = preload("res://scenes/levels/game_over.tscn").instantiate()
 	game_over.level_scene_path = scene_file_path
 	add_child(game_over)

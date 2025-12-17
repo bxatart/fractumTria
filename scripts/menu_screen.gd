@@ -1,5 +1,7 @@
 extends Control
 
+signal settings_requested
+
 @onready var continue_button: Button = $VBoxContainer/continueButton
 @onready var exit_button: Button = $VBoxContainer/exitButton
 
@@ -29,7 +31,7 @@ func _on_continue_button_pressed() -> void:
 func _on_config_button_pressed() -> void:
 	Sound.playSfx("menuConfirm")
 	await get_tree().create_timer(0.25).timeout
-	# Pantalla de configuració
+	settings_requested.emit()
 
 func _on_exit_button_pressed() -> void:
 	Sound.playSfx("menuBack")
