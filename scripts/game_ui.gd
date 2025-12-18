@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var menu_layer: Control = $menuLayer
+@onready var white_flash: ColorRect = $whiteFlash
 
 func open_pause_menu(is_pause: bool, is_level_select: bool) -> void:
 	#Si ja està obert el menú
@@ -31,3 +32,18 @@ func open_settings(is_pause: bool, is_level_select: bool) -> void:
 		settings.queue_free()
 		open_pause_menu(is_pause, is_level_select)
 	)
+
+func flash_white() -> void:
+	white_flash.visible = true
+	white_flash.modulate.a = 0.0
+	var t = create_tween()
+	t.tween_property(white_flash, "modulate:a", 1.0, 0.35)
+	await t.finished
+	white_flash.modulate.a = 0.0
+	white_flash.visible = false
+
+func flash_white_out() -> void:
+	white_flash.visible = true
+	white_flash.modulate.a = 0.0
+	var t = create_tween()
+	t.tween_property(white_flash, "modulate:a", 1.0, 0.35)

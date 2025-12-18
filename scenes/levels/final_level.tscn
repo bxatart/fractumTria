@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://c26hi6cg10ylk"]
+[gd_scene load_steps=19 format=4 uid="uid://c26hi6cg10ylk"]
 
 [ext_resource type="PackedScene" uid="uid://doyfwebhb78xw" path="res://scenes/levels/base_level.tscn" id="1_lekuc"]
 [ext_resource type="Texture2D" uid="uid://k2k3xf6cofwt" path="res://assets/backgrounds/bg_final_base.png" id="2_lekuc"]
@@ -11,7 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://ctinipsbc2yra" path="res://scenes/enemies/final_enemy.tscn" id="7_ifx55"]
 [ext_resource type="Texture2D" uid="uid://dcwij8qd6fpdt" path="res://assets/sprites/platforms_grey.png" id="8_ve0j8"]
 [ext_resource type="PackedScene" uid="uid://bgvw11ub8858o" path="res://scenes/enemies/enemy_2.tscn" id="9_3xiv5"]
+[ext_resource type="PackedScene" uid="uid://durresdf0tryv" path="res://scenes/levels/shield_switch.tscn" id="9_21cr8"]
+[ext_resource type="PackedScene" uid="uid://b7i8f57vlg0w1" path="res://scenes/levels/heart_switch.tscn" id="10_odfv6"]
 [ext_resource type="PackedScene" uid="uid://cyoyxa1grlhr6" path="res://scenes/enemies/enemy_3.tscn" id="10_rqhej"]
+[ext_resource type="Texture2D" uid="uid://bb1bva2ke623i" path="res://assets/other/full_prism.png" id="15_q4uxy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_21cr8"]
 texture = ExtResource("8_ve0j8")
@@ -40,6 +43,9 @@ physics_layer_0/collision_layer = 7
 physics_layer_0/collision_mask = 56
 sources/0 = SubResource("TileSetAtlasSource_21cr8")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ve0j8"]
+size = Vector2(1.815, 353.875)
+
 [node name="FinalLevel" instance=ExtResource("1_lekuc")]
 script = ExtResource("2_rqhej")
 
@@ -48,7 +54,7 @@ script = ExtResource("2_rqhej")
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" index="0"]
-position = Vector2(320, 0)
+position = Vector2(321, 1)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_lekuc")
 offset = Vector2(0, -360)
@@ -86,10 +92,10 @@ texture = ExtResource("6_jwk10")
 offset = Vector2(0, -360)
 
 [node name="TileMapLayerGreen" parent="." index="1"]
-tile_map_data = PackedByteArray("AAARAPj/AQACAAAAAAASAPj/AQADAAAAAAABAPn/AQACAAAAAAACAPn/AQADAAAAAAAKAPj/AQABAAAAAAA=")
+tile_map_data = PackedByteArray("AAABAPn/AQACAAAAAAACAPn/AQADAAAAAAARAPn/AQACAAAAAAASAPn/AQADAAAAAAAJAPj/AQACAAAAAAALAPj/AQADAAAAAAAKAPj/AQAAAAAAAAA=")
 
 [node name="TileMapLayerOrange" parent="." index="2"]
-tile_map_data = PackedByteArray("AAAFAPf/AQAGAAAAAAAGAPf/AQAEAAAAAAAHAPf/AQAEAAAAAAAAAPz/AQAFAAAAAAATAPz/AQAFAAAAAAAPAPf/AQAHAAAAAAAOAPf/AQAEAAAAAAANAPf/AQAEAAAAAAAMAPf/AQAGAAAAAAAIAPf/AQAHAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAPz/AQAFAAAAAAATAPz/AQAFAAAAAAAFAPj/AQAGAAAAAAAGAPj/AQAEAAAAAAAHAPj/AQAEAAAAAAAIAPj/AQAHAAAAAAAMAPj/AQAGAAAAAAANAPj/AQAEAAAAAAAOAPj/AQAEAAAAAAAPAPj/AQAHAAAAAAA=")
 
 [node name="TileMapLayerPurple" parent="." index="3"]
 tile_map_data = PackedByteArray("AAAOAPz/AQAIAAAAAAAPAPz/AQAIAAAAAAANAPz/AQAKAAAAAAAQAPz/AQALAAAAAAADAPz/AQAKAAAAAAAEAPz/AQAIAAAAAAAFAPz/AQAIAAAAAAAGAPz/AQALAAAAAAA=")
@@ -98,7 +104,15 @@ tile_map_data = PackedByteArray("AAAOAPz/AQAIAAAAAAAPAPz/AQAIAAAAAAANAPz/AQAKAAA
 tile_map_data = PackedByteArray("AAAAAP//AAABAAAAAAABAP//AAABAAAAAAACAP//AAABAAAAAAADAP//AAABAAAAAAAEAP//AAABAAAAAAAFAP//AAABAAAAAAAGAP//AAABAAAAAAAHAP//AAABAAAAAAAIAP//AAABAAAAAAAJAP//AAABAAAAAAAKAP//AAABAAAAAAALAP//AAABAAAAAAAMAP//AAABAAAAAAANAP//AAABAAAAAAAOAP//AAABAAAAAAAPAP//AAABAAAAAAAQAP//AAABAAAAAAARAP//AAABAAAAAAASAP//AAABAAAAAAATAP//AAABAAAAAAA=")
 tile_set = SubResource("TileSet_odfv6")
 
-[node name="Player" parent="." index="5"]
+[node name="shieldSwitch" parent="." index="5" instance=ExtResource("9_21cr8")]
+position = Vector2(63, -226)
+final_enemy_path = NodePath("../Enemies/finalEnemy")
+
+[node name="heartSwitch" parent="." index="6" instance=ExtResource("10_odfv6")]
+position = Vector2(575, -226)
+player_path = NodePath("../Player")
+
+[node name="Player" parent="." index="7"]
 position = Vector2(26, -48)
 level_index = 3
 
@@ -106,10 +120,11 @@ level_index = 3
 limit_right = 640
 limit_bottom = 0
 
-[node name="Enemies" type="Node" parent="." index="6"]
+[node name="Enemies" type="Node" parent="." index="8" groups=["enemies"]]
 
 [node name="finalEnemy" parent="Enemies" index="0" node_paths=PackedStringArray("groundSpawnPoints", "topSpawnPoints", "greenSpawnPoints", "orangeSpawnPoints", "purpleSpawnPoints") instance=ExtResource("7_ifx55")]
 position = Vector2(320, -104)
+max_health = 3
 enemy1_scene = ExtResource("7_e446s")
 enemy2_scene = ExtResource("9_3xiv5")
 enemy3_scene = ExtResource("10_rqhej")
@@ -119,15 +134,15 @@ greenSpawnPoints = NodePath("../../GreenSpawnPoints")
 orangeSpawnPoints = NodePath("../../OrangeSpwanPoints")
 purpleSpawnPoints = NodePath("../../PurpleSpawnPoints")
 
-[node name="GroundSpawnPoints" type="Node2D" parent="." index="7"]
+[node name="GroundSpawnPoints" type="Node2D" parent="." index="9"]
 
 [node name="Marker2D" type="Marker2D" parent="GroundSpawnPoints" index="0"]
-position = Vector2(128, -32)
+position = Vector2(168, -32)
 
 [node name="Marker2D2" type="Marker2D" parent="GroundSpawnPoints" index="1"]
 position = Vector2(496, -32)
 
-[node name="TopSpawnPoints" type="Node2D" parent="." index="8"]
+[node name="TopSpawnPoints" type="Node2D" parent="." index="10"]
 
 [node name="Marker2D" type="Marker2D" parent="TopSpawnPoints" index="0"]
 position = Vector2(256, -328)
@@ -135,7 +150,7 @@ position = Vector2(256, -328)
 [node name="Marker2D2" type="Marker2D" parent="TopSpawnPoints" index="1"]
 position = Vector2(512, -328)
 
-[node name="PurpleSpawnPoints" type="Node2D" parent="." index="9"]
+[node name="PurpleSpawnPoints" type="Node2D" parent="." index="11"]
 
 [node name="Marker2D" type="Marker2D" parent="PurpleSpawnPoints" index="0"]
 position = Vector2(128, -128)
@@ -149,35 +164,60 @@ position = Vector2(448, -128)
 [node name="Marker2D4" type="Marker2D" parent="PurpleSpawnPoints" index="3"]
 position = Vector2(512, -128)
 
-[node name="OrangeSpwanPoints" type="Node2D" parent="." index="10"]
+[node name="OrangeSpwanPoints" type="Node2D" parent="." index="12"]
 
 [node name="Marker2D" type="Marker2D" parent="OrangeSpwanPoints" index="0"]
 position = Vector2(16, -128)
 
 [node name="Marker2D2" type="Marker2D" parent="OrangeSpwanPoints" index="1"]
-position = Vector2(192, -288)
+position = Vector2(192, -257)
 
 [node name="Marker2D3" type="Marker2D" parent="OrangeSpwanPoints" index="2"]
-position = Vector2(256, -288)
+position = Vector2(256, -257)
 
 [node name="Marker2D4" type="Marker2D" parent="OrangeSpwanPoints" index="3"]
-position = Vector2(416, -288)
+position = Vector2(416, -257)
 
 [node name="Marker2D5" type="Marker2D" parent="OrangeSpwanPoints" index="4"]
-position = Vector2(480, -288)
+position = Vector2(480, -257)
 
 [node name="Marker2D6" type="Marker2D" parent="OrangeSpwanPoints" index="5"]
 position = Vector2(624, -128)
 
-[node name="GreenSpawnPoints" type="Node2D" parent="." index="11"]
+[node name="GreenSpawnPoints" type="Node2D" parent="." index="13"]
 
-[node name="Marker2D" type="Marker2D" parent="GreenSpawnPoints" index="0"]
-position = Vector2(64, -224)
+[node name="Marker2D1" type="Marker2D" parent="GreenSpawnPoints" index="0"]
+position = Vector2(63, -256)
 
 [node name="Marker2D2" type="Marker2D" parent="GreenSpawnPoints" index="1"]
 position = Vector2(336, -256)
 
 [node name="Marker2D3" type="Marker2D" parent="GreenSpawnPoints" index="2"]
 position = Vector2(576, -256)
+
+[node name="Walls" type="Node2D" parent="." index="15"]
+
+[node name="Left" type="StaticBody2D" parent="Walls" index="0"]
+collision_layer = 7
+collision_mask = 56
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" index="0"]
+position = Vector2(-1.0925, -176.937)
+shape = SubResource("RectangleShape2D_ve0j8")
+
+[node name="Right" type="StaticBody2D" parent="Walls" index="1"]
+position = Vector2(640, 0)
+collision_layer = 7
+collision_mask = 56
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls/Right" index="0"]
+position = Vector2(0, -176)
+shape = SubResource("RectangleShape2D_ve0j8")
+
+[node name="prismRestored" type="Sprite2D" parent="." index="16"]
+visible = false
+position = Vector2(320, -112)
+scale = Vector2(1.79661, 1.79661)
+texture = ExtResource("15_q4uxy")
 
 [editable path="gameUI"]

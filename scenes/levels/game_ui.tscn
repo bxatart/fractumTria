@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dycf21wlpjigt"]
 
 [ext_resource type="Script" uid="uid://gej8ejxf26hu" path="res://scripts/game_ui.gd" id="1_hspwf"]
-[ext_resource type="Script" uid="uid://du4ny67qj05db" path="res://scripts/hud.gd" id="2_1kue3"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="2_1kue3"]
 [ext_resource type="Texture2D" uid="uid://uxcj5vsuod0p" path="res://assets/other/icon_green.png" id="3_iu5xu"]
 [ext_resource type="Texture2D" uid="uid://guw0naiu513b" path="res://assets/other/icon_orange.png" id="4_8380e"]
 [ext_resource type="Texture2D" uid="uid://cmj0hdmfp2wv" path="res://assets/other/icon_purple.png" id="5_kkp6q"]
@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dlovavwxda3l2" path="res://assets/other/healthbar_frame.png" id="9_hpnya"]
 [ext_resource type="Texture2D" uid="uid://dg42mmrx3jcsu" path="res://assets/other/healthbar_fill.png" id="10_hbgs6"]
 
-[node name="gameUI" type="CanvasLayer"]
+[node name="gameUI" type="CanvasLayer" groups=["game_ui"]]
 script = ExtResource("1_hspwf")
 
 [node name="HUD" type="Control" parent="." groups=["hud"]]
@@ -65,3 +65,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="whiteFlash" type="ColorRect" parent="."]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

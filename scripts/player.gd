@@ -18,6 +18,7 @@ extends CharacterBody2D
 @export var exit_limit: float = 2000.0 #Sortir del nivell
 @export var game_over_scene: PackedScene = preload("res://scenes/levels/game_over.tscn")
 @export var level_index: int = 0
+@export var fire_rate: float = 0.18
 
 #Dany al jugador
 var is_hurt: bool = false
@@ -52,6 +53,7 @@ var tilt_speed: float = 10.0
 var bullet = preload("res://scenes/player/bullet.tscn")
 var muzzle_position
 var shoot_timer: float = 0.0
+var fire: float = 0.0
 
 #PROVA - Posició inicial
 var spawn_position: Vector2
@@ -107,6 +109,7 @@ func _physics_process(delta: float) -> void:
 	if shoot_timer == 0.0:
 		player_idle(delta)
 		player_run(delta)
+	fire = max(0.0, fire - delta)
 	player_shoot(delta)
 	#Mou
 	move_and_slide()
@@ -226,14 +229,18 @@ func player_shoot(delta: float) -> void:
 	#No disparar si no es pot controlar el jugador
 	if not can_control:
 		return
+	#Evita disparar molts cops seguits
+	if fire > 0.0:
+		return
 	if last_dir  != 0 and Input.is_action_just_pressed("shoot"):
+		fire = fire_rate
 		var bullet_instance: Area2D = bullet.instantiate()
 		#Posició d'inici de la bala
 		bullet_instance.global_position = muzzle.global_position
 		#Afegeix la bala a l'escena
 		get_parent().add_child(bullet_instance)
 		#Direcció i color de la bala
-		bullet_instance.setup(last_dir, GameState.current_color)
+		bullet_instance.setup(last_dir, GameState.current_color, global_position.y)
 		current_state = State.shoot
 		#Temporitzador
 		shoot_timer = 0.15

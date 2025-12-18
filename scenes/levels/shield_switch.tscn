@@ -1,0 +1,84 @@
+[gd_scene load_steps=10 format=3 uid="uid://durresdf0tryv"]
+
+[ext_resource type="Texture2D" uid="uid://c8vv2g35ay6eq" path="res://assets/other/switch_icon.png" id="1_3ljwc"]
+[ext_resource type="Script" uid="uid://bot2vqieky26w" path="res://scripts/shield_switch.gd" id="1_427n8"]
+[ext_resource type="Texture2D" uid="uid://cr80ek7c2n28w" path="res://assets/other/switch_shield.png" id="2_427n8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8lgh"]
+atlas = ExtResource("1_3ljwc")
+region = Rect2(64, 0, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2nen"]
+atlas = ExtResource("1_3ljwc")
+region = Rect2(0, 0, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jaeiy"]
+atlas = ExtResource("1_3ljwc")
+region = Rect2(32, 0, 32, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d7op0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8lgh")
+}],
+"loop": true,
+"name": &"cooldown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2nen")
+}],
+"loop": true,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jaeiy")
+}],
+"loop": true,
+"name": &"ready",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8lgh"]
+size = Vector2(52, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_427n8"]
+size = Vector2(52, 4)
+
+[node name="shieldSwitch" type="Area2D"]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_427n8")
+
+[node name="buttonAnim" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_d7op0")
+animation = &"cooldown"
+
+[node name="shieldIcon" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(0, -28)
+scale = Vector2(2, 2)
+texture = ExtResource("2_427n8")
+
+[node name="Switch" type="StaticBody2D" parent="."]
+collision_layer = 7
+collision_mask = 56
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Switch"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_j8lgh")
+
+[node name="Trigger" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_427n8")
+
+[connection signal="body_entered" from="Trigger" to="." method="_on_trigger_body_entered"]
+[connection signal="body_exited" from="Trigger" to="." method="_on_trigger_body_exited"]
