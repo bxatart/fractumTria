@@ -12,16 +12,13 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
 	if pause:
-		Sound.pauseMusic()
-		exit_button.text = "EXIT TO LEVEL SELECT"
+		exit_button.text = tr("EXIT TO LEVEL SELECT")
 	elif level_select:
-		exit_button.text = "EXIT TO TITLE SCREEN"
+		exit_button.text = tr("EXIT TO TITLE SCREEN")
 	await get_tree().process_frame
 	continue_button.grab_focus()
 
 func _on_continue_button_pressed() -> void:
-	if pause:
-		Sound.resumeMusic()
 	get_tree().paused = false
 	Sound.playSfx("menuConfirm")
 	await get_tree().create_timer(0.25).timeout

@@ -6,6 +6,9 @@ extends CharacterBody2D
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var hurtbox_collision: CollisionShape2D = $Hurtbox/CollisionShape2D
 @onready var capsule_shape: CapsuleShape2D = hurtbox_collision.shape
+@onready var shield_area: Area2D = $Shield
+@onready var shield_sprite: Sprite2D = $Shield/shieldSprite
+@onready var shield_impact: Sprite2D = $Shield/shieldImpact
 
 @export var enemy_color: GameState.color = GameState.color.GREEN
 @export var patrol_points: Node2D
@@ -18,6 +21,15 @@ signal max_health_set(max_hp: int)
 signal health_changed(current_hp: int)
 signal died
 
+#Escut
+var shield_active: bool = true
+var shield_running: bool = false
+var shield_flash_running: bool = false
+const bullet_layer = 5
+
+#Mort
+@export var death_scene: PackedScene = preload("res://scenes/enemies/final_enemy_death.tscn")
+
 #Enemics
 @export var enemy1_scene: PackedScene
 @export var enemy2_scene: PackedScene
@@ -29,7 +41,8 @@ signal died
 @export var greenSpawnPoints: Node2D
 @export var orangeSpawnPoints: Node2D
 @export var purpleSpawnPoints: Node2D
-var spawn_wave_size: int = 2
+var spawn_wave_size: int = 1
+
 #Llistes de spawn points
 var ground_markers: Array[Node2D] = []
 var top_markers: Array[Node2D] = []
@@ -66,12 +79,14 @@ var tilt_angle: float = 10.0
 var tilt_speed: float = 10.0
 
 #Estat de l'enemic
-enum State { idle, move, shoot, spawn, change_color }
+enum State { idle, move, shoot, spawn, change_color, death }
 var current_state: State
 
 func _ready() -> void:
 	add_to_group("enemies")
 	add_to_group("final_boss")
+	#Escut
+	enable_shield()
 	#Inicialitza vida i senyals
 	health = max_health
 	emit_signal("max_health_set", max_health)
@@ -94,7 +109,7 @@ func _ready() -> void:
 	init_spawn_markers()
 	#Connectar amb UI
 	connect_hud()
-	
+
 func _physics_process(delta: float) -> void:
 	if current_state == State.idle or current_state == State.move:
 		#Estat idle
@@ -135,6 +150,10 @@ func get_animation(delta) -> void:
 	var t: float = clamp(delta * tilt_speed, 0.0, 1.0)
 	anim.rotation = lerp_angle(anim.rotation, target_tilt, t)
 	hurtbox_collision.rotation = anim.rotation
+	if shield_active:
+		anim.self_modulate = Color(0.7, 0.9, 1.0, 1.0)
+	else:
+		anim.self_modulate = Color(1, 1, 1, 1)
 
 func enemy_idle(delta: float) -> void:
 	if !canMove:
@@ -265,8 +284,8 @@ func enemy_spawn_attack() -> void:
 	#Durada de l'animació
 	var duration: float = 5.0
 	#Fer girar l'animació 360 graus
-	var gir = create_tween()
-	gir.tween_property(anim, "rotation_degrees", anim.rotation_degrees + 360.0, duration)
+	#var gir = create_tween()
+	#gir.tween_property(anim, "rotation_degrees", anim.rotation_degrees + 360.0, duration)
 	#Esperar a que acabi l'animació
 	await anim.animation_finished
 	#Tornar a la rotació original
@@ -504,21 +523,30 @@ func hit_feedback() -> void:
 		anim.self_modulate = Color(1, 1, 1, 1)
 	feedback = false
 
-func _on_hurtbox_area_entered(area: Area2D) -> void:
-	print("FINAL ENEMY: Hurtbox area entered")
-	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
-		var node: Node = area.get_parent()
-		health -= node.damage_amount
-		health = max(health, 0)
-		emit_signal("health_changed", health)
-		print("Health: ", health)
-		if health <= 0:
-			#PROVA - Mort de l'enemic
-			emit_signal("died")
-			queue_free()
-			return
-		else:
-			hit_feedback()
+func enable_shield() -> void:
+	shield_active = true
+	#Activa col·lisions amb la bala
+	shield_area.collision_layer = 6
+	shield_area.set_collision_mask_value(bullet_layer, true)
+	shield_sprite.visible = true
+	shield_impact.visible = false
+
+func disable_shield(seconds: float) -> void:
+	if shield_running:
+		return
+	shield_running = true
+	shield_active = false
+	#Desactiva les collision layers
+	shield_area.collision_layer = 0
+	shield_area.set_collision_mask_value(bullet_layer, false)
+	shield_sprite.visible = false
+	shield_impact.visible = false
+	await get_tree().create_timer(seconds).timeout
+	enable_shield()
+	shield_running = false
+
+func is_changing() -> bool:
+	return current_state == State.change_color
 
 func connect_hud() -> void:
 	var hud = get_tree().get_first_node_in_group("hud")
@@ -530,3 +558,67 @@ func connect_hud() -> void:
 	max_health_set.connect(hud.setup_healthbar)
 	health_changed.connect(hud.update_healthbar)
 	died.connect(hud.hide_healthbar)
+
+func die() -> void:
+	#Guarda posició de l'enemic
+	var p = global_position
+	var parent = get_parent()
+	#Guarda el color final de l'enemic
+	var final_color = enemy_color
+	#Canviar l'enemic per l'escena final de mort
+	var death = death_scene.instantiate()
+	#Coloca l'escena a la posició final de l'enemic
+	death.global_position = p
+	#Afegeix l'escena
+	parent.add_child(death)
+	#Animació
+	death.play_death(final_color)
+	#Elimina l'enemic
+	queue_free()
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("FINAL ENEMY: Hurtbox area entered")
+	var node = area.get_parent()
+	if node == null:
+		return
+	#No rep dany si l'escut està actiu
+	if shield_active:
+		return
+	#No rep dany si està fent alguna animació
+	if is_changing():
+		return
+	if node.has_method("get_damage_amount") and node.color == enemy_color:
+		health -= node.damage_amount
+		health = max(health, 0)
+		emit_signal("health_changed", health)
+		print("Health: ", health)
+		if health <= 0:
+			#Mort de l'enemic
+			die()
+			return
+		else:
+			hit_feedback()
+
+func _on_shield_area_entered(area: Area2D) -> void:
+	var node = area.get_parent()
+	if node == null:
+		return
+	#Detecta només les bales
+	if not node.is_in_group("bullets"):
+		return
+	#Evita flash si entren moltes bales de cop
+	if shield_flash_running:
+		node.queue_free()
+		return
+	shield_flash_running = true
+	#Flash
+	shield_sprite.visible = false
+	shield_impact.visible = true
+	#Elimina la bala
+	node.queue_free()
+	#Espera 1 segon
+	await get_tree().create_timer(0.5).timeout
+	if shield_active:
+		shield_impact.visible = false
+		shield_sprite.visible = true
+	shield_flash_running = false

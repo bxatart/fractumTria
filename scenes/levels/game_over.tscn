@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b43jtejofuyuh" path="res://assets/backgrounds/bg_pause.png" id="1_lpwf7"]
 [ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="1_org1n"]
-[ext_resource type="Script" uid="uid://df376pl2l6ujo" path="res://scripts/game_over.gd" id="2_qy7gw"]
+[ext_resource type="Script" path="res://scripts/game_over.gd" id="2_qy7gw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_org1n"]
 
@@ -29,7 +29,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("worldTint/TextureRect:modulate")
+tracks/0/path = NodePath("TextureRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -81,7 +81,7 @@ length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("worldTint/TextureRect:modulate")
+tracks/0/path = NodePath("TextureRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -143,16 +143,11 @@ grow_vertical = 2
 theme = ExtResource("1_org1n")
 script = ExtResource("2_qy7gw")
 
-[node name="worldTint" type="Node2D" parent="."]
-
-[node name="CanvasModulate" type="CanvasModulate" parent="worldTint"]
-
-[node name="TextureRect" type="TextureRect" parent="worldTint" groups=["background"]]
+[node name="TextureRect" type="TextureRect" parent="." groups=["background"]]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 320.0
-offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_lpwf7")

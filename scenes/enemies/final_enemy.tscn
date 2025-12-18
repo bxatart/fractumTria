@@ -1,8 +1,10 @@
-[gd_scene load_steps=44 format=3 uid="uid://ctinipsbc2yra"]
+[gd_scene load_steps=46 format=3 uid="uid://ctinipsbc2yra"]
 
 [ext_resource type="Script" uid="uid://bm3snhs1guem7" path="res://scripts/final_enemy.gd" id="1_bfi4t"]
 [ext_resource type="Texture2D" uid="uid://7825d5dnvtq6" path="res://assets/sprites/final_enemy_attack2.png" id="1_d3ay7"]
 [ext_resource type="Texture2D" uid="uid://dj0wtn45b2v5m" path="res://assets/sprites/final_enemy.png" id="1_oab66"]
+[ext_resource type="Texture2D" uid="uid://bytoa5qxvm25r" path="res://assets/other/shield.png" id="4_5tewf"]
+[ext_resource type="Texture2D" uid="uid://cnuwg5mfabj5d" path="res://assets/other/shield_hit.png" id="5_134ew"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_56y2i"]
 atlas = ExtResource("1_d3ay7")
@@ -169,6 +171,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_56y2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjpp4")
 }],
 "loop": false,
 "name": &"attack2_green",
@@ -189,6 +194,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_04w8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efuu3")
 }],
 "loop": false,
 "name": &"attack2_orange",
@@ -209,6 +217,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n8dt6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hucwr")
 }],
 "loop": false,
 "name": &"attack2_purple",
@@ -345,24 +356,41 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d3ay7"]
 radius = 46.0
-height = 136.0
+height = 122.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bfi4t"]
 radius = 46.0
-height = 142.0
+height = 122.0
 
 [node name="finalEnemy" type="CharacterBody2D" node_paths=PackedStringArray("patrol_points")]
 script = ExtResource("1_bfi4t")
 patrol_points = NodePath("PatrolPoints")
-health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_56y2i")
-animation = &"attack2_purple"
+animation = &"attack2_green"
+
+[node name="Shield" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Shield"]
+position = Vector2(1, -14)
+polygon = PackedVector2Array(-57, -42, -25, -50, -1, -66, 23, -50, 55, -42, 55, 30, 43, 54, 0, 80, -39, 59, -57, 24)
+
+[node name="shieldSprite" type="Sprite2D" parent="Shield"]
+position = Vector2(0.999998, -8.05262)
+scale = Vector2(1.57895, 1.57895)
+texture = ExtResource("4_5tewf")
+
+[node name="shieldImpact" type="Sprite2D" parent="Shield"]
+position = Vector2(1, -7.78946)
+scale = Vector2(1.57895, 1.57895)
+texture = ExtResource("5_134ew")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 4)
+position = Vector2(2, -3)
 shape = SubResource("CapsuleShape2D_d3ay7")
 debug_color = Color(0.204604, 0.603622, 0.601403, 0.42)
 
@@ -382,7 +410,7 @@ collision_layer = 32
 collision_mask = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(2, 1)
+position = Vector2(2, -4)
 shape = SubResource("CapsuleShape2D_bfi4t")
 debug_color = Color(0.944582, 0.207528, 0.295258, 0.42)
 
@@ -394,6 +422,7 @@ position = Vector2(-80, 48)
 [node name="Point2" type="Marker2D" parent="PatrolPoints"]
 position = Vector2(88, 48)
 
+[connection signal="area_entered" from="Shield" to="." method="_on_shield_area_entered"]
 [connection signal="timeout" from="patrolTimer" to="." method="_on_patrol_timer_timeout"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

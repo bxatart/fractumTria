@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://doyfwebhb78xw" path="res://scenes/levels/base_level.tscn" id="1_014kd"]
 [ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="2_bswci"]
-[ext_resource type="Script" uid="uid://hodty6ci7fxw" path="res://scripts/level_1.gd" id="2_x42e6"]
+[ext_resource type="Script" path="res://scripts/level_1.gd" id="2_x42e6"]
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="3_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="4_6761a"]
 [ext_resource type="PackedScene" uid="uid://bximb6t1vnmx6" path="res://scenes/player/checkpoint.tscn" id="5_sk5k4"]

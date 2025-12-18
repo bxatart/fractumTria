@@ -9,6 +9,7 @@ var bullet_impact_effect = preload("res://scenes/player/bullet_impact.tscn")
 
 var speed: int = 100 #Velocitat
 var direction: float = 1.0
+var pos_y: float = 0.0 #Guardar alçada de la bala
 var color: GameState.color = GameState.color.GREEN
 
 var damage_amount: int = 1
@@ -17,7 +18,8 @@ func _ready() -> void:
 	add_to_group("bullets")
 	get_tree().create_timer(timer).timeout.connect(queue_free)
 
-func setup(new_direction: float, new_color: GameState.color) -> void:
+func setup(new_direction: float, new_color: GameState.color, y: float) -> void:
+	pos_y = y
 	direction = new_direction
 	color = new_color
 	print("BALA setup -> direction:", direction, " color:", color)

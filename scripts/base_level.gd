@@ -4,8 +4,12 @@ extends Node2D
 @onready var game_ui: CanvasLayer = $gameUI
 @onready var player: CharacterBody2D = $Player
 @onready var hud: Control = $gameUI/HUD
+@onready var prism_restored: Sprite2D = $prismRestored
+
+var ending_running = false
 
 func _ready() -> void:
+	add_to_group("baseLevel")
 	player.max_health = GameState.player_max_health
 	player.health = clamp(GameState.player_health, 0, player.max_health)
 	player.emit_signal("health_changed", player.health, player.max_health)
@@ -31,3 +35,29 @@ func show_game_over() -> void:
 	var game_over = preload("res://scenes/levels/game_over.tscn").instantiate()
 	game_over.level_scene_path = scene_file_path
 	add_child(game_over)
+
+func trigger_game_ending() -> void:
+	if ending_running:
+		return
+	ending_running = true
+	player.disable_control()
+	#Pausa el joc
+	get_tree().paused = true
+	game_ui.process_mode = Node.PROCESS_MODE_ALWAYS
+	#Flash 1
+	await game_ui.flash_white()
+	#Amaga el jugador
+	player.visible = false
+	#Amaga l'enemic final
+	for n in get_tree().get_nodes_in_group("finalEnemy"):
+		n.visible = false
+	#Amaga el hud
+	hud.visible = false
+	#Mostra el prisma
+	prism_restored.visible = true
+	await get_tree().create_timer(1.0).timeout
+	await game_ui.flash_white_out()
+	await get_tree().create_timer(1.5).timeout
+	#Canvia a escena final
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/ending.tscn")
