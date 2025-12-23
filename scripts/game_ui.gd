@@ -2,6 +2,9 @@ extends CanvasLayer
 
 @onready var menu_layer: Control = $menuLayer
 @onready var white_flash: ColorRect = $whiteFlash
+@onready var tutorial_box: Control = $tutorialBox
+@onready var tutorial_text: Label = $tutorialBox/tutorialText
+@onready var tutorial_anim: AnimationPlayer = $tutorialBox/AnimationPlayer
 
 func open_pause_menu(is_pause: bool, is_level_select: bool) -> void:
 	#Si ja està obert el menú
@@ -32,6 +35,13 @@ func open_settings(is_pause: bool, is_level_select: bool) -> void:
 		settings.queue_free()
 		open_pause_menu(is_pause, is_level_select)
 	)
+
+func show_tutorial(text: String) -> void:
+	tutorial_text.text = tr(text)
+	tutorial_anim.play("show")
+
+func hide_tutorial() -> void:
+	tutorial_anim.play("hide")
 
 func flash_white() -> void:
 	white_flash.visible = true

@@ -1,8 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://dl2cvk41250sk"]
+[gd_scene load_steps=20 format=3 uid="uid://uexm6dsujn08"]
 
 [ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="1_05p07"]
 [ext_resource type="Texture2D" uid="uid://b43jtejofuyuh" path="res://assets/backgrounds/bg_pause.png" id="1_cr101"]
-[ext_resource type="Script" uid="uid://dh51mqj3vg4er" path="res://scripts/settings_menu.gd" id="1_lwwgp"]
+[ext_resource type="Script" path="res://scripts/settings_menu.gd" id="1_lwwgp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wswnh"]
 bg_color = Color(0.917647, 0.678431, 0.929412, 1)
@@ -247,7 +247,7 @@ autowrap_mode = 3
 [node name="changeColor" type="Label" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content/controlsSection/controlsColumns/labels"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Change color:"
+text = "Switch color:"
 autowrap_mode = 3
 
 [node name="shoot" type="Label" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content/controlsSection/controlsColumns/labels"]

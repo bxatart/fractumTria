@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bvpx68g84lce"]
+[gd_scene load_steps=0 format=3 uid="uid://bvpx68g84lce"]
 
 [node name="heartIcon" type="TextureRect"]
 offset_right = 32.0
