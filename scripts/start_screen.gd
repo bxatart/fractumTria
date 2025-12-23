@@ -23,7 +23,7 @@ func start_game() -> void:
 	#PROVA - Hi ha d'anar la cutscene primer
 	Sound.stopMusic()
 	await get_tree().create_timer(0.5).timeout
-	get_tree().change_scene_to_file("res://scenes/level_select.tscn")
+	get_tree().change_scene_to_file("res://scenes/intro.tscn")
 
 func _on_credits_button_pressed() -> void:
 	#Fer visible la pantalla de crèdits

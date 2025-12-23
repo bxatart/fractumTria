@@ -215,6 +215,8 @@ func enemy_shoot() -> void:
 	#Direcció cap al jugador
 	var dir: Vector2 = player.global_position - muzzle.global_position
 	wave_instance.setup(dir, enemy_color, wave_speed)
+	#So
+	Sound.playEnemySfx("wave", global_position)
 	#Torna a l'estat anterior
 	current_state = prev_state
 	canMove = prev_canMove
@@ -594,6 +596,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		print("Health: ", health)
 		if health <= 0:
 			#Mort de l'enemic
+			emit_signal("died")
 			die()
 			return
 		else:

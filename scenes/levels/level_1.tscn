@@ -1,11 +1,27 @@
-[gd_scene load_steps=8 format=4 uid="uid://dqpfobno3p4nb"]
+[gd_scene load_steps=14 format=4 uid="uid://dqpfobno3p4nb"]
 
 [ext_resource type="PackedScene" uid="uid://doyfwebhb78xw" path="res://scenes/levels/base_level.tscn" id="1_014kd"]
 [ext_resource type="PackedScene" uid="uid://d2toht1hj6mvu" path="res://scenes/parallax_background_base.tscn" id="2_bswci"]
-[ext_resource type="Script" path="res://scripts/level_1.gd" id="2_x42e6"]
+[ext_resource type="Script" uid="uid://hodty6ci7fxw" path="res://scripts/level_1.gd" id="2_x42e6"]
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="3_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="4_6761a"]
 [ext_resource type="PackedScene" uid="uid://bximb6t1vnmx6" path="res://scenes/player/checkpoint.tscn" id="5_sk5k4"]
+[ext_resource type="Script" uid="uid://cg48o2carmi1k" path="res://scripts/tutorial.gd" id="6_oc4kc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dga24"]
+size = Vector2(224, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sk5k4"]
+size = Vector2(272, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oc4kc"]
+size = Vector2(138, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxy0u"]
+size = Vector2(168, 94.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8va5"]
+size = Vector2(112, 66)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6761a"]
 size = Vector2(1.815, 353.875)
@@ -20,10 +36,10 @@ transform = Transform2D(1, 0, 0, 1, 0, -360)
 [node name="TileMapLayerGreen" parent="." index="1"]
 z_index = -1
 position = Vector2(0, 64)
-tile_map_data = PackedByteArray("AAAAAP3/AQAAAAAAAAABAP3/AQAAAAAAAAACAP3/AQAAAAAAAAADAP3/AQAAAAAAAAAEAP3/AQAAAAAAAAAFAP3/AQAAAAAAAAAGAP3/AQAAAAAAAAAHAP3/AQAAAAAAAAAIAP3/AQAAAAAAAAAJAP3/AQAAAAAAAAAKAP3/AQAAAAAAAAALAP3/AQAAAAAAAAAMAP3/AQAAAAAAAAANAP3/AQAAAAAAAAAOAP3/AQAAAAAAAAAPAP3/AQAAAAAAAAAQAP3/AQADAAAAAAAKAPz/AAAAAAAAAAATAPv/AQAAAAAAAAAUAPv/AQAAAAAAAAAVAPv/AQAAAAAAAAASAPv/AQACAAAAAAAWAPv/AQADAAAAAAAcAPz/AQACAAAAAAAdAPz/AQAAAAAAAAAeAPz/AQAAAAAAAAAfAPz/AQAAAAAAAAAgAPz/AQAAAAAAAAAhAPz/AQAAAAAAAAAiAPz/AQAAAAAAAAAjAPz/AQAAAAAAAAAkAPz/AQAAAAAAAAAlAPz/AQADAAAAAAAgAPv/AAAAAAAAAAAYAPj/AQACAAAAAAAZAPj/AQAAAAAAAAAbAPj/AQADAAAAAAAaAPj/AQAAAAAAAAA/APr/AQAAAAAAAABAAPr/AQAAAAAAAABBAPr/AQAAAAAAAABCAPr/AQAAAAAAAABDAPr/AQAAAAAAAABEAPr/AQAAAAAAAABFAPr/AQAAAAAAAABGAPr/AQAAAAAAAABHAPr/AQAAAAAAAABIAPr/AQAAAAAAAABJAPr/AQAAAAAAAABKAPr/AQAAAAAAAABLAPr/AQAAAAAAAABMAPr/AQAAAAAAAABNAPr/AQAAAAAAAABOAPr/AQADAAAAAACCAPr/AQAAAAAAAACDAPr/AQAAAAAAAACEAPr/AQAAAAAAAACFAPr/AQAAAAAAAACGAPr/AQAAAAAAAACHAPr/AQAAAAAAAACIAPr/AQAAAAAAAACJAPr/AQAAAAAAAACKAPr/AQAAAAAAAACLAPr/AQAAAAAAAACMAPr/AQAAAAAAAACNAPr/AQAAAAAAAACOAPr/AQAAAAAAAACPAPr/AQAAAAAAAAA7APr/AQACAAAAAAA8APr/AQAAAAAAAAA9APr/AQAAAAAAAAA+APr/AQAAAAAAAABIAPn/AAAAAAAAAABxAPf/AQACAAAAAAByAPf/AQAAAAAAAABzAPf/AQAAAAAAAAB0APf/AQAAAAAAAAB1APf/AQADAAAAAAB/APr/AQACAAAAAACAAPr/AQAAAAAAAACBAPr/AQAAAAAAAACQAPr/AQAAAAAAAACRAPr/AQAAAAAAAACSAPr/AQAAAAAAAACTAPr/AQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAP3/AQAAAAAAAAABAP3/AQAAAAAAAAACAP3/AQAAAAAAAAADAP3/AQAAAAAAAAAEAP3/AQAAAAAAAAAFAP3/AQAAAAAAAAAGAP3/AQAAAAAAAAAHAP3/AQAAAAAAAAAIAP3/AQAAAAAAAAAJAP3/AQAAAAAAAAAKAP3/AQAAAAAAAAALAP3/AQAAAAAAAAAMAP3/AQAAAAAAAAANAP3/AQAAAAAAAAAOAP3/AQAAAAAAAAAPAP3/AQAAAAAAAAAQAP3/AQADAAAAAAAKAPz/AAAAAAAAAAATAPv/AQAAAAAAAAAUAPv/AQAAAAAAAAAVAPv/AQAAAAAAAAASAPv/AQACAAAAAAAWAPv/AQADAAAAAAAYAPj/AQACAAAAAAAZAPj/AQAAAAAAAAAbAPj/AQADAAAAAAAaAPj/AQAAAAAAAAA/APr/AQAAAAAAAABAAPr/AQAAAAAAAABBAPr/AQAAAAAAAABCAPr/AQAAAAAAAABDAPr/AQAAAAAAAABEAPr/AQAAAAAAAABFAPr/AQAAAAAAAABGAPr/AQAAAAAAAABHAPr/AQAAAAAAAABIAPr/AQAAAAAAAABJAPr/AQAAAAAAAABKAPr/AQAAAAAAAABLAPr/AQAAAAAAAABMAPr/AQAAAAAAAABNAPr/AQAAAAAAAABOAPr/AQADAAAAAACCAPr/AQAAAAAAAACDAPr/AQAAAAAAAACEAPr/AQAAAAAAAACFAPr/AQAAAAAAAACGAPr/AQAAAAAAAACHAPr/AQAAAAAAAACIAPr/AQAAAAAAAACJAPr/AQAAAAAAAACKAPr/AQAAAAAAAACLAPr/AQAAAAAAAACMAPr/AQAAAAAAAACNAPr/AQAAAAAAAACOAPr/AQAAAAAAAACPAPr/AQAAAAAAAAA7APr/AQACAAAAAAA8APr/AQAAAAAAAAA9APr/AQAAAAAAAAA+APr/AQAAAAAAAABIAPn/AAAAAAAAAABxAPf/AQACAAAAAAByAPf/AQAAAAAAAABzAPf/AQAAAAAAAAB0APf/AQAAAAAAAAB1APf/AQADAAAAAAB/APr/AQACAAAAAACAAPr/AQAAAAAAAACBAPr/AQAAAAAAAACQAPr/AQAAAAAAAACRAPr/AQAAAAAAAACSAPr/AQAAAAAAAACTAPr/AQAAAAAAAAAdAPj/AQACAAAAAAAeAPj/AQAAAAAAAAAfAPj/AQAAAAAAAAAgAPj/AQAAAAAAAAAhAPf/AAAAAAAAAAAhAPj/AQAAAAAAAAAiAPj/AQAAAAAAAAAjAPj/AQAAAAAAAAAkAPj/AQAAAAAAAAAlAPj/AQAAAAAAAAAmAPj/AQADAAAAAAA=")
 
 [node name="TileMapLayerOrange" parent="." index="2"]
-tile_map_data = PackedByteArray("AAAoAP7/AQAGAAAAAAApAP7/AQAEAAAAAAAqAP7/AQAEAAAAAAArAP3/AAAAAAAAAAArAP7/AQAEAAAAAAAsAP7/AQAEAAAAAAAtAP7/AQAEAAAAAAAuAP7/AQAHAAAAAABSAPn/AQAEAAAAAABTAPn/AQAEAAAAAABUAPn/AQAEAAAAAABVAPn/AQAEAAAAAABWAPn/AQAEAAAAAABXAPn/AQAEAAAAAABYAPn/AQAEAAAAAABZAPn/AQAEAAAAAABaAPn/AQAEAAAAAABbAPn/AQAEAAAAAABcAPn/AQAHAAAAAABQAPn/AQAGAAAAAABRAPn/AQAEAAAAAABUAPj/AAAAAAAAAABsAPr/AQAGAAAAAABtAPr/AQAEAAAAAABuAPr/AQAEAAAAAABvAPr/AQAEAAAAAABwAPr/AQAHAAAAAAA=")
+tile_map_data = PackedByteArray("AAAoAP7/AQAGAAAAAAApAP7/AQAEAAAAAAAqAP7/AQAEAAAAAAArAP3/AAAAAAAAAAArAP7/AQAEAAAAAAAsAP7/AQAEAAAAAAAtAP7/AQAEAAAAAAAuAP7/AQAHAAAAAABSAPn/AQAEAAAAAABTAPn/AQAEAAAAAABUAPn/AQAEAAAAAABVAPn/AQAEAAAAAABWAPn/AQAEAAAAAABXAPn/AQAEAAAAAABYAPn/AQAEAAAAAABZAPn/AQAEAAAAAABaAPn/AQAEAAAAAABbAPn/AQAEAAAAAABcAPn/AQAHAAAAAABQAPn/AQAGAAAAAABRAPn/AQAEAAAAAABUAPj/AAAAAAAAAABsAPr/AQAGAAAAAABtAPr/AQAEAAAAAABuAPr/AQAEAAAAAABvAPr/AQAEAAAAAABwAPr/AQAHAAAAAAAhAP7/AQAGAAAAAAAiAP7/AQAEAAAAAAAjAP7/AQAEAAAAAAAkAP7/AQAEAAAAAAAlAP7/AQAEAAAAAAAmAP7/AQAHAAAAAAA=")
 
 [node name="TileMapLayerPurple" parent="." index="3"]
 tile_map_data = PackedByteArray("AABgAP7/AQAIAAAAAABhAP7/AQAIAAAAAABiAP7/AQAIAAAAAABjAP7/AQAIAAAAAABkAP7/AQAIAAAAAABlAP7/AQAIAAAAAABmAP7/AQAIAAAAAABnAP7/AQAIAAAAAABoAP7/AQAIAAAAAABpAP7/AQALAAAAAABfAP7/AQAKAAAAAABiAP3/AAAAAAAAAAB3APv/AQAKAAAAAAB4APv/AQAIAAAAAAB5APv/AQAIAAAAAAB6APv/AQAIAAAAAAB7APv/AQALAAAAAAAxAP7/AQAKAAAAAAAyAP7/AQAIAAAAAAAzAP7/AQAIAAAAAAA0AP7/AQAIAAAAAAA1AP7/AQAIAAAAAAA2AP7/AQAIAAAAAAA0AP3/AAAAAAAAAAA3AP7/AQALAAAAAAA=")
@@ -42,7 +58,73 @@ scale = Vector2(1.5, 1.5)
 [node name="Checkpoint" parent="." index="6" instance=ExtResource("5_sk5k4")]
 position = Vector2(2016, -140)
 
-[node name="Enemies" type="Node" parent="." index="7"]
+[node name="moveInstructions" type="Area2D" parent="." index="7"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("6_oc4kc")
+message = "MOVE : ← → / A D"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="moveInstructions" index="0"]
+position = Vector2(120, -60)
+shape = SubResource("RectangleShape2D_dga24")
+
+[node name="jumpInstructions" type="Area2D" parent="." index="8"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("6_oc4kc")
+message = "JUMP : ↑ / W"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpInstructions" index="0"]
+position = Vector2(392, -112)
+shape = SubResource("RectangleShape2D_sk5k4")
+
+[node name="changeColorInstructions" type="Area2D" parent="." index="9"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("6_oc4kc")
+message = "SWITCH COLOR: Z / K"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="changeColorInstructions" index="0"]
+position = Vector2(1160, -224)
+shape = SubResource("RectangleShape2D_oc4kc")
+
+[node name="changeColorInstructions2" type="Area2D" parent="." index="10"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("6_oc4kc")
+message = "SWITCH COLOR: Z / K"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="changeColorInstructions2" index="0"]
+position = Vector2(1492, -111.25)
+shape = SubResource("RectangleShape2D_qxy0u")
+
+[node name="shootInstructions" type="Area2D" parent="." index="11"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("6_oc4kc")
+message = "SHOOT: X / J"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="shootInstructions" index="0"]
+position = Vector2(2112, -162)
+shape = SubResource("RectangleShape2D_oc4kc")
+
+[node name="doubleChangeColorInstructions2" type="Area2D" parent="." index="12"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("6_oc4kc")
+message = "DOUBLE SWITCH : Z Z / K K"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="doubleChangeColorInstructions2" index="0"]
+position = Vector2(3320, -97)
+shape = SubResource("RectangleShape2D_s8va5")
+
+[node name="Enemies" type="Node" parent="." index="13"]
 
 [node name="enemy1" parent="Enemies" index="0" instance=ExtResource("3_nsrm0")]
 position = Vector2(2216, -125)
@@ -60,7 +142,7 @@ enemy_color = 1
 position = Vector2(3250, -61)
 enemy_color = 2
 
-[node name="Walls" type="Node2D" parent="." index="8"]
+[node name="Walls" type="Node2D" parent="." index="14"]
 
 [node name="Left" type="StaticBody2D" parent="Walls" index="0"]
 collision_layer = 7

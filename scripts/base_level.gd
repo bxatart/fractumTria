@@ -40,6 +40,7 @@ func trigger_game_ending() -> void:
 	if ending_running:
 		return
 	ending_running = true
+	game_ui.hide_tutorial()
 	player.disable_control()
 	#Pausa el joc
 	get_tree().paused = true
@@ -55,6 +56,7 @@ func trigger_game_ending() -> void:
 	hud.visible = false
 	#Mostra el prisma
 	prism_restored.visible = true
+	prism_restored.position = player.global_position
 	await get_tree().create_timer(1.0).timeout
 	await game_ui.flash_white_out()
 	await get_tree().create_timer(1.5).timeout

@@ -1,7 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://dbdj0gmv2tjpl"]
+[gd_scene load_steps=18 format=3 uid="uid://2b45begcdjcc"]
 
 [ext_resource type="Texture2D" uid="uid://dj0wtn45b2v5m" path="res://assets/sprites/final_enemy.png" id="1_acljq"]
-[ext_resource type="Script" uid="uid://balqrt457cvl5" path="res://scripts/final_enemy_death.gd" id="1_gdt06"]
+[ext_resource type="Script" path="res://scripts/final_enemy_death.gd" id="1_gdt06"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gdt06"]
 atlas = ExtResource("1_acljq")

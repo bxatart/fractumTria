@@ -217,7 +217,7 @@ shape = SubResource("RectangleShape2D_ve0j8")
 [node name="prismRestored" type="Sprite2D" parent="." index="16"]
 visible = false
 position = Vector2(320, -112)
-scale = Vector2(1.79661, 1.79661)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("15_q4uxy")
 
 [editable path="gameUI"]

@@ -7,6 +7,7 @@ var MUSIC = {
 	"level3": preload("res://assets/audio/music/purpleLevelMusic.wav"),
 	"finalLevel": preload("res://assets/audio/music/finalLevelMusic.wav"),
 	"intro": preload("res://assets/audio/music/gameIntro.wav"),
+	"introAnim": preload("res://assets/audio/music/introAnimMusic.wav"),
 	"levelSelect": preload("res://assets/audio/music/levelSelectMusic.wav"),
 	"gameOver": preload("res://assets/audio/music/gameOverMusic.wav"),
 	"end": preload("res://assets/audio/music/endingMusic.wav"),

@@ -1,6 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://b5timaf4x37kc"]
+[gd_scene load_steps=27 format=3 uid="uid://btrrbsgbv6ccw"]
 
-[ext_resource type="Script" uid="uid://bg6ijawdgls1o" path="res://scripts/level_select.gd" id="1_htctk"]
+[ext_resource type="Script" path="res://scripts/level_select.gd" id="1_htctk"]
 [ext_resource type="PackedScene" path="res://scenes/rock.tscn" id="2_4nqmc"]
 [ext_resource type="Script" path="res://scripts/background_layers.gd" id="2_317l6"]
 [ext_resource type="Texture2D" uid="uid://bl6wgvbwms1pn" path="res://assets/backgrounds/levelSelect_base.png" id="2_m4qq5"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c6spm43d5tutw" path="res://assets/other/rock_multicolor.png" id="7_s6tf7"]
 [ext_resource type="Texture2D" uid="uid://unf384p4oy25" path="res://assets/backgrounds/levelSelect_bg2_orange.png" id="8_112fn"]
 [ext_resource type="PackedScene" uid="uid://d2owuefyais2h" path="res://scenes/levels/level_2.tscn" id="8_rovvv"]
-[ext_resource type="PackedScene" uid="uid://id7px3yaigo" path="res://scenes/player/player_marker.tscn" id="9_ckc44"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_marker.tscn" id="9_ckc44"]
 [ext_resource type="PackedScene" uid="uid://b8omrwx7w62be" path="res://scenes/levels/level_3.tscn" id="10_0wyvj"]
 [ext_resource type="Texture2D" uid="uid://cbewji04mmg1k" path="res://assets/backgrounds/levelSelect_bg3_purple.png" id="10_povud"]
 [ext_resource type="PackedScene" uid="uid://c26hi6cg10ylk" path="res://scenes/levels/final_level.tscn" id="12_m4qq5"]

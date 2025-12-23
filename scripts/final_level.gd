@@ -8,3 +8,7 @@ func _ready() -> void:
 	hud.setup_healthbar(final_enemy.max_health)
 	final_enemy.health_changed.connect(hud.update_healthbar)
 	final_enemy.died.connect(hud.hide_healthbar)
+	final_enemy.died.connect(func():
+		game_ui.show_tutorial(tr("ENTER THE PRISM"))
+	)
+	
