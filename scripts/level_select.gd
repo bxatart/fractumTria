@@ -5,10 +5,22 @@ extends Node2D
 @onready var rocks_container: Node2D = $rocks
 @onready var marker: Node2D = $playerMarker
 @onready var background: Node2D = $background
+@onready var level_label: Label = $levelSelectUI/levelLabel
 
 var rocks: Array[LevelRock] = []
 var current_index: int = 0
-
+const rockNames = {
+	0: "THE AWAKENING",
+	1: "THE IGNITION",
+	2: "THE DISTORTION",
+	3: "THE TOWER",
+}
+var rockTextColors = {
+	0: Color(0.118, 0.737, 0.451, 1),
+	1: Color(0.984, 0.42, 0.114, 1),
+	2: Color(0.659, 0.518, 0.953, 1),
+	3: Color(1, 1, 1, 1),
+}
 #Guardar fins a quin nivell s'ha arribat
 var max_unlocked_index: int = 0
 
@@ -42,6 +54,8 @@ func _ready() -> void:
 	print("Marker:", marker.global_position)
 	#Fons
 	update_background()
+	#Text
+	update_name()
 
 func update_rocks_state() -> void:
 	for r in rocks:
@@ -67,6 +81,7 @@ func try_move(new_index: int) -> void:
 	current_index = new_index
 	marker.move_direction(dir)
 	move_marker(rocks[current_index].get_anchor())
+	update_name()
 
 func move_marker(target_pos: Vector2) -> void:
 	if tween and tween.is_running():
@@ -114,3 +129,16 @@ func update_background() -> void:
 			#Canvia el fons si el nivell està completat
 			var unlocked = GameState.is_level_completed(c.level_index)
 			c.set_unlocked(unlocked)
+
+func update_name() -> void:
+	if rocks.is_empty():
+		return
+	var name: String = rockNames[current_index]
+	level_label.text = tr(name)
+	level_label.modulate = rockTextColors[current_index]
+
+func translation_text() -> void:
+	tr("THE AWAKENING")
+	tr("THE IGNITION")
+	tr("THE DISTORTION")
+	tr("THE TOWER")

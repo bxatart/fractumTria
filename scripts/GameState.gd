@@ -8,6 +8,7 @@ var last_entry_color: color = color.GREEN #Color a l'entrar al nivell
 var has_entry_color: bool = false
 
 #Vida
+const base_health: int = 3
 var player_health: int = 3
 var player_max_health: int = 3
 
@@ -89,3 +90,23 @@ func get_level_color(level_index: int) -> color:
 func set_player_health(current: int, max: int) -> void:
 	player_max_health = max
 	player_health = clamp(current, 0, max)
+
+func reset_player_health() -> void:
+	player_max_health = base_health
+	player_health = base_health
+
+func save_progress() -> void:
+	SaveGame.save_game(levels_completed, last_level_played, player_health, player_max_health, int(current_color))
+
+func load_progress() -> void:
+	var data = SaveGame.load_game()
+	if data.is_empty():
+		return
+	#Nivell
+	levels_completed = data["levels_completed"]
+	last_level_played = int(data["last_level_played"])
+	#Vides
+	player_health = int(data["health"])
+	player_max_health = int(data["max_health"])
+	#Color
+	set_color(color.values()[int(data["color"])])

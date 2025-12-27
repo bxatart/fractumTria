@@ -8,17 +8,18 @@ extends CharacterBody2D
 @onready var muzzle : Marker2D = $Muzzle
 @onready var hurtbox: Area2D = $Hurtbox
 @onready var body_polygon: CollisionPolygon2D = $CollisionPolygon2D
+@onready var timer: Timer = $Timer
 
 @export var start_color: GameState.color = GameState.color.GREEN
 @export var speed: float = 180.0 #velocitat
 @export var jump: float = 500.0 #força de salt
 @export var gravity: float = 1200.0 #gravetat
 @export var max_health: int = 3 #vida
-@export var knockback: float = 250.0 #força del knockback
+@export var knockback: float = 400.0 #força del knockback
 @export var exit_limit: float = 2000.0 #Sortir del nivell
 @export var game_over_scene: PackedScene = preload("res://scenes/levels/game_over.tscn")
 @export var level_index: int = 0
-@export var fire_rate: float = 0.18
+@export var fire_rate: float = 0.2
 
 #Dany al jugador
 var is_hurt: bool = false
@@ -26,6 +27,7 @@ var health: int
 signal health_changed(current: int, max: int)
 var game_over: bool = false
 const base_max_health: int = 3
+var invulnerable: bool = false
 
 #Guardar els valors de moviment
 var last_dir: float = 1.0 #direcció
@@ -34,6 +36,8 @@ var base_jump: float
 var base_gravity: float
 var can_control: bool = true
 var exit_level: bool = false
+var coyote_time = 0.1
+var coyote_timer = 0.0
 
 var query_shape: ConvexPolygonShape2D
 
@@ -53,9 +57,9 @@ var tilt_speed: float = 10.0
 var bullet = preload("res://scenes/player/bullet.tscn")
 var muzzle_position
 var shoot_timer: float = 0.0
-var fire: float = 0.0
+var shoot_cooldown: float = 0.0
 
-#PROVA - Posició inicial
+#Posició inicial
 var spawn_position: Vector2
 
 #Estat del jugador
@@ -68,7 +72,8 @@ func _ready() -> void:
 	base_speed = speed
 	base_jump = jump
 	base_gravity = gravity
-	health = max_health
+	max_health = GameState.player_max_health
+	health = clamp(GameState.player_health, 0, max_health)
 	emit_signal("health_changed", health, max_health)
 	#Control del jugador
 	enable_control()
@@ -83,7 +88,7 @@ func _ready() -> void:
 	change_physics()
 	#Canvia la collision mask segons el color
 	change_collision_layer()
-	#PROVA - Guarda la posició inicial
+	#Posició del jugador pel respawn
 	spawn_position = global_position
 	#Crear una forma
 	query_shape = ConvexPolygonShape2D.new()
@@ -103,14 +108,18 @@ func _physics_process(delta: float) -> void:
 	change_color()
 	#Mira si el jugador està a l'aire
 	player_falling(delta)
+	#Salt
+	player_jump()
 	#Actualitza el temporitzador de disparar
 	update_shoot_timer(delta)
 	#Comprovar estat del jugador
 	if shoot_timer == 0.0:
 		player_idle(delta)
 		player_run(delta)
-	fire = max(0.0, fire - delta)
-	player_shoot(delta)
+	else:
+		player_run(delta)
+	shoot_cooldown = max(0.0, shoot_cooldown - delta)
+	player_shoot()
 	#Mou
 	move_and_slide()
 	#Canvia animació segons l'estat
@@ -179,11 +188,13 @@ func player_falling(delta: float) -> void:
 	if game_over:
 		return
 	#Cau si el personatge està a l'aire
-	if not is_on_floor():
-		velocity.y += gravity * delta
-	else:
+	if is_on_floor():
+		coyote_timer = coyote_time
 		velocity.y = max(velocity.y, 0.0)
-	#PROVA - Si el personatge ha caigut, el torna a la posició inicial
+	else:
+		coyote_timer -= delta
+		velocity.y += gravity * delta
+	#Si el personatge ha caigut, el torna a la posició inicial
 	if global_position.y > 600 and not exit_level:
 		Sound.playSfx("playerFalling")
 		health -= 1
@@ -195,6 +206,8 @@ func player_falling(delta: float) -> void:
 			return
 		else:
 			respawn()
+			get_tree().call_group("respawnable_enemies", "revive")
+			get_tree().call_group("enemies", "respawn")
 
 func player_idle(delta: float) -> void:
 	#Si no es pot controlar el jugador
@@ -216,24 +229,28 @@ func player_run(delta: float) -> void:
 		velocity.x = dir * speed
 		last_dir = dir
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.x = move_toward(velocity.x, 0.0, speed * 25.0 * delta)
 	if dir != 0:
 		current_state = State.run
 		#print("Player State: ", State.keys()[current_state])
-	#Salt
-	if is_on_floor() and Input.is_action_just_pressed("jump"):
-		velocity.y = -jump
-		Sound.playSfx("jump")
 
-func player_shoot(delta: float) -> void:
-	#No disparar si no es pot controlar el jugador
+func player_jump() -> void:
 	if not can_control:
 		return
-	#Evita disparar molts cops seguits
-	if fire > 0.0:
+	#Salt
+	if Input.is_action_just_pressed("jump") and coyote_timer > 0.0:
+		velocity.y = -jump
+		coyote_timer = 0.0
+		Sound.playSfx("jump")
+
+func player_shoot() -> void:
+	#No disparar si no es pot controlar el jugador
+	if not can_control or is_hurt or game_over or exit_level:
+		return
+	#Evita disparar moltes bales de cop
+	if shoot_cooldown > 0.0:
 		return
 	if last_dir  != 0 and Input.is_action_just_pressed("shoot"):
-		fire = fire_rate
 		var bullet_instance: Area2D = bullet.instantiate()
 		#Posició d'inici de la bala
 		bullet_instance.global_position = muzzle.global_position
@@ -242,8 +259,10 @@ func player_shoot(delta: float) -> void:
 		#Direcció i color de la bala
 		bullet_instance.setup(last_dir, GameState.current_color, global_position.y)
 		current_state = State.shoot
-		#Temporitzador
+		#Temporitzador per l'animació
 		shoot_timer = 0.15
+		#Temporitzador per disparar
+		shoot_cooldown = max(fire_rate, shoot_timer)
 		print("Player State: ", State.keys()[current_state])
 		Sound.playSfx("shot")
 
@@ -401,8 +420,15 @@ func apply_knockback(from_node: Node) -> void:
 	#Salt enrera
 	velocity.y = -jump * 0.4
 
+func start_invulnerability() -> void:
+	invulnerable = true
+	hurtbox.monitoring = false
+	timer.start()
+
 #Dany al jugador
 func take_damage(amount: int, from_node: Node) -> void:
+	if invulnerable or game_over or exit_level:
+		return
 	health -= amount
 	delete_bonus_hearts()
 	emit_signal("health_changed", health, max_health)
@@ -492,17 +518,23 @@ func exit(delta: float) -> void:
 		#Canvia el color
 		GameState.restore_entry_color()
 		#Guardar les vides
-		health = max(health, base_max_health)
-		max_health = max(max_health, health)
-		emit_signal("health_changed", health, max_health)
 		GameState.set_player_health(health, max_health)
+		#Guardar partida
+		GameState.save_progress()
 		#Anar al menú de selecció de nivells
 		get_tree().change_scene_to_file("res://scenes/level_select.tscn")
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	#Si s'està sortint del nivell, no et poden tocar
-	if exit_level:
+	if invulnerable or game_over or exit_level:
 		return
 	var enemy = area.get_parent()
 	if enemy.is_in_group("enemies"):
+		#Pausar uns segons l'enemic
+		if enemy.has_method("start_stun"):
+			enemy.start_stun()
 		take_damage(1, enemy)
+
+func _on_timer_timeout() -> void:
+	invulnerable = false
+	hurtbox.monitoring = true

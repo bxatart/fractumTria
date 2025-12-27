@@ -53,7 +53,7 @@ position = Vector2(64, -80)
 start_color = 1
 level_index = 1
 
-[node name="Camera2D" parent="Player" index="4"]
+[node name="Camera2D" parent="Player" index="5"]
 limit_right = 6500
 limit_bottom = 0
 
@@ -62,17 +62,21 @@ limit_bottom = 0
 [node name="enemy1" parent="Enemies" index="0" instance=ExtResource("9_nt80m")]
 position = Vector2(2216, -61)
 enemy_color = 1
+health = 5
 
 [node name="enemy1-2" parent="Enemies" index="1" instance=ExtResource("9_nt80m")]
 position = Vector2(3712, -29)
+health = 5
 
 [node name="enemy1-3" parent="Enemies" index="2" instance=ExtResource("9_nt80m")]
 position = Vector2(4088, -93)
 enemy_color = 2
+health = 5
 
 [node name="enemy1-4" parent="Enemies" index="3" instance=ExtResource("9_nt80m")]
 position = Vector2(5700, -29)
 enemy_color = 1
+health = 5
 
 [node name="enemy2" parent="Enemies" index="4" instance=ExtResource("10_brxtv")]
 position = Vector2(3288, -204)

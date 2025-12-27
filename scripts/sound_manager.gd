@@ -30,7 +30,11 @@ var SFX = {
 	"checkpoint": preload("res://assets/audio/sfx/checkpoint.wav"),
 	"enemyDamage": preload("res://assets/audio/sfx/enemyDamage.wav"),
 	"enemyDeath": preload("res://assets/audio/sfx/enemyDeath.wav"),
+	"enemyChangeColor": preload("res://assets/audio/sfx/finalEnemyChangeColor.wav"),
+	"enemySpawn": preload("res://assets/audio/sfx/finalEnemySpawn.wav"),
+	"finalEnemyDeath": preload("res://assets/audio/sfx/finalEnemyDeath.wav"),
 	"wave": preload("res://assets/audio/sfx/wave.wav"),
+	"shieldOff": preload("res://assets/audio/sfx/shieldOff.wav"),
 }
 #Guarda el nom de la música
 var current_music_name = ""

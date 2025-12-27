@@ -49,11 +49,3 @@ func flash_white() -> void:
 	var t = create_tween()
 	t.tween_property(white_flash, "modulate:a", 1.0, 0.35)
 	await t.finished
-	white_flash.modulate.a = 0.0
-	white_flash.visible = false
-
-func flash_white_out() -> void:
-	white_flash.visible = true
-	white_flash.modulate.a = 0.0
-	var t = create_tween()
-	t.tween_property(white_flash, "modulate:a", 1.0, 0.35)

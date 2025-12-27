@@ -253,11 +253,10 @@ size = Vector2(18, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ejytf"]
 size = Vector2(21, 32)
 
-[node name="enemy1" type="CharacterBody2D" node_paths=PackedStringArray("patrol_points")]
+[node name="enemy1" type="CharacterBody2D"]
 collision_layer = 32
 collision_mask = 7
 script = ExtResource("1_ejytf")
-patrol_points = NodePath("PatrolPoints")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)

@@ -1,12 +1,11 @@
 extends Control
 
-@onready var icon: TextureRect = $topLeft/icon
 @onready var hearts_box: HBoxContainer = $topLeft/hearts
 @onready var healthbar: TextureProgressBar = $healthbar
+@onready var icon_green: TextureRect = $topLeft/icons/iconGreen
+@onready var icon_orange: TextureRect = $topLeft/icons/iconOrange
+@onready var icon_purple: TextureRect = $topLeft/icons/iconPurple
 
-@export var icon_green: Texture2D
-@export var icon_orange: Texture2D
-@export var icon_purple: Texture2D
 @export var heart_scene: PackedScene
 @export var heart_full: Texture2D
 @export var heart_empty: Texture2D
@@ -14,23 +13,41 @@ extends Control
 var max_hearts = 0
 
 func _ready() -> void:
-	#Posar la icona del color actual
-	set_icon_color(GameState.current_color)
-	#Mira quan es canvia el color
-	GameState.color_changed.connect(set_icon_color)
 	#No mostrar la healthbar
 	healthbar.visible = false
 	healthbar.value = 0
+	#Posar la icona del color actual
+	await get_tree().process_frame
+	set_icon_pivots()
+	set_icon_color(GameState.current_color)
+	#Mira quan es canvia el color
+	GameState.color_changed.connect(set_icon_color)
 
 #Canviar de color la icona segons el color del jugador
 func set_icon_color(new_color: GameState.color) -> void:
+	icon_green.scale = Vector2(1, 1)
+	icon_orange.scale = Vector2(1, 1)
+	icon_purple.scale = Vector2(1, 1)
 	match new_color:
 		GameState.color.GREEN:
-			icon.texture = icon_green
+			icon_green.modulate = Color(1, 1, 1, 1)
+			icon_green.scale = Vector2(1.2, 1.2)
+			icon_orange.modulate = Color(0.5, 0.5, 0.5)
+			icon_purple.modulate = Color(0.5, 0.5, 0.5)
 		GameState.color.ORANGE:
-			icon.texture = icon_orange
+			icon_orange.modulate = Color(1, 1, 1, 1)
+			icon_orange.scale = Vector2(1.2, 1.2)
+			icon_green.modulate = Color(0.5, 0.5, 0.5)
+			icon_purple.modulate = Color(0.5, 0.5, 0.5)
 		GameState.color.PURPLE:
-			icon.texture = icon_purple
+			icon_purple.modulate = Color(1, 1, 1, 1)
+			icon_purple.scale = Vector2(1.2, 1.2)
+			icon_green.modulate = Color(0.5, 0.5, 0.5)
+			icon_orange.modulate = Color(0.5, 0.5, 0.5)
+
+func set_icon_pivots() -> void:
+	for icon in [icon_green, icon_orange, icon_purple]:
+		icon.pivot_offset = icon.size * 0.5
 
 func setup_hearts(max_hp: int) -> void:
 	max_hearts = max_hp

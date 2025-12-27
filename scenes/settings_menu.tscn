@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="1_05p07"]
 [ext_resource type="Texture2D" uid="uid://b43jtejofuyuh" path="res://assets/backgrounds/bg_pause.png" id="1_cr101"]
-[ext_resource type="Script" path="res://scripts/settings_menu.gd" id="1_lwwgp"]
+[ext_resource type="Script" uid="uid://dh51mqj3vg4er" path="res://scripts/settings_menu.gd" id="1_lwwgp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wswnh"]
 bg_color = Color(0.917647, 0.678431, 0.929412, 1)
@@ -207,9 +207,13 @@ theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_gdgfw")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_75x6d")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_x0dr5")
 selected = 0
-item_count = 1
+item_count = 3
 popup/item_0/text = "English"
 popup/item_0/id = 0
+popup/item_1/text = "Català"
+popup/item_1/id = 1
+popup/item_2/text = "Castellano"
+popup/item_2/id = 2
 
 [node name="controlsSection" type="VBoxContainer" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content"]
 layout_mode = 2
@@ -259,7 +263,7 @@ autowrap_mode = 3
 [node name="pause" type="Label" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content/controlsSection/controlsColumns/labels"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Menu / Pause:"
+text = "Menu/Pause:"
 autowrap_mode = 3
 
 [node name="enter" type="Label" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content/controlsSection/controlsColumns/labels"]
@@ -278,7 +282,7 @@ theme_override_constants/separation = 6
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.658824, 0.517647, 0.952941, 1)
-text = "A / D or ← →"
+text = "A/D or ← →"
 autowrap_mode = 3
 
 [node name="jump2" type="Label" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content/controlsSection/controlsColumns/controls"]
@@ -292,14 +296,14 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.658824, 0.517647, 0.952941, 1)
-text = "Z / K"
+text = "Z/K"
 autowrap_mode = 3
 
 [node name="shoot" type="Label" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content/controlsSection/controlsColumns/controls"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.658824, 0.517647, 0.952941, 1)
-text = "X / J"
+text = "X/J"
 autowrap_mode = 3
 
 [node name="pause" type="Label" parent="Panel/Margin/rootBoxContainer/ScrollContainer/Content/controlsSection/controlsColumns/controls"]
@@ -313,7 +317,7 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.658824, 0.517647, 0.952941, 1)
-text = "SPACE / ENTER"
+text = "SPACE/ENTER"
 autowrap_mode = 3
 
 [node name="backButton" type="Button" parent="Panel/Margin/rootBoxContainer"]
@@ -337,4 +341,5 @@ text = "BACK"
 
 [connection signal="value_changed" from="Panel/Margin/rootBoxContainer/ScrollContainer/Content/audioSection/musicSection/musicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="Panel/Margin/rootBoxContainer/ScrollContainer/Content/audioSection/sfxSection/sfxSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="item_selected" from="Panel/Margin/rootBoxContainer/ScrollContainer/Content/accessibilitySection/languageSection/langOption" to="." method="_on_lang_option_item_selected"]
 [connection signal="pressed" from="Panel/Margin/rootBoxContainer/backButton" to="." method="_on_back_button_pressed"]

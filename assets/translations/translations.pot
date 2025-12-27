@@ -45,6 +45,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
+#: scenes/level_select.tscn
+msgid "LEVEL SELECT"
+msgstr ""
+
 #: scenes/menu_screen.tscn
 msgid "CONTINUE"
 msgstr ""
@@ -83,6 +87,14 @@ msgid "English"
 msgstr ""
 
 #: scenes/settings_menu.tscn
+msgid "Català"
+msgstr ""
+
+#: scenes/settings_menu.tscn
+msgid "Castellano"
+msgstr ""
+
+#: scenes/settings_menu.tscn
 msgid "CONTROLS"
 msgstr ""
 
@@ -103,7 +115,7 @@ msgid "Shoot:"
 msgstr ""
 
 #: scenes/settings_menu.tscn
-msgid "Menu / Pause:"
+msgid "Menu/Pause:"
 msgstr ""
 
 #: scenes/settings_menu.tscn
@@ -111,7 +123,7 @@ msgid "Accept:"
 msgstr ""
 
 #: scenes/settings_menu.tscn
-msgid "A / D or ← →"
+msgid "A/D or ← →"
 msgstr ""
 
 #: scenes/settings_menu.tscn
@@ -119,11 +131,11 @@ msgid "W or ↑"
 msgstr ""
 
 #: scenes/settings_menu.tscn
-msgid "Z / K"
+msgid "Z/K"
 msgstr ""
 
 #: scenes/settings_menu.tscn
-msgid "X / J"
+msgid "X/J"
 msgstr ""
 
 #: scenes/settings_menu.tscn
@@ -131,7 +143,7 @@ msgid "ESC"
 msgstr ""
 
 #: scenes/settings_menu.tscn
-msgid "SPACE / ENTER"
+msgid "SPACE/ENTER"
 msgstr ""
 
 #: scenes/settings_menu.tscn
@@ -171,19 +183,19 @@ msgid ""
 msgstr ""
 
 #: scripts/ending.gd
-msgid "The Prism was restored."
+msgid "The Prism has been restored."
 msgstr ""
 
 #: scripts/ending.gd
-msgid "Balance returned."
+msgid "Balance has returned."
 msgstr ""
 
 #: scripts/ending.gd
-msgid "Color flowed back into the world."
+msgid "Color has flown back into the world!"
 msgstr ""
 
 #: scripts/ending.gd
-msgid "The world was whole again."
+msgid "And so, the world is whole once again."
 msgstr ""
 
 #: scripts/final_level.gd
@@ -191,15 +203,15 @@ msgid "ENTER THE PRISM"
 msgstr ""
 
 #: scripts/intro.gd
-msgid "At the center of the world, a tower watched in silence."
+msgid "At the top of the world, a tower watched in silence."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "Within it, the Prism endured."
+msgid "Within it stood the Prism..."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "Until something awoke."
+msgid "... until something awoke."
 msgstr ""
 
 #: scripts/intro.gd
@@ -207,39 +219,75 @@ msgid "A corruption without color. Without purpose."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "The balance broke."
+msgid "It disrupted the balance,"
 msgstr ""
 
 #: scripts/intro.gd
-msgid "The Prism shattered."
+msgid "the Prism shattered,"
 msgstr ""
 
 #: scripts/intro.gd
-msgid "And the world fractured with it."
+msgid "and so the world was fractured."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "One fragment endured."
+msgid "But one fragment endured."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "Three colors answered."
+msgid "Only three colors were saved."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "The world lost its light. The fragment did not."
+msgid "The world had lost its light, but the fragment had not."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "It could now shift. But it was still incomplete."
+msgid "Though still incomplete, it could now shift."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "To return to the tower, it had to endure them all."
+msgid "To return to the tower, it had to tread carefully."
 msgstr ""
 
 #: scripts/intro.gd
-msgid "Green was the first."
+msgid "And so the first new light was green."
+msgstr ""
+
+#: scripts/level_1.gd
+msgid "MOVE: ← → / A D"
+msgstr ""
+
+#: scripts/level_1.gd
+msgid "JUMP: ↑ / W"
+msgstr ""
+
+#: scripts/level_1.gd
+msgid "SWITCH COLOR: Z / K"
+msgstr ""
+
+#: scripts/level_1.gd
+msgid "SHOOT: X / J"
+msgstr ""
+
+#: scripts/level_1.gd
+msgid "DOUBLE SWITCH: Z Z / K K"
+msgstr ""
+
+#: scripts/level_select.gd
+msgid "THE AWAKENING"
+msgstr ""
+
+#: scripts/level_select.gd
+msgid "THE IGNITION"
+msgstr ""
+
+#: scripts/level_select.gd
+msgid "THE DISTORTION"
+msgstr ""
+
+#: scripts/level_select.gd
+msgid "THE TOWER"
 msgstr ""
 
 #: scripts/menu_screen.gd

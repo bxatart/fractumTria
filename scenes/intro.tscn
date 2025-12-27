@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://cmbu8wf4jlat4"]
+[gd_scene load_steps=49 format=3 uid="uid://dc53celf5ndkn"]
 
 [ext_resource type="Script" uid="uid://c5j1q1ihatq08" path="res://scripts/intro.gd" id="1_ioskq"]
 [ext_resource type="Texture2D" uid="uid://b0vroarqgde5e" path="res://assets/backgrounds/bg_tower_color.png" id="2_yjqpq"]
@@ -1020,7 +1020,7 @@ tracks/70/keys = {
 
 [sub_resource type="Animation" id="Animation_4bx60"]
 resource_name = "intro"
-length = 47.0
+length = 50.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1844,22 +1844,22 @@ tracks/68/path = NodePath(".")
 tracks/68/interp = 1
 tracks/68/loop_wrap = true
 tracks/68/keys = {
-"times": PackedFloat32Array(1.03333, 4, 7, 8.96667, 10, 12.9942, 16, 19, 20.9667, 22.9, 23, 25, 25.5333, 29.9, 30, 31.9, 32, 34.9, 35, 37.9, 38, 40.9, 41, 44.4, 44.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(1.03333, 5, 7, 9.46667, 10, 13.9667, 16, 20, 20.9667, 22.9, 23, 25, 25.5333, 29.9, 30, 31.9, 32, 34.9, 35, 37.9, 38, 40.9, 41, 44.4, 44.5, 48),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "values": [{
-"args": ["At the center of the world, a tower watched in silence."],
+"args": ["At the top of the world, a tower watched in silence."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["Within it, the Prism endured."],
+"args": ["Within it stood the Prism..."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["Until something awoke."],
+"args": ["... until something awoke."],
 "method": &"set_subtitles"
 }, {
 "args": [],
@@ -1871,56 +1871,59 @@ tracks/68/keys = {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["The balance broke."],
+"args": ["It disrupted the balance,"],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["The Prism shattered."],
+"args": ["the Prism shattered,"],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["And the world fractured with it."],
+"args": ["and so the world was fractured."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["One fragment endured."],
+"args": ["But one fragment endured."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["Three colors answered."],
+"args": ["Only three colors were saved."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["The world lost its light. The fragment did not."],
+"args": ["The world had lost its light, but the fragment had not."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["It could now shift. But it was still incomplete."],
+"args": ["Though still incomplete, it could now shift."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["To return to the tower, it had to endure them all."],
+"args": ["To return to the tower, it had to tread carefully."],
 "method": &"set_subtitles"
 }, {
 "args": [],
 "method": &"clear_subtitles"
 }, {
-"args": ["Green was the first."],
+"args": ["And so the first new light was green."],
 "method": &"set_subtitles"
+}, {
+"args": [],
+"method": &"clear_subtitles"
 }]
 }
 tracks/69/type = "value"
@@ -1930,10 +1933,10 @@ tracks/69/path = NodePath("CanvasLayer/subtitlesBox:visible")
 tracks/69/interp = 1
 tracks/69/loop_wrap = true
 tracks/69/keys = {
-"times": PackedFloat32Array(0, 1, 4, 7, 9, 10, 13, 16.0333, 19, 21, 25, 25.5333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1, 5, 7, 9.5, 10, 13.9725, 16.0333, 20, 21, 25, 25.5333, 48),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false, true, false, true, false, true, false, true, false, true, false, true]
+"values": [false, true, false, true, false, true, false, true, false, true, false, true, false]
 }
 tracks/70/type = "value"
 tracks/70/imported = false
