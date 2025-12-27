@@ -7,6 +7,10 @@ var enemy_death_effect = preload("res://scenes/enemies/enemy_2_death.tscn")
 @onready var floor_check_right: RayCast2D = $FloorCheckRight
 @onready var wall_check_left: RayCast2D = $WallCheckLeft
 @onready var wall_check_right: RayCast2D = $WallCheckRight
+@onready var body_col: CollisionShape2D = $CollisionShape2D
+@onready var hurtbox: Area2D = $Hurtbox
+@onready var hurtbox_col: CollisionShape2D = $Hurtbox/CollisionShape2D
+@onready var stun_timer: Timer = $stunTimer
 
 @export var enemy_color: GameState.color = GameState.color.GREEN
 @export var speed: float = 50.0
@@ -14,6 +18,7 @@ var enemy_death_effect = preload("res://scenes/enemies/enemy_2_death.tscn")
 @export var health: int = 5
 
 var feedback: bool = false
+var stunned: bool = false
 
 #Jugador
 var player: Node2D = null
@@ -32,8 +37,27 @@ var facing_dir: float = 1.0 #Direcció
 enum State { idle, move }
 var current_state: State
 
+#Estat inicial
+var base_pos: Vector2
+var base_health: int
+var dead: bool = false
+var base_color: GameState.color
+var body_layer: int
+var body_mask: int
+var hurtbox_layer: int
+var hurtbox_mask: int
+
 func _ready() -> void:
 	add_to_group("enemies")
+	add_to_group("respawnable_enemies")
+	#Guardar l'estat inicial
+	base_pos = global_position
+	base_health = health
+	base_color = enemy_color
+	body_layer = collision_layer
+	body_mask = collision_mask
+	hurtbox_layer = hurtbox.collision_layer
+	hurtbox_mask = hurtbox.collision_mask
 	#Busca el jugador a l'escena
 	find_player()
 	#Animació inicial de l'enemic
@@ -50,6 +74,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	#Gestiona la caiguda
 	enemy_gravity(delta)
+	if stunned:
+		move_and_slide()
+		get_animation()
+		return
 	#Estat de l'enemic
 	update_state()
 	match current_state:
@@ -78,7 +106,7 @@ func enemy_gravity(delta: float) -> void:
 		velocity.y += gravity * delta
 	else:
 		velocity.y = max(velocity.y, 0.0)
-	#PROVA - Torna l'enemic a la posició inicial
+	#Torna l'enemic a la posició inicial
 	if global_position.y > 800:
 		respawn()
 
@@ -165,10 +193,57 @@ func check_wall(dir: float) -> bool:
 	else:
 		return wall_check_right.is_colliding()
 
-#PROVA - Torna a la posició inicial si l'enemic cau
+#Torna a la posició inicial
 func respawn() -> void:
 	global_position = spawn_position
 	current_state = State.idle
+
+#Torna a posar l'enemic si el jugador cau o és eleminat
+func revive() -> void:
+	if not is_in_group("respawnable_enemies"):
+		add_to_group("respawnable_enemies")
+	if not dead:
+		return
+	dead = false
+	#Estat original
+	global_position = base_pos
+	health = base_health
+	enemy_color = base_color
+	visible = true
+	set_physics_process(true)
+	set_process(true)
+	velocity = Vector2.ZERO
+	add_to_group("enemies")
+	#Fer que el jugador el pugui detectar
+	body_col.disabled = false
+	hurtbox.monitoring = true
+	hurtbox.monitorable = true
+	hurtbox_col.disabled = false
+	collision_layer = body_layer
+	collision_mask = body_mask
+	hurtbox.collision_layer = hurtbox_layer
+	hurtbox.collision_mask = hurtbox_mask
+	#Reinicia estat
+	current_state = State.idle
+	update_state()
+
+func kill_enemy() -> void:
+	#Amaga l'enemic
+	dead = true
+	visible = false
+	set_physics_process(false)
+	set_process(false)
+	velocity = Vector2.ZERO
+	remove_from_group("enemies")
+	#Fer que el jugador no el pugui detectar
+	body_col.disabled = true
+	hurtbox.monitoring = false
+	hurtbox.monitorable = false
+	hurtbox_col.disabled = true
+	collision_layer = 0
+	collision_mask = 0
+	hurtbox.collision_layer = 0
+	hurtbox.collision_mask = 0
 
 #Posa l'animació en gris si s'ha tocat l'enemic
 func hit_feedback() -> void:
@@ -186,6 +261,15 @@ func hit_feedback() -> void:
 		anim.self_modulate = Color(1, 1, 1, 1)
 	feedback = false
 
+func start_stun() -> void:
+	if stunned or dead:
+		return
+	stunned = true
+	canMove = false
+	velocity.x = 0.0
+	velocity.y = 0.0
+	stun_timer.start()
+
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	print("ENEMY2: Hurtbox area entered")
 	if area.get_parent().has_method("get_damage_amount") and area.get_parent().color == enemy_color:
@@ -200,6 +284,10 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			get_parent().add_child(enemy_death_instance)
 			if enemy_death_instance.has_method("setup"):
 				enemy_death_instance.setup(facing_dir, enemy_color)
-			queue_free()
+			kill_enemy()
 		else:
 			hit_feedback()
+
+func _on_stun_timer_timeout() -> void:
+	stunned = false
+	update_state()

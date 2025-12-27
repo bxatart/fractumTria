@@ -282,6 +282,7 @@ height = 28.0
 collision_layer = 32
 collision_mask = 7
 script = ExtResource("1_fi5i3")
+health = 6
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wbe07")
@@ -323,4 +324,9 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_fi5i3")
 debug_color = Color(0.992045, 0, 0.257437, 0.42)
 
+[node name="stunTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="stunTimer" to="." method="_on_stun_timer_timeout"]

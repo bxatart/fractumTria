@@ -1,6 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://btrrbsgbv6ccw"]
+[gd_scene load_steps=28 format=3 uid="uid://btrrbsgbv6ccw"]
 
-[ext_resource type="Script" path="res://scripts/level_select.gd" id="1_htctk"]
+[ext_resource type="Script" uid="uid://bg6ijawdgls1o" path="res://scripts/level_select.gd" id="1_htctk"]
 [ext_resource type="PackedScene" path="res://scenes/rock.tscn" id="2_4nqmc"]
 [ext_resource type="Script" path="res://scripts/background_layers.gd" id="2_317l6"]
 [ext_resource type="Texture2D" uid="uid://bl6wgvbwms1pn" path="res://assets/backgrounds/levelSelect_base.png" id="2_m4qq5"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://dsx6q2x3m605p" path="res://assets/other/rock_unlocked_purple.png" id="20_v042j"]
 [ext_resource type="Texture2D" uid="uid://p82segy687kl" path="res://assets/other/rock_unlocked_multicolor.png" id="23_5ot7t"]
 [ext_resource type="PackedScene" uid="uid://dycf21wlpjigt" path="res://scenes/levels/game_ui.tscn" id="26_6k74p"]
+[ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="26_v042j"]
 
 [node name="levelSelect" type="Node2D"]
 position = Vector2(320, 180)
@@ -91,6 +92,35 @@ texture_unlocked = ExtResource("23_5ot7t")
 level_scene = ExtResource("12_m4qq5")
 
 [node name="playerMarker" parent="." instance=ExtResource("9_ckc44")]
+
+[node name="levelSelectUI" type="CanvasLayer" parent="."]
+
+[node name="titleLabel" type="Label" parent="levelSelectUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -82.0
+offset_top = 10.0
+offset_right = 82.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme = ExtResource("26_v042j")
+text = "LEVEL SELECT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="levelLabel" type="Label" parent="levelSelectUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = 40.0
+offset_right = 25.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme = ExtResource("26_v042j")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="gameUI" parent="." instance=ExtResource("26_6k74p")]
 

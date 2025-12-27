@@ -2,9 +2,12 @@ extends Area2D
 
 @onready var button_anim: AnimatedSprite2D = $buttonAnim
 @onready var trigger: Area2D = $Trigger
+@onready var heart_icon: TextureRect = $heartIcon
 
 @export var player_path: NodePath
 @export var heal_amount: int = 1
+@export var heart_full: Texture2D
+@export var heart_empty: Texture2D
 
 var player: Node = null
 var active = true
@@ -18,6 +21,7 @@ enum State { active, cooldown }
 var current_state: State = State.active
 
 func _ready() -> void:
+	heart_icon.texture = heart_full
 	player = get_node_or_null(player_path)
 	if player == null:
 		print("HEART SWITCH: No s'ha assignat el jugador")
@@ -25,12 +29,15 @@ func _ready() -> void:
 
 func get_animation() -> void:
 	if current_state == State.active:
+		heart_icon.texture = heart_full
 		button_anim.play("ready")
 	else:
+		heart_icon.texture = heart_empty
 		button_anim.play("cooldown")
 
 func reset_button() -> void:
 	active = true
+	heart_icon.texture = heart_full
 	current_state = State.active
 	get_animation()
 
@@ -45,6 +52,7 @@ func _on_trigger_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
 	#Cura el jugador
+	active = false
 	needs_exit = true
 	current_state = State.cooldown
 	get_animation()

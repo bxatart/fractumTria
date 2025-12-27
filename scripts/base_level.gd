@@ -4,7 +4,6 @@ extends Node2D
 @onready var game_ui: CanvasLayer = $gameUI
 @onready var player: CharacterBody2D = $Player
 @onready var hud: Control = $gameUI/HUD
-@onready var prism_restored: Sprite2D = $prismRestored
 
 var ending_running = false
 
@@ -45,21 +44,10 @@ func trigger_game_ending() -> void:
 	#Pausa el joc
 	get_tree().paused = true
 	game_ui.process_mode = Node.PROCESS_MODE_ALWAYS
-	#Flash 1
+	#Flash
 	await game_ui.flash_white()
-	#Amaga el jugador
-	player.visible = false
-	#Amaga l'enemic final
-	for n in get_tree().get_nodes_in_group("finalEnemy"):
-		n.visible = false
-	#Amaga el hud
-	hud.visible = false
-	#Mostra el prisma
-	prism_restored.visible = true
-	prism_restored.position = player.global_position
-	await get_tree().create_timer(1.0).timeout
-	await game_ui.flash_white_out()
 	await get_tree().create_timer(1.5).timeout
 	#Canvia a escena final
 	get_tree().paused = false
+	GameState.reset_player_health()
 	get_tree().change_scene_to_file("res://scenes/ending.tscn")

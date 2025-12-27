@@ -279,9 +279,9 @@ height = 26.0
 radius = 11.0
 height = 28.0
 
-[node name="enemy3" type="CharacterBody2D" node_paths=PackedStringArray("patrol_points")]
+[node name="enemy3" type="CharacterBody2D"]
 script = ExtResource("1_djy1j")
-patrol_points = NodePath("PatrolPoints")
+health = 12
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_57y64")

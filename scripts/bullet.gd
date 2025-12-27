@@ -7,7 +7,7 @@ var bullet_impact_effect = preload("res://scenes/player/bullet_impact.tscn")
 
 @export var timer: float = 4.0 #Temporitzador
 
-var speed: int = 100 #Velocitat
+var speed: int = 190 #Velocitat
 var direction: float = 1.0
 var pos_y: float = 0.0 #Guardar alçada de la bala
 var color: GameState.color = GameState.color.GREEN

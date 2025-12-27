@@ -1,0 +1,300 @@
+# LANGUAGE translation for FractumTria for the following files:
+# res://scenes/ending.tscn
+# res://scenes/intro.tscn
+# res://scenes/level_select.tscn
+# res://scenes/menu_screen.tscn
+# res://scenes/settings_menu.tscn
+# res://scenes/start_screen.tscn
+# res://scenes/levels/base_level.tscn
+# res://scenes/levels/final_level.tscn
+# res://scenes/levels/game_over.tscn
+# res://scenes/levels/game_ui.tscn
+# res://scenes/levels/level_1.tscn
+# res://scenes/levels/level_2.tscn
+# res://scenes/levels/level_3.tscn
+# res://scenes/enemies/final_enemy.tscn
+# res://scenes/enemies/final_enemy_death.tscn
+# res://scripts/base_level.gd
+# res://scripts/ending.gd
+# res://scripts/final_enemy.gd
+# res://scripts/final_enemy_death.gd
+# res://scripts/final_level.gd
+# res://scripts/GameState.gd
+# res://scripts/game_over.gd
+# res://scripts/game_ui.gd
+# res://scripts/hud.gd
+# res://scripts/intro.gd
+# res://scripts/level_1.gd
+# res://scripts/level_2.gd
+# res://scripts/level_3.gd
+# res://scripts/level_select.gd
+# res://scripts/main_button.gd
+# res://scripts/menu_screen.gd
+# res://scripts/Settings.gd
+# res://scripts/settings_menu.gd
+# res://scripts/start_screen.gd
+# res://scripts/tutorial.gd
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: FractumTria\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: scenes/level_select.tscn
+msgid "LEVEL SELECT"
+msgstr "SELECCIÓ DE NIVELL"
+
+#: scenes/menu_screen.tscn
+msgid "CONTINUE"
+msgstr "CONTINUA"
+
+#: scenes/menu_screen.tscn scenes/settings_menu.tscn
+msgid "SETTINGS"
+msgstr "CONFIGURACIÓ"
+
+#: scenes/menu_screen.tscn
+msgid "EXIT"
+msgstr "SURT"
+
+#: scenes/settings_menu.tscn
+msgid "AUDIO"
+msgstr "ÀUDIO"
+
+#: scenes/settings_menu.tscn
+msgid "Music"
+msgstr "Música"
+
+#: scenes/settings_menu.tscn
+msgid "SFX"
+msgstr "SFX"
+
+#: scenes/settings_menu.tscn
+msgid "ACCESSIBILITY"
+msgstr "ACCESSIBILITAT"
+
+#: scenes/settings_menu.tscn
+msgid "Language"
+msgstr "Idioma"
+
+#: scenes/settings_menu.tscn
+msgid "English"
+msgstr "English"
+
+#: scenes/settings_menu.tscn
+msgid "Català"
+msgstr "Català"
+
+#: scenes/settings_menu.tscn
+msgid "Castellano"
+msgstr "Castellano"
+
+#: scenes/settings_menu.tscn
+msgid "CONTROLS"
+msgstr "CONTROLS"
+
+#: scenes/settings_menu.tscn
+msgid "Move:"
+msgstr "Moure’s:"
+
+#: scenes/settings_menu.tscn
+msgid "Jump:"
+msgstr "Saltar:"
+
+#: scenes/settings_menu.tscn
+msgid "Switch color:"
+msgstr "Canviar de color:"
+
+#: scenes/settings_menu.tscn
+msgid "Shoot:"
+msgstr "Disparar:"
+
+#: scenes/settings_menu.tscn
+msgid "Menu/Pause:"
+msgstr "Menú/Pausa:"
+
+#: scenes/settings_menu.tscn
+msgid "Accept:"
+msgstr "Acceptar:"
+
+#: scenes/settings_menu.tscn
+msgid "A/D or ← →"
+msgstr "A/D o ← →"
+
+#: scenes/settings_menu.tscn
+msgid "W or ↑"
+msgstr "W o ↑"
+
+#: scenes/settings_menu.tscn
+msgid "Z/K"
+msgstr "Z/K"
+
+#: scenes/settings_menu.tscn
+msgid "X/J"
+msgstr "X/J"
+
+#: scenes/settings_menu.tscn
+msgid "ESC"
+msgstr "ESC"
+
+#: scenes/settings_menu.tscn
+msgid "SPACE/ENTER"
+msgstr "ESPAI/INTRO"
+
+#: scenes/settings_menu.tscn
+msgid "BACK"
+msgstr "ENRERE"
+
+#: scenes/start_screen.tscn
+msgid "PRESS START"
+msgstr "PREM INICI"
+
+#: scenes/start_screen.tscn
+msgid ""
+"CREDITS\n"
+"\n"
+"Game created by\n"
+"Berta Juanhuix Xatart\n"
+"\n"
+"Thank you for playing!"
+msgstr ""
+"CRÈDITS\n"
+"\n"
+"Joc creat per\n"
+"Berta Juanhuix Xatart\n"
+"\n"
+"Gràcies per jugar!"
+
+#: scenes/levels/game_over.tscn
+msgid "GAME OVER"
+msgstr "FINAL DE LA PARTIDA"
+
+#: scenes/levels/game_over.tscn
+msgid "RETRY"
+msgstr "TORNAR-HO A INTENTAR"
+
+#: scenes/levels/game_over.tscn scripts/menu_screen.gd
+msgid "EXIT TO LEVEL SELECT"
+msgstr "TORNAR A SELECCIÓ DE NIVELL"
+
+#: scripts/ending.gd
+msgid "The Prism has been restored."
+msgstr "El Prisma s’ha restaurat."
+
+#: scripts/ending.gd
+msgid "Balance has returned."
+msgstr "L’equilibri ha tornat."
+
+#: scripts/ending.gd
+msgid "Color has flown back into the world!"
+msgstr "El color ha retornat al món!"
+
+#: scripts/ending.gd
+msgid "And so, the world is whole once again."
+msgstr "Així, el món està sencer un altre cop."
+
+#: scripts/final_level.gd
+msgid "ENTER THE PRISM"
+msgstr "ENTRA AL PRISMA"
+
+#: scripts/intro.gd
+msgid "At the top of the world, a tower watched in silence."
+msgstr "Al pic del món, una torre observa en silenci."
+
+#: scripts/intro.gd
+msgid "Within it stood the Prism..."
+msgstr "Dins seu s’hi trobava el Prisma…"
+
+#: scripts/intro.gd
+msgid "... until something awoke."
+msgstr "… fins que alguna cosa va despertar."
+
+#: scripts/intro.gd
+msgid "A corruption without color. Without purpose."
+msgstr "Una corrupció sense color. Sense finalitat."
+
+#: scripts/intro.gd
+msgid "It disrupted the balance,"
+msgstr "Va alterar l’equilibri,"
+
+#: scripts/intro.gd
+msgid "the Prism shattered,"
+msgstr "el Prisma es va esmicolar,"
+
+#: scripts/intro.gd
+msgid "and so the world was fractured."
+msgstr "i el món es va fracturar."
+
+#: scripts/intro.gd
+msgid "But one fragment endured."
+msgstr "Però un fragment va sobreviure."
+
+#: scripts/intro.gd
+msgid "Only three colors were saved."
+msgstr "Només es van salvar tres colors."
+
+#: scripts/intro.gd
+msgid "The world had lost its light, but the fragment had not."
+msgstr "El món havia perdut la seva llum, però el fragment no."
+
+#: scripts/intro.gd
+msgid "Though still incomplete, it could now shift."
+msgstr "Tot i estar encara incomplet, ara podia canviar."
+
+#: scripts/intro.gd
+msgid "To return to the tower, it had to tread carefully."
+msgstr "Per tornar a la torre, havia d’avançar amb compte."
+
+#: scripts/intro.gd
+msgid "And so the first new light was green."
+msgstr "Així, la primera nova llum va ser verda."
+
+#: scripts/level_1.gd
+msgid "MOVE: ← → / A D"
+msgstr "MOURE’S: ← → / A D"
+
+#: scripts/level_1.gd
+msgid "JUMP: ↑ / W"
+msgstr "SALTAR: ↑ / W"
+
+#: scripts/level_1.gd
+msgid "SWITCH COLOR: Z / K"
+msgstr "CANVIAR DE COLOR: Z / K"
+
+#: scripts/level_1.gd
+msgid "SHOOT: X / J"
+msgstr "DISPARAR: X / J"
+
+#: scripts/level_1.gd
+msgid "DOUBLE SWITCH: Z Z / K K"
+msgstr "DOBLE CANVI: Z Z / K K"
+
+#: scripts/level_select.gd
+msgid "THE AWAKENING"
+msgstr "EL DESPERTAR"
+
+#: scripts/level_select.gd
+msgid "THE IGNITION"
+msgstr "LA IGNICIÓ"
+
+#: scripts/level_select.gd
+msgid "THE DISTORTION"
+msgstr "LA DISTORSIÓ"
+
+#: scripts/level_select.gd
+msgid "THE TOWER"
+msgstr "LA TORRE"
+
+#: scripts/menu_screen.gd
+msgid "EXIT TO TITLE SCREEN"
+msgstr "TORNA A LA PANTALLA PRINCIPAL"

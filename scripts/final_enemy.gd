@@ -15,7 +15,7 @@ extends CharacterBody2D
 @export var speed: float = 1500.0
 @export var wave_speed: float = 200.0
 @export var wait_time: int = 3
-@export var max_health: int = 20
+@export var max_health: int
 var health: int
 signal max_health_set(max_hp: int)
 signal health_changed(current_hp: int)
@@ -257,6 +257,8 @@ func enemy_change_color(new_color: GameState.color) -> void:
 	#Canvia l'estat
 	current_state = State.change_color
 	get_animation(0.0)
+	#So
+	Sound.playEnemySfx("enemyChangeColor", global_position)
 	#Esperar a que acabi l'animació
 	await anim.animation_finished
 	enemy_color = new_color
@@ -283,11 +285,8 @@ func enemy_spawn_attack() -> void:
 	#Nom de l'animació segons el color
 	var color_name: String = GameState.get_color_name(enemy_color)
 	var anim_name = "attack2_%s" % color_name
-	#Durada de l'animació
-	var duration: float = 5.0
-	#Fer girar l'animació 360 graus
-	#var gir = create_tween()
-	#gir.tween_property(anim, "rotation_degrees", anim.rotation_degrees + 360.0, duration)
+	#So
+	Sound.playEnemySfx("enemySpawn", global_position)
 	#Esperar a que acabi l'animació
 	await anim.animation_finished
 	#Tornar a la rotació original
@@ -334,6 +333,7 @@ func spawn_enemy1() -> void:
 	get_parent().add_child(enemy)
 	#Posició de l'enemic
 	enemy.global_position = marker.global_position
+	enemy.find_points()
 	#Marcar spawn point com a ocupat
 	ground_occupied[marker] = enemy
 	#Color de l'enemic
@@ -466,6 +466,9 @@ func find_player() -> void:
 		print(player)
 
 func find_points() -> void:
+	if patrol_points == null:
+		print("FINAL ENEMY: patrol_points és null")
+		return
 	#Troba la posició dels marcadors
 	children = patrol_points.get_children()
 	points_number = children.size()
@@ -474,6 +477,7 @@ func find_points() -> void:
 	if points_number == 0:
 		print("FINAL ENEMY: No hi ha marcadors")
 		return
+	point_positions.clear()
 	#Afegeix la posició dels marcadors a l'array
 	for point in children:
 		point_positions.append(point.global_position)
@@ -597,6 +601,15 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		if health <= 0:
 			#Mort de l'enemic
 			emit_signal("died")
+			#So
+			Sound.playEnemySfx("finalEnemyDeath", global_position)
+			#Marca el nivell com a completat
+			GameState.complete_level(3)
+			#Guarda el nivell jugat
+			GameState.set_last_level_played(3)
+			#Canvia el color
+			GameState.restore_entry_color()
+			GameState.save_progress()
 			die()
 			return
 		else:

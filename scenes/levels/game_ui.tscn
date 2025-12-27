@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://dycf21wlpjigt"]
 
 [ext_resource type="Script" uid="uid://gej8ejxf26hu" path="res://scripts/game_ui.gd" id="1_hspwf"]
-[ext_resource type="Script" path="res://scripts/hud.gd" id="2_1kue3"]
+[ext_resource type="Script" uid="uid://du4ny67qj05db" path="res://scripts/hud.gd" id="2_1kue3"]
 [ext_resource type="Texture2D" uid="uid://uxcj5vsuod0p" path="res://assets/other/icon_green.png" id="3_iu5xu"]
 [ext_resource type="Texture2D" uid="uid://guw0naiu513b" path="res://assets/other/icon_orange.png" id="4_8380e"]
 [ext_resource type="Texture2D" uid="uid://cmj0hdmfp2wv" path="res://assets/other/icon_purple.png" id="5_kkp6q"]
@@ -11,22 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://dlovavwxda3l2" path="res://assets/other/healthbar_frame.png" id="9_hpnya"]
 [ext_resource type="Texture2D" uid="uid://dg42mmrx3jcsu" path="res://assets/other/healthbar_fill.png" id="10_hbgs6"]
 [ext_resource type="Theme" uid="uid://bhid78ber0sik" path="res://assets/fonts/font_theme.tres" id="11_hbgs6"]
-
-[sub_resource type="Animation" id="Animation_hbgs6"]
-resource_name = "show"
-length = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("tutorialText:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_52jdw"]
 length = 0.001
@@ -59,6 +43,22 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_hbgs6"]
+resource_name = "show"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("tutorialText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xmpv3"]
 _data = {
 &"RESET": SubResource("Animation_52jdw"),
@@ -77,9 +77,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_1kue3")
-icon_green = ExtResource("3_iu5xu")
-icon_orange = ExtResource("4_8380e")
-icon_purple = ExtResource("5_kkp6q")
 heart_scene = ExtResource("6_kkp6q")
 heart_full = ExtResource("7_pdhdd")
 heart_empty = ExtResource("8_hpnya")
@@ -91,8 +88,32 @@ offset_right = 56.0
 offset_bottom = 40.0
 theme_override_constants/separation = 16
 
-[node name="icon" type="TextureRect" parent="HUD/topLeft"]
+[node name="icons" type="HBoxContainer" parent="HUD/topLeft"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="iconGreen" type="TextureRect" parent="HUD/topLeft/icons"]
+custom_minimum_size = Vector2(11, 15)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_iu5xu")
+stretch_mode = 5
+
+[node name="iconOrange" type="TextureRect" parent="HUD/topLeft/icons"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_8380e")
+stretch_mode = 5
+
+[node name="iconPurple" type="TextureRect" parent="HUD/topLeft/icons"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_kkp6q")
 stretch_mode = 5
 
 [node name="hearts" type="HBoxContainer" parent="HUD/topLeft"]

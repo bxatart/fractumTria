@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://p6xtjs5ht8p" path="res://scenes/enemies/enemy_1.tscn" id="3_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://cu54h2hvhsay7" path="res://scenes/player/altar.tscn" id="4_6761a"]
 [ext_resource type="PackedScene" uid="uid://bximb6t1vnmx6" path="res://scenes/player/checkpoint.tscn" id="5_sk5k4"]
-[ext_resource type="Script" uid="uid://cg48o2carmi1k" path="res://scripts/tutorial.gd" id="6_oc4kc"]
+[ext_resource type="Script" path="res://scripts/tutorial.gd" id="6_oc4kc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dga24"]
 size = Vector2(224, 56)
@@ -47,7 +47,7 @@ tile_map_data = PackedByteArray("AABgAP7/AQAIAAAAAABhAP7/AQAIAAAAAABiAP7/AQAIAAA
 [node name="Player" parent="." index="4"]
 position = Vector2(64, -48)
 
-[node name="Camera2D" parent="Player" index="4"]
+[node name="Camera2D" parent="Player" index="5"]
 limit_right = 4500
 limit_bottom = 0
 
@@ -63,7 +63,7 @@ collision_layer = 0
 collision_mask = 8
 monitorable = false
 script = ExtResource("6_oc4kc")
-message = "MOVE : ← → / A D"
+message = "MOVE: ← → / A D"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="moveInstructions" index="0"]
 position = Vector2(120, -60)
@@ -74,7 +74,7 @@ collision_layer = 0
 collision_mask = 8
 monitorable = false
 script = ExtResource("6_oc4kc")
-message = "JUMP : ↑ / W"
+message = "JUMP: ↑ / W"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="jumpInstructions" index="0"]
 position = Vector2(392, -112)
@@ -118,7 +118,7 @@ collision_layer = 0
 collision_mask = 8
 monitorable = false
 script = ExtResource("6_oc4kc")
-message = "DOUBLE SWITCH : Z Z / K K"
+message = "DOUBLE SWITCH: Z Z / K K"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="doubleChangeColorInstructions2" index="0"]
 position = Vector2(3320, -97)

@@ -24,12 +24,16 @@ func apply() -> void:
 	#Aplicar volum
 	apply_audio()
 	#Aplicar idioma
+	apply_language()
 	#Emet senyal canvis
 	emit_signal("changed")
 
 func apply_audio() -> void:
 	set_bus("Music", music_volume)
 	set_bus("Sfx", sfx_volume)
+
+func apply_language() -> void:
+	TranslationServer.set_locale(language)
 
 func set_bus(bus_name: String, value: float) -> void:
 	#Busca l'índex del bus per nom
@@ -62,6 +66,11 @@ func set_sfx_volume(v: float) -> void:
 	#Aplicar canvi
 	apply()
 	#Guardar-ho
+	save_settings()
+
+func set_language(lang: String) -> void:
+	language = lang
+	apply()
 	save_settings()
 
 func save_settings() -> void:

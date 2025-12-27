@@ -21,6 +21,7 @@ func _on_retry_button_pressed() -> void:
 	retry_button.disabled = true
 	Sound.playSfx("menuConfirm")
 	await get_tree().create_timer(0.25).timeout
+	GameState.reset_player_health()
 	#Tornar a carregar el mateix nivell
 	get_tree().change_scene_to_file(level_scene_path)
 
@@ -29,6 +30,7 @@ func _on_exit_button_pressed() -> void:
 	Sound.playSfx("menuBack")
 	await get_tree().create_timer(0.25).timeout
 	GameState.restore_entry_color()
+	GameState.reset_player_health()
 	#Carregar el level select
 	get_tree().change_scene_to_file("res://scenes/level_select.tscn")
 

@@ -34,6 +34,7 @@ func _on_exit_button_pressed() -> void:
 	Sound.playSfx("menuBack")
 	await get_tree().create_timer(0.25).timeout
 	get_tree().paused = false
+	GameState.reset_player_health()
 	if pause:
 		GameState.restore_entry_color()
 		get_tree().change_scene_to_file("res://scenes/level_select.tscn")
