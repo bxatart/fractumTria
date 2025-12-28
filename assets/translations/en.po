@@ -34,6 +34,8 @@
 # res://scripts/settings_menu.gd
 # res://scripts/start_screen.gd
 # res://scripts/tutorial.gd
+# res://scenes/load_game_screen.tscn
+# res://scripts/load_game_screen.gd
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -56,6 +58,7 @@ msgid "LEVEL SELECT"
 msgstr "LEVEL SELECT"
 
 #: scenes/menu_screen.tscn
+#: scenes/load_game_screen.tscn
 msgid "CONTINUE"
 msgstr "CONTINUE"
 
@@ -296,5 +299,10 @@ msgid "THE TOWER"
 msgstr "THE TOWER"
 
 #: scripts/menu_screen.gd
+#: scenes/load_game_screen.tscn
 msgid "EXIT TO TITLE SCREEN"
 msgstr "EXIT TO TITLE SCREEN"
+
+#: scenes/load_game_screen.tscn
+msgid "NEW GAME"
+msgstr "NEW GAME"

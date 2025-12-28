@@ -35,3 +35,7 @@ func load_game() -> Dictionary:
 		"max_health": int(cfg.get_value("player", "max_health", 3)),
 		"color": int(cfg.get_value("player", "color", 0)),
 	}
+
+func delete_save() -> void:
+	if has_save():
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))

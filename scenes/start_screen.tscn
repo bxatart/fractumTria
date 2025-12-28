@@ -123,4 +123,5 @@ focus_previous = NodePath("../playButton")
 texture_normal = ExtResource("5_hm208")
 stretch_mode = 0
 
+[connection signal="pressed" from="playButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="creditsButton" to="." method="_on_credits_button_pressed"]

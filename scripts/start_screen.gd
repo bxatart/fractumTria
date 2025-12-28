@@ -22,14 +22,11 @@ func _ready() -> void:
 func start_game() -> void:
 	Sound.stopMusic()
 	await get_tree().create_timer(0.5).timeout
-	if SaveGame.has_save():
-		GameState.load_progress()
-		get_tree().change_scene_to_file("res://scenes/level_select.tscn")
-	else:
-		get_tree().change_scene_to_file("res://scenes/intro.tscn")
+	get_tree().change_scene_to_file("res://scenes/load_game_screen.tscn")
 
 func _on_credits_button_pressed() -> void:
 	#Fer visible la pantalla de crèdits
+	Sound.playSfx("menuConfirm")
 	credits.visible = not credits.visible
 	if credits.visible:
 		credits_button.grab_focus()
