@@ -110,3 +110,15 @@ func load_progress() -> void:
 	player_max_health = int(data["max_health"])
 	#Color
 	set_color(color.values()[int(data["color"])])
+
+func reset_progress() -> void:
+	levels_completed = create_levels_array(total_levels)
+	last_level_played = -1
+	player_health = base_health
+	player_max_health = base_health
+	current_color = color.GREEN
+
+func new_game() -> void:
+	SaveGame.delete_save()
+	reset_progress()
+	get_tree().change_scene_to_file("res://scenes/intro.tscn")
