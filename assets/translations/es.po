@@ -57,8 +57,7 @@ msgstr ""
 msgid "LEVEL SELECT"
 msgstr "SELECCIÓN DE NIVEL"
 
-#: scenes/menu_screen.tscn
-#: scenes/load_game_screen.tscn
+#: scenes/menu_screen.tscn scenes/load_game_screen.tscn
 msgid "CONTINUE"
 msgstr "CONTINUAR"
 
@@ -68,7 +67,7 @@ msgstr "CONFIGURACIÓN"
 
 #: scenes/menu_screen.tscn
 msgid "EXIT"
-msgstr "SALIDA"
+msgstr "SALIR"
 
 #: scenes/settings_menu.tscn
 msgid "AUDIO"
@@ -216,7 +215,7 @@ msgstr "En la cima del mundo, una torre observaba en silencio."
 
 #: scripts/intro.gd
 msgid "Within it stood the Prism..."
-msgstr "Dentro de ella se hallaba en Prisma…"
+msgstr "En ella se hallaba el Prisma…"
 
 #: scripts/intro.gd
 msgid "... until something awoke."
@@ -252,7 +251,7 @@ msgstr "El mundo había perdido su luz, pero el fragmento no."
 
 #: scripts/intro.gd
 msgid "Though still incomplete, it could now shift."
-msgstr "Aunque aún estaba incompleto, ahora podría cambiar."
+msgstr "Aunque aún estaba incompleto, ahora podía cambiar."
 
 #: scripts/intro.gd
 msgid "To return to the tower, it had to tread carefully."
@@ -298,10 +297,9 @@ msgstr "LA DISTORSIÓN"
 msgid "THE TOWER"
 msgstr "LA TORRE"
 
-#: scripts/menu_screen.gd
-#: scenes/load_game_screen.tscn
+#: scripts/menu_screen.gd scenes/load_game_screen.tscn
 msgid "EXIT TO TITLE SCREEN"
-msgstr "VOLER A LA PANTALLA PRINCIPAL"
+msgstr "VOLVER A LA PANTALLA PRINCIPAL"
 
 #: scenes/load_game_screen.tscn
 msgid "NEW GAME"

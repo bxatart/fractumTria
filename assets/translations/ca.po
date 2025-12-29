@@ -57,10 +57,9 @@ msgstr ""
 msgid "LEVEL SELECT"
 msgstr "SELECCIÓ DE NIVELL"
 
-#: scenes/menu_screen.tscn
-#: scenes/load_game_screen.tscn
+#: scenes/menu_screen.tscn scenes/load_game_screen.tscn
 msgid "CONTINUE"
-msgstr "CONTINUA"
+msgstr "CONTINUAR"
 
 #: scenes/menu_screen.tscn scenes/settings_menu.tscn
 msgid "SETTINGS"
@@ -68,7 +67,7 @@ msgstr "CONFIGURACIÓ"
 
 #: scenes/menu_screen.tscn
 msgid "EXIT"
-msgstr "SURT"
+msgstr "SORTIR"
 
 #: scenes/settings_menu.tscn
 msgid "AUDIO"
@@ -184,7 +183,7 @@ msgstr "FINAL DE LA PARTIDA"
 
 #: scenes/levels/game_over.tscn
 msgid "RETRY"
-msgstr "TORNAR-HO A INTENTAR"
+msgstr "REINTENTAR"
 
 #: scenes/levels/game_over.tscn scripts/menu_screen.gd
 msgid "EXIT TO LEVEL SELECT"
@@ -192,7 +191,7 @@ msgstr "TORNAR A SELECCIÓ DE NIVELL"
 
 #: scripts/ending.gd
 msgid "The Prism has been restored."
-msgstr "El Prisma s’ha restaurat."
+msgstr "El Prisma ha estat restaurat."
 
 #: scripts/ending.gd
 msgid "Balance has returned."
@@ -212,7 +211,7 @@ msgstr "ENTRA AL PRISMA"
 
 #: scripts/intro.gd
 msgid "At the top of the world, a tower watched in silence."
-msgstr "Al pic del món, una torre observa en silenci."
+msgstr "Al pic del món, una torre observava en silenci."
 
 #: scripts/intro.gd
 msgid "Within it stood the Prism..."
@@ -298,11 +297,10 @@ msgstr "LA DISTORSIÓ"
 msgid "THE TOWER"
 msgstr "LA TORRE"
 
-#: scripts/menu_screen.gd
-#: scenes/load_game_screen.tscn
+#: scripts/menu_screen.gd scenes/load_game_screen.tscn
 msgid "EXIT TO TITLE SCREEN"
-msgstr "TORNA A LA PANTALLA PRINCIPAL"
+msgstr "TORNAR A LA PANTALLA PRINCIPAL"
 
 #: scenes/load_game_screen.tscn
 msgid "NEW GAME"
-msgstr "PARTIDA NOVA"
+msgstr "NOVA PARTIDA"

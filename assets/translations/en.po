@@ -57,8 +57,7 @@ msgstr ""
 msgid "LEVEL SELECT"
 msgstr "LEVEL SELECT"
 
-#: scenes/menu_screen.tscn
-#: scenes/load_game_screen.tscn
+#: scenes/menu_screen.tscn scenes/load_game_screen.tscn
 msgid "CONTINUE"
 msgstr "CONTINUE"
 
@@ -298,8 +297,7 @@ msgstr "THE DISTORTION"
 msgid "THE TOWER"
 msgstr "THE TOWER"
 
-#: scripts/menu_screen.gd
-#: scenes/load_game_screen.tscn
+#: scripts/menu_screen.gd scenes/load_game_screen.tscn
 msgid "EXIT TO TITLE SCREEN"
 msgstr "EXIT TO TITLE SCREEN"
 
