@@ -91,3 +91,10 @@ func load_settings() -> void:
 		music_volume = float(cfg.get_value("audio", "music_volume", music_volume))
 		sfx_volume = float(cfg.get_value("audio", "sfx_volume", sfx_volume))
 		language = str(cfg.get_value("accessibility", "language", language))
+
+func has_save() -> bool:
+	return FileAccess.file_exists(save_path)
+
+func delete_settings() -> void:
+	if has_save():
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))

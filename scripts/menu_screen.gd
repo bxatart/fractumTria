@@ -42,6 +42,14 @@ func _on_exit_button_pressed() -> void:
 		#Pantalla d'inici
 		get_tree().change_scene_to_file("res://scenes/start_screen.tscn")
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().paused = false
+		Sound.playSfx("menuConfirm")
+		await get_tree().create_timer(0.25).timeout
+		#Tanca el menú
+		queue_free()
+
 func _on_continue_button_focus_entered() -> void:
 	Sound.playSfx("menuSelect")
 

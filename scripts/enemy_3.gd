@@ -262,10 +262,13 @@ func revive() -> void:
 	current_state = State.idle
 	canMove = false
 	timer.start()
+	shoot_timer.start()
 
 func kill_enemy() -> void:
 	#Amaga l'enemic
 	dead = true
+	timer.stop()
+	shoot_timer.stop()
 	visible = false
 	set_physics_process(false)
 	set_process(false)
