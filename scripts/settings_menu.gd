@@ -47,6 +47,13 @@ func _on_back_button_pressed() -> void:
 	emit_signal("closed")
 	queue_free()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		Sound.playSfx("menuBack")
+		await get_tree().create_timer(0.25).timeout
+		emit_signal("closed")
+		queue_free()
+
 func _on_lang_option_item_selected(index: int) -> void:
 	if signaling:
 		return

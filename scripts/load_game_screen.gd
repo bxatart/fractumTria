@@ -8,7 +8,9 @@ func _ready() -> void:
 	continue_button.visible = false
 	if SaveGame.has_save():
 		continue_button.visible = true
-	new_game_button.grab_focus()
+		continue_button.grab_focus()
+	else:
+		new_game_button.grab_focus()
 
 func _on_continue_button_pressed() -> void:
 	Sound.playSfx("menuConfirm")

@@ -41,6 +41,7 @@ func _on_trigger_body_entered(body: Node2D) -> void:
 	current_state = State.fill
 	get_animation()
 	#Efecte de so
+	Sound.stopMusic()
 	sfx_player = Sound.playSfx("endLevel")
 	if player.has_method("full_heal"):
 		player.full_heal()

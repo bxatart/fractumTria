@@ -120,5 +120,6 @@ func reset_progress() -> void:
 
 func new_game() -> void:
 	SaveGame.delete_save()
+	Settings.delete_settings()
 	reset_progress()
 	get_tree().change_scene_to_file("res://scenes/intro.tscn")
